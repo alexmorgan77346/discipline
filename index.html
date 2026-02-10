@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#22c55e">
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#1a1a2e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Discipline">
+    <meta name="description" content="Track your Diet, Gym, and Study habits to build discipline">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192.png">
     <title>Discipline Dashboard</title>
     <style>
         * {
@@ -27,7 +30,6 @@
             --text-light: #636e72;
             --border: #dfe6e9;
         }
-      
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
@@ -561,12 +563,6 @@
     </style>
 </head>
 <body>
-    <script>
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("service-worker.js");
-}
-</script>
-
     <!-- Header -->
     <div class="header">
         <h1>💪 Discipline Dashboard</h1>
@@ -577,7 +573,10 @@ if ("serviceWorker" in navigator) {
     <div id="home-page" class="page active">
         <div class="container">
             <!-- Streak Badge -->
-         
+            <div class="streak-badge">
+                <h2>🔥 <span id="streak-count">0</span></h2>
+                <p>Day Streak</p>
+            </div>
 
             <!-- Overall Score -->
             <div class="card">
@@ -798,7 +797,7 @@ if ("serviceWorker" in navigator) {
             <div class="card">
                 <div class="card-title">Study Sessions</div>
                 <div id="study-sessions"></div>
-                <button class="btn btn-secondary" onclick="openStudyModal()">+ Add Session</button>
+                <button class="btn btn-secondary" onclick="openAddSessionModal()">+ Add New Session</button>
             </div>
         </div>
     </div>
@@ -867,46 +866,58 @@ if ("serviceWorker" in navigator) {
         </div>
     </div>
 
-    <!-- Study Session Modal -->
-    <div id="study-modal" class="modal">
+    <!-- Add Session Modal -->
+    <div id="add-session-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <span class="close-modal" onclick="closeStudyModal()">&times;</span>
-                Add Study Session
+                <span class="close-modal" onclick="closeAddSessionModal()">&times;</span>
+                Add New Study Session
             </div>
             <div class="input-group">
-                <label>Subject / Topic</label>
-                <input type="text" id="study-subject" placeholder="Mathematics">
+                <label>Session Name</label>
+                <input type="text" id="session-name" placeholder="Mathematics - Calculus">
             </div>
             <div class="input-group">
                 <label>Purpose</label>
-                <select id="study-purpose">
+                <select id="session-purpose">
                     <option value="exam">Exam Preparation</option>
                     <option value="skill">Skill Development</option>
                     <option value="revision">Revision</option>
                     <option value="coding">Coding Practice</option>
                 </select>
             </div>
-            
-            <!-- Pomodoro Timer in Modal -->
-            <div class="timer-container">
-                <div class="card-title">Start Pomodoro Session</div>
-                <div class="timer-display" id="modal-timer-display">25:00</div>
-                <div class="timer-controls">
-                    <button id="modal-timer-start" onclick="startModalTimer()">Start</button>
-                    <button id="modal-timer-pause" onclick="pauseModalTimer()">Pause</button>
-                    <button onclick="resetModalTimer()">Reset</button>
-                </div>
-                <div style="text-align: center; margin-top: 10px; color: white;">
-                    <small>Timer will auto-save session when complete (25 min)</small>
-                </div>
-            </div>
-            
             <div class="input-group">
-                <label>Or Manually Enter Time (minutes)</label>
-                <input type="number" id="study-time" placeholder="60">
+                <label>Target Time (minutes)</label>
+                <input type="number" id="session-target-time" placeholder="60">
             </div>
-            <button class="btn btn-primary" onclick="addStudySession()">Add Session Manually</button>
+            <button class="btn btn-primary" onclick="addNewSession()">Add Session</button>
+        </div>
+    </div>
+
+    <!-- Timer Modal -->
+    <div id="timer-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close-modal" onclick="closeTimerModal()">&times;</span>
+                <span id="timer-session-name">Study Session</span>
+            </div>
+            
+            <!-- Timer Display -->
+            <div class="timer-container">
+                <div class="card-title">Session Timer</div>
+                <div class="timer-display" id="session-timer-display">00:00</div>
+                <div style="text-align: center; color: white; margin: 10px 0;">
+                    <span id="timer-target-display">Target: 60 min</span>
+                </div>
+                <div class="timer-controls">
+                    <button onclick="startSessionTimer()">Start</button>
+                    <button onclick="pauseSessionTimer()">Pause</button>
+                    <button onclick="resetSessionTimer()">Reset</button>
+                </div>
+                <div style="text-align: center; margin-top: 15px;">
+                    <button class="btn btn-primary" onclick="completeSession()">✓ Complete Session</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -957,7 +968,7 @@ if ("serviceWorker" in navigator) {
                 exercises: { chest: [], back: [], shoulders: [], biceps: [], triceps: [], legs: [] }
             },
             study: {
-                sessions: []
+                sessions: [] // Each session: { name, purpose, targetTime, completions: [{date, actualTime, completed}] }
             }
         };
 
@@ -1310,119 +1321,93 @@ if ("serviceWorker" in navigator) {
         }
 
         // Study Functions
-        function openStudyModal() {
-            document.getElementById('study-modal').classList.add('active');
+        let currentSessionIndex = -1;
+        
+        function openAddSessionModal() {
+            document.getElementById('add-session-modal').classList.add('active');
         }
 
-        function closeStudyModal() {
-            document.getElementById('study-modal').classList.remove('active');
-            document.getElementById('study-subject').value = '';
-            document.getElementById('study-purpose').value = 'exam';
-            document.getElementById('study-time').value = '';
-            pauseModalTimer();
-            resetModalTimer();
+        function closeAddSessionModal() {
+            document.getElementById('add-session-modal').classList.remove('active');
+            document.getElementById('session-name').value = '';
+            document.getElementById('session-purpose').value = 'exam';
+            document.getElementById('session-target-time').value = '';
         }
 
-        function addStudySession() {
+        function addNewSession() {
             const session = {
-                subject: document.getElementById('study-subject').value,
-                purpose: document.getElementById('study-purpose').value,
-                time: parseInt(document.getElementById('study-time').value) || 0,
-                date: new Date().toLocaleString(),
-                completed: false
+                name: document.getElementById('session-name').value,
+                purpose: document.getElementById('session-purpose').value,
+                targetTime: parseInt(document.getElementById('session-target-time').value) || 60,
+                completions: []
             };
 
-            if (!session.subject) {
-                alert('Please enter a subject');
-                return;
-            }
-
-            if (session.time === 0) {
-                alert('Please enter time spent or use the Pomodoro timer');
+            if (!session.name) {
+                alert('Please enter a session name');
                 return;
             }
 
             data.study.sessions.push(session);
             saveData();
             renderStudy();
-            closeStudyModal();
-        }
-        
-        // Modal Timer Functions
-        let modalTimerInterval = null;
-        let modalTimerSeconds = 1500; // 25 minutes
-        let isModalTimerRunning = false;
-
-        function updateModalTimerDisplay() {
-            const minutes = Math.floor(modalTimerSeconds / 60);
-            const seconds = modalTimerSeconds % 60;
-            document.getElementById('modal-timer-display').textContent = 
-                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            closeAddSessionModal();
         }
 
-        function startModalTimer() {
-            const subject = document.getElementById('study-subject').value;
-            if (!subject) {
-                alert('Please enter a subject/topic first');
-                return;
-            }
+        function openTimerModal(index) {
+            currentSessionIndex = index;
+            const session = data.study.sessions[index];
             
-            if (!isModalTimerRunning) {
-                isModalTimerRunning = true;
-                modalTimerInterval = setInterval(() => {
-                    if (modalTimerSeconds > 0) {
-                        modalTimerSeconds--;
-                        updateModalTimerDisplay();
-                    } else {
-                        pauseModalTimer();
-                        
-                        // Auto-save the session
-                        const session = {
-                            subject: document.getElementById('study-subject').value,
-                            purpose: document.getElementById('study-purpose').value,
-                            time: 25, // Pomodoro session
-                            date: new Date().toLocaleString(),
-                            completed: true // Auto-complete when timer finishes
-                        };
-                        
-                        data.study.sessions.push(session);
-                        saveData();
-                        renderStudy();
-                        
-                        alert('Pomodoro complete! 25-minute session saved. Take a 5-minute break.');
-                        closeStudyModal();
-                        resetModalTimer();
-                    }
-                }, 1000);
-            }
+            document.getElementById('timer-session-name').textContent = session.name;
+            document.getElementById('timer-target-display').textContent = `Target: ${session.targetTime} min`;
+            document.getElementById('timer-modal').classList.add('active');
+            
+            resetSessionTimer();
         }
 
-        function pauseModalTimer() {
-            isModalTimerRunning = false;
-            clearInterval(modalTimerInterval);
+        function closeTimerModal() {
+            document.getElementById('timer-modal').classList.remove('active');
+            pauseSessionTimer();
+            resetSessionTimer();
+            currentSessionIndex = -1;
         }
 
-        function resetModalTimer() {
-            pauseModalTimer();
-            modalTimerSeconds = 1500;
-            updateModalTimerDisplay();
-        }
-
-        function deleteStudySession(index) {
-            if (confirm('Delete this session?')) {
+        function deleteSession(index) {
+            if (confirm('Delete this permanent session?')) {
                 data.study.sessions.splice(index, 1);
                 saveData();
                 renderStudy();
             }
         }
 
-        function renderStudy() {
-            // Calculate total time from completed sessions
-            let totalMinutes = 0;
+        function getTodayCompletions() {
+            const today = new Date().toDateString();
+            let completions = [];
+            
             data.study.sessions.forEach(session => {
-                if (session.completed) {
-                    totalMinutes += session.time;
-                }
+                session.completions.forEach(comp => {
+                    const compDate = new Date(comp.date).toDateString();
+                    if (compDate === today && comp.completed) {
+                        completions.push(comp);
+                    }
+                });
+            });
+            
+            return completions;
+        }
+
+        function isTodayCompleted(session) {
+            const today = new Date().toDateString();
+            return session.completions.some(comp => {
+                const compDate = new Date(comp.date).toDateString();
+                return compDate === today && comp.completed;
+            });
+        }
+
+        function renderStudy() {
+            // Calculate total time from today's completions
+            let totalMinutes = 0;
+            getTodayCompletions().forEach(comp => {
+                totalMinutes += comp.actualTime;
             });
 
             const hours = Math.floor(totalMinutes / 60);
@@ -1434,21 +1419,34 @@ if ("serviceWorker" in navigator) {
             container.innerHTML = '';
             
             data.study.sessions.forEach((session, index) => {
-                const checkIcon = session.completed ? '✓' : '○';
-                const completedClass = session.completed ? 'style="opacity: 0.6;"' : '';
+                const isCompleted = isTodayCompleted(session);
+                const checkIcon = isCompleted ? '✓' : '○';
+                const completedClass = isCompleted ? 'style="opacity: 0.6;"' : '';
+                
+                // Get today's completion if exists
+                const today = new Date().toDateString();
+                const todayCompletion = session.completions.find(comp => {
+                    return new Date(comp.date).toDateString() === today && comp.completed;
+                });
+                
+                const timeDisplay = todayCompletion 
+                    ? `${todayCompletion.actualTime} min` 
+                    : `Target: ${session.targetTime} min`;
                 
                 container.innerHTML += `
                     <div class="study-session" ${completedClass}>
                         <div class="study-session-info">
                             <h4>
-                                <span onclick="toggleStudyComplete(${index})" style="cursor: pointer; margin-right: 8px; font-size: 18px;">${checkIcon}</span>
-                                ${session.subject}
+                                <span style="font-size: 18px; margin-right: 8px;">${checkIcon}</span>
+                                ${session.name}
                             </h4>
-                            <div class="study-session-meta">${session.purpose} • ${session.date}</div>
+                            <div class="study-session-meta">${session.purpose} • ${timeDisplay}</div>
                         </div>
                         <div style="text-align: right;">
-                            <div class="study-session-time">${session.time}m</div>
-                            <button class="btn btn-danger btn-small" onclick="deleteStudySession(${index})">Delete</button>
+                            <button class="btn btn-primary btn-small" onclick="openTimerModal(${index})" ${isCompleted ? 'disabled' : ''}>
+                                ${isCompleted ? 'Done ✓' : 'Start'}
+                            </button>
+                            <button class="btn btn-danger btn-small" onclick="deleteSession(${index})">Delete</button>
                         </div>
                     </div>
                 `;
@@ -1457,28 +1455,86 @@ if ("serviceWorker" in navigator) {
             updateAllProgress();
         }
 
-        function toggleStudyComplete(index) {
-            data.study.sessions[index].completed = !data.study.sessions[index].completed;
-            saveData();
-            renderStudy();
-        }
-
         function calculateStudyProgress() {
-            let totalMinutes = 0;
-            let completedSessions = 0;
             let totalSessions = data.study.sessions.length;
+            if (totalSessions === 0) return 0;
             
+            let completedToday = 0;
             data.study.sessions.forEach(session => {
-                if (session.completed) {
-                    completedSessions++;
-                    totalMinutes += session.time;
+                if (isTodayCompleted(session)) {
+                    completedToday++;
                 }
             });
 
-            if (totalSessions === 0) return 0;
+            return Math.round((completedToday / totalSessions) * 100);
+        }
+
+        // Session Timer Functions
+        let sessionTimerInterval = null;
+        let sessionTimerSeconds = 0;
+        let isSessionTimerRunning = false;
+
+        function updateSessionTimerDisplay() {
+            const minutes = Math.floor(sessionTimerSeconds / 60);
+            const seconds = sessionTimerSeconds % 60;
+            document.getElementById('session-timer-display').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function startSessionTimer() {
+            if (!isSessionTimerRunning) {
+                isSessionTimerRunning = true;
+                sessionTimerInterval = setInterval(() => {
+                    sessionTimerSeconds++;
+                    updateSessionTimerDisplay();
+                }, 1000);
+            }
+        }
+
+        function pauseSessionTimer() {
+            isSessionTimerRunning = false;
+            clearInterval(sessionTimerInterval);
+        }
+
+        function resetSessionTimer() {
+            pauseSessionTimer();
+            sessionTimerSeconds = 0;
+            updateSessionTimerDisplay();
+        }
+
+        function completeSession() {
+            if (sessionTimerSeconds === 0) {
+                alert('Please start the timer first');
+                return;
+            }
             
-            // Progress based on completed sessions
-            return Math.round((completedSessions / totalSessions) * 100);
+            if (currentSessionIndex === -1) return;
+            
+            pauseSessionTimer();
+            
+            const timeMinutes = Math.ceil(sessionTimerSeconds / 60);
+            
+            // Add completion to this session
+            const completion = {
+                date: new Date().toISOString(),
+                actualTime: timeMinutes,
+                completed: true
+            };
+            
+            data.study.sessions[currentSessionIndex].completions.push(completion);
+            saveData();
+            renderStudy();
+            
+            alert(`Session completed! You studied for ${timeMinutes} minutes.`);
+            closeTimerModal();
+        }
+
+        function deleteStudySession(index) {
+            if (confirm('Delete this session?')) {
+                data.study.sessions.splice(index, 1);
+                saveData();
+                renderStudy();
+            }
         }
 
         // Set current date
@@ -1492,6 +1548,13 @@ if ("serviceWorker" in navigator) {
         window.addEventListener('load', () => {
             updateDate();
             loadData();
+            
+            // Register Service Worker for PWA
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('service-worker.js')
+                    .then(reg => console.log('Service Worker registered'))
+                    .catch(err => console.log('Service Worker registration failed'));
+            }
         });
     </script>
 </body>
