@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#22c55e">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1a1a2e">
+    <title>Discipline Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #00b894;
+            --danger: #d63031;
+            --warning: #fdcb6e;
+            --dark: #1a1a2e;
+            --dark-alt: #16213e;
+            --light: #f5f6fa;
+            --text: #2d3436;
+            --text-light: #636e72;
+            --border: #dfe6e9;
+        }
+      
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: var(--light);
+            color: var(--text);
+            padding-bottom: 70px;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary), #a29bfe);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* Container */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Page visibility */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text);
+        }
+
+        /* Progress Cards */
+        .progress-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .progress-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .progress-card h3 {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .progress-number {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .progress-number.diet { color: var(--secondary); }
+        .progress-number.gym { color: var(--primary); }
+        .progress-number.study { color: var(--warning); }
+
+        /* Circular Progress */
+        .circular-progress {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 20px auto;
+        }
+
+        .circular-progress svg {
+            transform: rotate(-90deg);
+        }
+
+        .circular-progress circle {
+            fill: none;
+            stroke-width: 12;
+        }
+
+        .circle-bg {
+            stroke: var(--border);
+        }
+
+        .circle-progress {
+            stroke: var(--primary);
+            stroke-linecap: round;
+            transition: stroke-dashoffset 0.5s ease;
+        }
+
+        .circular-progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Streak */
+        .streak-badge {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .streak-badge h2 {
+            font-size: 40px;
+            margin-bottom: 5px;
+        }
+
+        .streak-badge p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* Progress Bar */
+        .progress-bar-container {
+            background: var(--border);
+            border-radius: 10px;
+            height: 20px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 8px;
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Inputs */
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: var(--text-light);
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5f4dd1;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(108, 92, 231, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 14px;
+            width: auto;
+            margin: 5px;
+        }
+
+        /* Meal Sections */
+        .meal-section {
+            border-left: 4px solid var(--primary);
+            padding-left: 15px;
+            margin-bottom: 20px;
+        }
+
+        .meal-header {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .meal-item {
+            background: var(--light);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .meal-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .meal-item-name {
+            font-weight: 600;
+        }
+
+        .meal-item-details {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        /* Exercise Sections */
+        .muscle-group {
+            margin-bottom: 20px;
+        }
+
+        .muscle-group-header {
+            background: var(--primary);
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .muscle-group-content {
+            display: none;
+            padding: 10px;
+        }
+
+        .muscle-group-content.active {
+            display: block;
+        }
+
+        .exercise-item {
+            background: var(--light);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .exercise-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .exercise-name {
+            font-weight: 600;
+        }
+
+        .exercise-details {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        /* Study Session */
+        .study-session {
+            background: var(--light);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .study-session-info h4 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .study-session-meta {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .study-session-time {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Timer */
+        .timer-container {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, var(--primary), #a29bfe);
+            border-radius: 12px;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .timer-display {
+            font-size: 60px;
+            font-weight: 700;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .timer-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .timer-controls button {
+            padding: 10px 20px;
+            border: 2px solid white;
+            background: transparent;
+            color: white;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .timer-controls button:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            z-index: 1000;
+        }
+
+        .nav-item {
+            flex: 1;
+            text-align: center;
+            padding: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            background: none;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+        }
+
+        .nav-icon {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+
+        .nav-label {
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .close-modal {
+            float: right;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        /* Stats */
+        .stat-item {
+            text-align: center;
+            padding: 10px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-top: 5px;
+        }
+
+        /* Utility Classes */
+        .text-center { text-align: center; }
+        .mt-20 { margin-top: 20px; }
+        .mb-20 { margin-bottom: 20px; }
+        
+        /* Responsive */
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .progress-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js");
+}
+</script>
+
+    <!-- Header -->
+    <div class="header">
+        <h1>💪 Discipline Dashboard</h1>
+        <p id="current-date"></p>
+    </div>
+
+    <!-- Home Page -->
+    <div id="home-page" class="page active">
+        <div class="container">
+            <!-- Streak Badge -->
+         
+
+            <!-- Overall Score -->
+            <div class="card">
+                <div class="card-title text-center">Overall Discipline Score</div>
+                <div class="circular-progress">
+                    <svg width="150" height="150">
+                        <circle class="circle-bg" cx="75" cy="75" r="65"></circle>
+                        <circle id="overall-progress-circle" class="circle-progress" cx="75" cy="75" r="65" 
+                                stroke-dasharray="408.4" stroke-dashoffset="408.4"></circle>
+                    </svg>
+                    <div class="circular-progress-text" id="overall-score">0%</div>
+                </div>
+            </div>
+
+            <!-- Progress Cards -->
+            <div class="progress-grid">
+                <div class="progress-card">
+                    <h3>Diet</h3>
+                    <div class="progress-number diet" id="diet-progress">0%</div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="diet-bar" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="progress-card">
+                    <h3>Gym</h3>
+                    <div class="progress-number gym" id="gym-progress">0%</div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="gym-bar" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="progress-card">
+                    <h3>Study</h3>
+                    <div class="progress-number study" id="study-progress">0%</div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="study-bar" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Diet Page -->
+    <div id="diet-page" class="page">
+        <div class="container">
+            <!-- Targets -->
+            <div class="card">
+                <div class="card-title">Daily Nutrition Targets</div>
+                <div class="grid-2">
+                    <div class="input-group">
+                        <label>Calories</label>
+                        <input type="number" id="target-calories" placeholder="2000">
+                    </div>
+                    <div class="input-group">
+                        <label>Carbs (g)</label>
+                        <input type="number" id="target-carbs" placeholder="250">
+                    </div>
+                    <div class="input-group">
+                        <label>Protein (g)</label>
+                        <input type="number" id="target-protein" placeholder="150">
+                    </div>
+                    <div class="input-group">
+                        <label>Fats (g)</label>
+                        <input type="number" id="target-fats" placeholder="65">
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="saveTargets()">Save Targets</button>
+            </div>
+
+            <!-- Progress -->
+            <div class="card">
+                <div class="card-title">Today's Nutrition</div>
+                <div class="grid-4">
+                    <div class="stat-item">
+                        <div class="stat-value" id="total-calories">0</div>
+                        <div class="stat-label">Calories</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="total-carbs">0</div>
+                        <div class="stat-label">Carbs</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="total-protein">0</div>
+                        <div class="stat-label">Protein</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="total-fats">0</div>
+                        <div class="stat-label">Fats</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Meals -->
+            <div class="card">
+                <div class="card-title">Meals</div>
+                
+                <!-- Morning -->
+                <div class="meal-section">
+                    <div class="meal-header">🌅 Morning</div>
+                    <div id="morning-meals"></div>
+                    <button class="btn btn-secondary" onclick="openMealModal('morning')">+ Add Meal</button>
+                </div>
+
+                <!-- Afternoon -->
+                <div class="meal-section">
+                    <div class="meal-header">☀️ Afternoon</div>
+                    <div id="afternoon-meals"></div>
+                    <button class="btn btn-secondary" onclick="openMealModal('afternoon')">+ Add Meal</button>
+                </div>
+
+                <!-- Evening -->
+                <div class="meal-section">
+                    <div class="meal-header">🌆 Evening</div>
+                    <div id="evening-meals"></div>
+                    <button class="btn btn-secondary" onclick="openMealModal('evening')">+ Add Meal</button>
+                </div>
+
+                <!-- Night -->
+                <div class="meal-section">
+                    <div class="meal-header">🌙 Night</div>
+                    <div id="night-meals"></div>
+                    <button class="btn btn-secondary" onclick="openMealModal('night')">+ Add Meal</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gym Page -->
+    <div id="gym-page" class="page">
+        <div class="container">
+            <!-- Progress -->
+            <div class="card">
+                <div class="card-title">Today's Workout Progress</div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="workout-progress-bar" style="width: 0%">0%</div>
+                </div>
+            </div>
+
+            <!-- Muscle Groups -->
+            <div class="card">
+                <div class="card-title">Exercises</div>
+                
+                <div class="muscle-group">
+                    <div class="muscle-group-header" onclick="toggleMuscleGroup('chest')">
+                        💪 Chest <span id="chest-toggle">+</span>
+                    </div>
+                    <div id="chest-content" class="muscle-group-content">
+                        <div id="chest-exercises"></div>
+                        <button class="btn btn-secondary" onclick="openExerciseModal('chest')">+ Add Exercise</button>
+                    </div>
+                </div>
+
+                <div class="muscle-group">
+                    <div class="muscle-group-header" onclick="toggleMuscleGroup('back')">
+                        🏋️ Back <span id="back-toggle">+</span>
+                    </div>
+                    <div id="back-content" class="muscle-group-content">
+                        <div id="back-exercises"></div>
+                        <button class="btn btn-secondary" onclick="openExerciseModal('back')">+ Add Exercise</button>
+                    </div>
+                </div>
+
+                <div class="muscle-group">
+                    <div class="muscle-group-header" onclick="toggleMuscleGroup('shoulders')">
+                        🤸 Shoulders <span id="shoulders-toggle">+</span>
+                    </div>
+                    <div id="shoulders-content" class="muscle-group-content">
+                        <div id="shoulders-exercises"></div>
+                        <button class="btn btn-secondary" onclick="openExerciseModal('shoulders')">+ Add Exercise</button>
+                    </div>
+                </div>
+
+                <div class="muscle-group">
+                    <div class="muscle-group-header" onclick="toggleMuscleGroup('biceps')">
+                        💪 Biceps <span id="biceps-toggle">+</span>
+                    </div>
+                    <div id="biceps-content" class="muscle-group-content">
+                        <div id="biceps-exercises"></div>
+                        <button class="btn btn-secondary" onclick="openExerciseModal('biceps')">+ Add Exercise</button>
+                    </div>
+                </div>
+
+                <div class="muscle-group">
+                    <div class="muscle-group-header" onclick="toggleMuscleGroup('triceps')">
+                        🦾 Triceps <span id="triceps-toggle">+</span>
+                    </div>
+                    <div id="triceps-content" class="muscle-group-content">
+                        <div id="triceps-exercises"></div>
+                        <button class="btn btn-secondary" onclick="openExerciseModal('triceps')">+ Add Exercise</button>
+                    </div>
+                </div>
+
+                <div class="muscle-group">
+                    <div class="muscle-group-header" onclick="toggleMuscleGroup('legs')">
+                        🦵 Legs <span id="legs-toggle">+</span>
+                    </div>
+                    <div id="legs-content" class="muscle-group-content">
+                        <div id="legs-exercises"></div>
+                        <button class="btn btn-secondary" onclick="openExerciseModal('legs')">+ Add Exercise</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Study Page -->
+    <div id="study-page" class="page">
+        <div class="container">
+            <!-- Progress -->
+            <div class="card">
+                <div class="card-title">Today's Study Time</div>
+                <div class="text-center">
+                    <div class="stat-value" id="total-study-time">0h 0m</div>
+                    <div class="stat-label">Total Time Studied</div>
+                </div>
+            </div>
+
+            <!-- Study Sessions -->
+            <div class="card">
+                <div class="card-title">Study Sessions</div>
+                <div id="study-sessions"></div>
+                <button class="btn btn-secondary" onclick="openStudyModal()">+ Add Session</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Meal Modal -->
+    <div id="meal-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close-modal" onclick="closeMealModal()">&times;</span>
+                Add Meal
+            </div>
+            <div class="input-group">
+                <label>Meal Name</label>
+                <input type="text" id="meal-name" placeholder="Oatmeal with fruits">
+            </div>
+            <div class="grid-2">
+                <div class="input-group">
+                    <label>Calories</label>
+                    <input type="number" id="meal-calories" placeholder="350">
+                </div>
+                <div class="input-group">
+                    <label>Carbs (g)</label>
+                    <input type="number" id="meal-carbs" placeholder="45">
+                </div>
+                <div class="input-group">
+                    <label>Protein (g)</label>
+                    <input type="number" id="meal-protein" placeholder="12">
+                </div>
+                <div class="input-group">
+                    <label>Fats (g)</label>
+                    <input type="number" id="meal-fats" placeholder="8">
+                </div>
+            </div>
+            <button class="btn btn-primary" onclick="addMeal()">Add Meal</button>
+        </div>
+    </div>
+
+    <!-- Exercise Modal -->
+    <div id="exercise-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close-modal" onclick="closeExerciseModal()">&times;</span>
+                Add Exercise
+            </div>
+            <div class="input-group">
+                <label>Exercise</label>
+                <select id="exercise-name">
+                    <option value="">Select Exercise</option>
+                </select>
+            </div>
+            <div class="grid-2">
+                <div class="input-group">
+                    <label>Sets</label>
+                    <input type="number" id="exercise-sets" placeholder="3">
+                </div>
+                <div class="input-group">
+                    <label>Reps</label>
+                    <input type="number" id="exercise-reps" placeholder="10">
+                </div>
+            </div>
+            <div class="input-group">
+                <label>Weight (kg)</label>
+                <input type="number" id="exercise-weight" placeholder="40">
+            </div>
+            <button class="btn btn-primary" onclick="addExercise()">Add Exercise</button>
+        </div>
+    </div>
+
+    <!-- Study Session Modal -->
+    <div id="study-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close-modal" onclick="closeStudyModal()">&times;</span>
+                Add Study Session
+            </div>
+            <div class="input-group">
+                <label>Subject / Topic</label>
+                <input type="text" id="study-subject" placeholder="Mathematics">
+            </div>
+            <div class="input-group">
+                <label>Purpose</label>
+                <select id="study-purpose">
+                    <option value="exam">Exam Preparation</option>
+                    <option value="skill">Skill Development</option>
+                    <option value="revision">Revision</option>
+                    <option value="coding">Coding Practice</option>
+                </select>
+            </div>
+            
+            <!-- Pomodoro Timer in Modal -->
+            <div class="timer-container">
+                <div class="card-title">Start Pomodoro Session</div>
+                <div class="timer-display" id="modal-timer-display">25:00</div>
+                <div class="timer-controls">
+                    <button id="modal-timer-start" onclick="startModalTimer()">Start</button>
+                    <button id="modal-timer-pause" onclick="pauseModalTimer()">Pause</button>
+                    <button onclick="resetModalTimer()">Reset</button>
+                </div>
+                <div style="text-align: center; margin-top: 10px; color: white;">
+                    <small>Timer will auto-save session when complete (25 min)</small>
+                </div>
+            </div>
+            
+            <div class="input-group">
+                <label>Or Manually Enter Time (minutes)</label>
+                <input type="number" id="study-time" placeholder="60">
+            </div>
+            <button class="btn btn-primary" onclick="addStudySession()">Add Session Manually</button>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <button class="nav-item active" onclick="navigateTo('home')">
+            <div class="nav-icon">🏠</div>
+            <div class="nav-label">Home</div>
+        </button>
+        <button class="nav-item" onclick="navigateTo('diet')">
+            <div class="nav-icon">🥗</div>
+            <div class="nav-label">Diet</div>
+        </button>
+        <button class="nav-item" onclick="navigateTo('gym')">
+            <div class="nav-icon">💪</div>
+            <div class="nav-label">Gym</div>
+        </button>
+        <button class="nav-item" onclick="navigateTo('study')">
+            <div class="nav-icon">📚</div>
+            <div class="nav-label">Study</div>
+        </button>
+    </div>
+
+    <script>
+        // Exercise Library
+        const exerciseLibrary = {
+            chest: ['Bench Press', 'Incline Press', 'Dumbbell Flyes', 'Push-ups', 'Cable Crossover'],
+            back: ['Pull-ups', 'Deadlift', 'Barbell Row', 'Lat Pulldown', 'Seated Row'],
+            shoulders: ['Overhead Press', 'Lateral Raise', 'Front Raise', 'Arnold Press', 'Face Pulls'],
+            biceps: ['Barbell Curl', 'Dumbbell Curl', 'Hammer Curl', 'Concentration Curl', 'Preacher Curl'],
+            triceps: ['Tricep Dips', 'Close Grip Bench', 'Overhead Extension', 'Tricep Pushdown', 'Skull Crushers'],
+            legs: ['Squats', 'Leg Press', 'Lunges', 'Leg Curl', 'Calf Raise', 'Romanian Deadlift']
+        };
+
+        // Initialize
+        let currentMealType = '';
+        let currentMuscleGroup = '';
+
+        // Data Structure
+        let data = {
+            streak: 0,
+            lastActiveDate: null,
+            diet: {
+                targets: { calories: 2000, carbs: 250, protein: 150, fats: 65 },
+                meals: { morning: [], afternoon: [], evening: [], night: [] }
+            },
+            gym: {
+                exercises: { chest: [], back: [], shoulders: [], biceps: [], triceps: [], legs: [] }
+            },
+            study: {
+                sessions: []
+            }
+        };
+
+        // Load data from localStorage
+        function loadData() {
+            const saved = localStorage.getItem('disciplineData');
+            if (saved) {
+                data = JSON.parse(saved);
+            }
+            updateStreak();
+            updateAllProgress();
+            renderDiet();
+            renderGym();
+            renderStudy();
+        }
+
+        // Save data to localStorage
+        function saveData() {
+            localStorage.setItem('disciplineData', JSON.stringify(data));
+        }
+
+        // Update Streak
+        function updateStreak() {
+            const today = new Date().toDateString();
+            if (data.lastActiveDate !== today) {
+                const yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                if (data.lastActiveDate === yesterday.toDateString()) {
+                    data.streak++;
+                } else if (data.lastActiveDate !== null) {
+                    data.streak = 1;
+                } else {
+                    data.streak = 1;
+                }
+                data.lastActiveDate = today;
+                saveData();
+            }
+            document.getElementById('streak-count').textContent = data.streak;
+        }
+
+        // Navigation
+        function navigateTo(page) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            
+            document.getElementById(`${page}-page`).classList.add('active');
+            event.target.closest('.nav-item').classList.add('active');
+        }
+
+        // Update All Progress
+        function updateAllProgress() {
+            const dietProgress = calculateDietProgress();
+            const gymProgress = calculateGymProgress();
+            const studyProgress = calculateStudyProgress();
+            const overall = Math.round((dietProgress + gymProgress + studyProgress) / 3);
+
+            // Update home page
+            document.getElementById('diet-progress').textContent = dietProgress + '%';
+            document.getElementById('diet-bar').style.width = dietProgress + '%';
+            
+            document.getElementById('gym-progress').textContent = gymProgress + '%';
+            document.getElementById('gym-bar').style.width = gymProgress + '%';
+            
+            document.getElementById('study-progress').textContent = studyProgress + '%';
+            document.getElementById('study-bar').style.width = studyProgress + '%';
+
+            document.getElementById('overall-score').textContent = overall + '%';
+            
+            const circle = document.getElementById('overall-progress-circle');
+            const circumference = 408.4;
+            const offset = circumference - (overall / 100) * circumference;
+            circle.style.strokeDashoffset = offset;
+        }
+
+        // Diet Functions
+        function saveTargets() {
+            data.diet.targets = {
+                calories: parseInt(document.getElementById('target-calories').value) || 2000,
+                carbs: parseInt(document.getElementById('target-carbs').value) || 250,
+                protein: parseInt(document.getElementById('target-protein').value) || 150,
+                fats: parseInt(document.getElementById('target-fats').value) || 65
+            };
+            saveData();
+            renderDiet();
+            alert('Targets saved!');
+        }
+
+        function openMealModal(type) {
+            currentMealType = type;
+            document.getElementById('meal-modal').classList.add('active');
+        }
+
+        function closeMealModal() {
+            document.getElementById('meal-modal').classList.remove('active');
+            document.getElementById('meal-name').value = '';
+            document.getElementById('meal-calories').value = '';
+            document.getElementById('meal-carbs').value = '';
+            document.getElementById('meal-protein').value = '';
+            document.getElementById('meal-fats').value = '';
+        }
+
+        function addMeal() {
+            const meal = {
+                name: document.getElementById('meal-name').value,
+                calories: parseInt(document.getElementById('meal-calories').value) || 0,
+                carbs: parseInt(document.getElementById('meal-carbs').value) || 0,
+                protein: parseInt(document.getElementById('meal-protein').value) || 0,
+                fats: parseInt(document.getElementById('meal-fats').value) || 0,
+                completed: false
+            };
+
+            if (!meal.name) {
+                alert('Please enter a meal name');
+                return;
+            }
+
+            data.diet.meals[currentMealType].push(meal);
+            saveData();
+            renderDiet();
+            closeMealModal();
+        }
+
+        function toggleMealComplete(type, index) {
+            if (!data.diet.meals[type][index].completed) {
+                data.diet.meals[type][index].completed = true;
+            } else {
+                data.diet.meals[type][index].completed = false;
+            }
+            saveData();
+            renderDiet();
+        }
+
+        function deleteMeal(type, index) {
+            if (confirm('Delete this permanent meal?')) {
+                data.diet.meals[type].splice(index, 1);
+                saveData();
+                renderDiet();
+            }
+        }
+
+        function renderDiet() {
+            // Set targets in inputs
+            document.getElementById('target-calories').value = data.diet.targets.calories;
+            document.getElementById('target-carbs').value = data.diet.targets.carbs;
+            document.getElementById('target-protein').value = data.diet.targets.protein;
+            document.getElementById('target-fats').value = data.diet.targets.fats;
+
+            // Calculate totals (only completed meals)
+            let totals = { calories: 0, carbs: 0, protein: 0, fats: 0 };
+            Object.values(data.diet.meals).forEach(mealType => {
+                mealType.forEach(meal => {
+                    if (meal.completed) {
+                        totals.calories += meal.calories;
+                        totals.carbs += meal.carbs;
+                        totals.protein += meal.protein;
+                        totals.fats += meal.fats;
+                    }
+                });
+            });
+
+            document.getElementById('total-calories').textContent = totals.calories;
+            document.getElementById('total-carbs').textContent = totals.carbs + 'g';
+            document.getElementById('total-protein').textContent = totals.protein + 'g';
+            document.getElementById('total-fats').textContent = totals.fats + 'g';
+
+            // Render meals
+            ['morning', 'afternoon', 'evening', 'night'].forEach(type => {
+                const container = document.getElementById(`${type}-meals`);
+                container.innerHTML = '';
+                
+                data.diet.meals[type].forEach((meal, index) => {
+                    const checkIcon = meal.completed ? '✓' : '○';
+                    const completedClass = meal.completed ? 'style="opacity: 0.6;"' : '';
+                    
+                    container.innerHTML += `
+                        <div class="meal-item" ${completedClass}>
+                            <div class="meal-item-header">
+                                <span class="meal-item-name">
+                                    <span onclick="toggleMealComplete('${type}', ${index})" style="cursor: pointer; margin-right: 8px; font-size: 18px;">${checkIcon}</span>
+                                    ${meal.name}
+                                </span>
+                                <button class="btn btn-danger btn-small" onclick="deleteMeal('${type}', ${index})">Delete</button>
+                            </div>
+                            <div class="meal-item-details">
+                                ${meal.calories} cal | C: ${meal.carbs}g | P: ${meal.protein}g | F: ${meal.fats}g
+                            </div>
+                        </div>
+                    `;
+                });
+            });
+
+            updateAllProgress();
+        }
+
+        function calculateDietProgress() {
+            let totals = { calories: 0, carbs: 0, protein: 0, fats: 0 };
+            let completedCount = 0;
+            let totalMeals = 0;
+            
+            Object.values(data.diet.meals).forEach(mealType => {
+                mealType.forEach(meal => {
+                    totalMeals++;
+                    if (meal.completed) {
+                        completedCount++;
+                        totals.calories += meal.calories;
+                        totals.carbs += meal.carbs;
+                        totals.protein += meal.protein;
+                        totals.fats += meal.fats;
+                    }
+                });
+            });
+
+            if (totalMeals === 0) return 0;
+
+            const caloriesProgress = Math.min((totals.calories / data.diet.targets.calories) * 100, 100);
+            const carbsProgress = Math.min((totals.carbs / data.diet.targets.carbs) * 100, 100);
+            const proteinProgress = Math.min((totals.protein / data.diet.targets.protein) * 100, 100);
+            const fatsProgress = Math.min((totals.fats / data.diet.targets.fats) * 100, 100);
+
+            return Math.round((caloriesProgress + carbsProgress + proteinProgress + fatsProgress) / 4);
+        }
+
+        // Gym Functions
+        function toggleMuscleGroup(group) {
+            const content = document.getElementById(`${group}-content`);
+            const toggle = document.getElementById(`${group}-toggle`);
+            
+            if (content.classList.contains('active')) {
+                content.classList.remove('active');
+                toggle.textContent = '+';
+            } else {
+                content.classList.add('active');
+                toggle.textContent = '-';
+            }
+        }
+
+        function openExerciseModal(group) {
+            currentMuscleGroup = group;
+            const select = document.getElementById('exercise-name');
+            select.innerHTML = '<option value="">Select Exercise</option>';
+            
+            exerciseLibrary[group].forEach(ex => {
+                select.innerHTML += `<option value="${ex}">${ex}</option>`;
+            });
+            
+            document.getElementById('exercise-modal').classList.add('active');
+        }
+
+        function closeExerciseModal() {
+            document.getElementById('exercise-modal').classList.remove('active');
+            document.getElementById('exercise-name').value = '';
+            document.getElementById('exercise-sets').value = '';
+            document.getElementById('exercise-reps').value = '';
+            document.getElementById('exercise-weight').value = '';
+        }
+
+        function addExercise() {
+            const exercise = {
+                name: document.getElementById('exercise-name').value,
+                sets: parseInt(document.getElementById('exercise-sets').value) || 0,
+                reps: parseInt(document.getElementById('exercise-reps').value) || 0,
+                weight: parseFloat(document.getElementById('exercise-weight').value) || 0,
+                completed: false
+            };
+
+            if (!exercise.name) {
+                alert('Please select an exercise');
+                return;
+            }
+
+            data.gym.exercises[currentMuscleGroup].push(exercise);
+            saveData();
+            renderGym();
+            closeExerciseModal();
+        }
+
+        function toggleExerciseComplete(group, index) {
+            data.gym.exercises[group][index].completed = !data.gym.exercises[group][index].completed;
+            saveData();
+            renderGym();
+        }
+
+        function deleteExercise(group, index) {
+            if (confirm('Delete this exercise?')) {
+                data.gym.exercises[group].splice(index, 1);
+                saveData();
+                renderGym();
+            }
+        }
+
+        function renderGym() {
+            Object.keys(data.gym.exercises).forEach(group => {
+                const container = document.getElementById(`${group}-exercises`);
+                container.innerHTML = '';
+                
+                data.gym.exercises[group].forEach((ex, index) => {
+                    const checkIcon = ex.completed ? '✓' : '○';
+                    const completedClass = ex.completed ? 'style="opacity: 0.6; text-decoration: line-through;"' : '';
+                    
+                    container.innerHTML += `
+                        <div class="exercise-item" ${completedClass}>
+                            <div class="exercise-header">
+                                <span class="exercise-name">
+                                    <span onclick="toggleExerciseComplete('${group}', ${index})" style="cursor: pointer; margin-right: 8px;">${checkIcon}</span>
+                                    ${ex.name}
+                                </span>
+                                <button class="btn btn-danger btn-small" onclick="deleteExercise('${group}', ${index})">Delete</button>
+                            </div>
+                            <div class="exercise-details">
+                                ${ex.sets} sets × ${ex.reps} reps @ ${ex.weight}kg
+                            </div>
+                        </div>
+                    `;
+                });
+            });
+
+            updateWorkoutProgress();
+            updateAllProgress();
+        }
+
+        function updateWorkoutProgress() {
+            let total = 0;
+            let completed = 0;
+            
+            Object.values(data.gym.exercises).forEach(group => {
+                group.forEach(ex => {
+                    total++;
+                    if (ex.completed) completed++;
+                });
+            });
+
+            const progress = total > 0 ? Math.round((completed / total) * 100) : 0;
+            const bar = document.getElementById('workout-progress-bar');
+            bar.style.width = progress + '%';
+            bar.textContent = progress + '%';
+        }
+
+        function calculateGymProgress() {
+            let total = 0;
+            let completed = 0;
+            
+            Object.values(data.gym.exercises).forEach(group => {
+                group.forEach(ex => {
+                    total++;
+                    if (ex.completed) completed++;
+                });
+            });
+
+            return total > 0 ? Math.round((completed / total) * 100) : 0;
+        }
+
+        // Study Functions
+        function openStudyModal() {
+            document.getElementById('study-modal').classList.add('active');
+        }
+
+        function closeStudyModal() {
+            document.getElementById('study-modal').classList.remove('active');
+            document.getElementById('study-subject').value = '';
+            document.getElementById('study-purpose').value = 'exam';
+            document.getElementById('study-time').value = '';
+            pauseModalTimer();
+            resetModalTimer();
+        }
+
+        function addStudySession() {
+            const session = {
+                subject: document.getElementById('study-subject').value,
+                purpose: document.getElementById('study-purpose').value,
+                time: parseInt(document.getElementById('study-time').value) || 0,
+                date: new Date().toLocaleString(),
+                completed: false
+            };
+
+            if (!session.subject) {
+                alert('Please enter a subject');
+                return;
+            }
+
+            if (session.time === 0) {
+                alert('Please enter time spent or use the Pomodoro timer');
+                return;
+            }
+
+            data.study.sessions.push(session);
+            saveData();
+            renderStudy();
+            closeStudyModal();
+        }
+        
+        // Modal Timer Functions
+        let modalTimerInterval = null;
+        let modalTimerSeconds = 1500; // 25 minutes
+        let isModalTimerRunning = false;
+
+        function updateModalTimerDisplay() {
+            const minutes = Math.floor(modalTimerSeconds / 60);
+            const seconds = modalTimerSeconds % 60;
+            document.getElementById('modal-timer-display').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function startModalTimer() {
+            const subject = document.getElementById('study-subject').value;
+            if (!subject) {
+                alert('Please enter a subject/topic first');
+                return;
+            }
+            
+            if (!isModalTimerRunning) {
+                isModalTimerRunning = true;
+                modalTimerInterval = setInterval(() => {
+                    if (modalTimerSeconds > 0) {
+                        modalTimerSeconds--;
+                        updateModalTimerDisplay();
+                    } else {
+                        pauseModalTimer();
+                        
+                        // Auto-save the session
+                        const session = {
+                            subject: document.getElementById('study-subject').value,
+                            purpose: document.getElementById('study-purpose').value,
+                            time: 25, // Pomodoro session
+                            date: new Date().toLocaleString(),
+                            completed: true // Auto-complete when timer finishes
+                        };
+                        
+                        data.study.sessions.push(session);
+                        saveData();
+                        renderStudy();
+                        
+                        alert('Pomodoro complete! 25-minute session saved. Take a 5-minute break.');
+                        closeStudyModal();
+                        resetModalTimer();
+                    }
+                }, 1000);
+            }
+        }
+
+        function pauseModalTimer() {
+            isModalTimerRunning = false;
+            clearInterval(modalTimerInterval);
+        }
+
+        function resetModalTimer() {
+            pauseModalTimer();
+            modalTimerSeconds = 1500;
+            updateModalTimerDisplay();
+        }
+
+        function deleteStudySession(index) {
+            if (confirm('Delete this session?')) {
+                data.study.sessions.splice(index, 1);
+                saveData();
+                renderStudy();
+            }
+        }
+
+        function renderStudy() {
+            // Calculate total time from completed sessions
+            let totalMinutes = 0;
+            data.study.sessions.forEach(session => {
+                if (session.completed) {
+                    totalMinutes += session.time;
+                }
+            });
+
+            const hours = Math.floor(totalMinutes / 60);
+            const minutes = totalMinutes % 60;
+            document.getElementById('total-study-time').textContent = `${hours}h ${minutes}m`;
+
+            // Render sessions
+            const container = document.getElementById('study-sessions');
+            container.innerHTML = '';
+            
+            data.study.sessions.forEach((session, index) => {
+                const checkIcon = session.completed ? '✓' : '○';
+                const completedClass = session.completed ? 'style="opacity: 0.6;"' : '';
+                
+                container.innerHTML += `
+                    <div class="study-session" ${completedClass}>
+                        <div class="study-session-info">
+                            <h4>
+                                <span onclick="toggleStudyComplete(${index})" style="cursor: pointer; margin-right: 8px; font-size: 18px;">${checkIcon}</span>
+                                ${session.subject}
+                            </h4>
+                            <div class="study-session-meta">${session.purpose} • ${session.date}</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div class="study-session-time">${session.time}m</div>
+                            <button class="btn btn-danger btn-small" onclick="deleteStudySession(${index})">Delete</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            updateAllProgress();
+        }
+
+        function toggleStudyComplete(index) {
+            data.study.sessions[index].completed = !data.study.sessions[index].completed;
+            saveData();
+            renderStudy();
+        }
+
+        function calculateStudyProgress() {
+            let totalMinutes = 0;
+            let completedSessions = 0;
+            let totalSessions = data.study.sessions.length;
+            
+            data.study.sessions.forEach(session => {
+                if (session.completed) {
+                    completedSessions++;
+                    totalMinutes += session.time;
+                }
+            });
+
+            if (totalSessions === 0) return 0;
+            
+            // Progress based on completed sessions
+            return Math.round((completedSessions / totalSessions) * 100);
+        }
+
+        // Set current date
+        function updateDate() {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('current-date').textContent = 
+                new Date().toLocaleDateString('en-US', options);
+        }
+
+        // Initialize on load
+        window.addEventListener('load', () => {
+            updateDate();
+            loadData();
+        });
+    </script>
+</body>
+</html>
