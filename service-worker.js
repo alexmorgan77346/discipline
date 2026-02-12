@@ -1,7 +1,10 @@
-const CACHE_NAME = 'discipline-dashboard-v2';
+const CACHE_NAME = 'discipline-dashboard-v3';
 const urlsToCache = [
-  './discipline-dashboard.html',
-  './manifest.json'
+  './',
+  './index.html',
+  './manifest.json',
+  './icon-192.png',
+  './icon-512.png'
 ];
 
 // Install event - cache files
@@ -47,4 +50,5 @@ self.addEventListener('activate', event => {
   );
   self.clients.claim();
 });
+
 
