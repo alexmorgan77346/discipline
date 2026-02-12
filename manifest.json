@@ -2,7 +2,7 @@
   "name": "Discipline Dashboard",
   "short_name": "Discipline",
   "description": "Track your Diet, Gym, and Study habits to build discipline",
-  "start_url": "./discipline-dashboard.html",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#1a1a2e",
   "theme_color": "#6c5ce7",
@@ -22,3 +22,4 @@
     }
   ]
 }
+
