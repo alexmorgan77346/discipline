@@ -19,238 +19,456 @@
         }
 
         :root {
-            --primary: #6c5ce7;
-            --secondary: #00b894;
-            --danger: #d63031;
-            --warning: #fdcb6e;
-            --dark: #1a1a2e;
-            --dark-alt: #16213e;
-            --light: #f5f6fa;
-            --text: #2d3436;
-            --text-light: #636e72;
-            --border: #dfe6e9;
+            --primary: #667eea;
+            --primary-dark: #5568d3;
+            --secondary: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #0f172a;
+            --dark-card: #1e293b;
+            --light: #f1f5f9;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: var(--light);
-            color: var(--text);
-            padding-bottom: 70px;
-            overflow-x: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding-bottom: 80px;
         }
 
-        /* Header */
-        .header {
-            background: linear-gradient(135deg, var(--primary), #a29bfe);
-            color: white;
+        .app-header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
             padding: 20px;
+            color: white;
             text-align: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        .header h1 {
-            font-size: 24px;
-            font-weight: 600;
+        .app-header h1 {
+            font-size: 28px;
+            font-weight: 700;
             margin-bottom: 5px;
         }
 
-        .header p {
+        .app-header p {
             font-size: 14px;
             opacity: 0.9;
         }
 
-        /* Container */
         .container {
             max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
+            margin: 20px auto;
+            padding: 0 20px;
         }
 
-        /* Page visibility */
         .page {
             display: none;
         }
 
         .page.active {
             display: block;
-            animation: fadeIn 0.3s ease;
+            animation: slideUp 0.3s ease;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Cards */
         .card {
             background: white;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.07);
         }
 
         .card-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 15px;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 16px;
             color: var(--text);
         }
 
-        /* Progress Cards */
-        .progress-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
+        /* Home Page Improvements */
+        .hero-section {
+            text-align: center;
+            color: white;
             margin-bottom: 20px;
         }
 
-        .progress-card {
+        .hero-score {
+            font-size: 72px;
+            font-weight: 900;
+            margin: 20px 0;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .hero-label {
+            font-size: 18px;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
             background: white;
-            border-radius: 12px;
+            border-radius: 16px;
             padding: 20px;
             text-align: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.07);
         }
 
-        .progress-card h3 {
-            font-size: 14px;
+        .stat-card h3 {
+            font-size: 12px;
             color: var(--text-light);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
         }
 
-        .progress-number {
-            font-size: 36px;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .progress-number.diet { color: var(--secondary); }
-        .progress-number.gym { color: var(--primary); }
-        .progress-number.study { color: var(--warning); }
-
-        /* Circular Progress */
-        .circular-progress {
-            position: relative;
-            width: 150px;
-            height: 150px;
-            margin: 20px auto;
-        }
-
-        .circular-progress svg {
-            transform: rotate(-90deg);
-        }
-
-        .circular-progress circle {
-            fill: none;
-            stroke-width: 12;
-        }
-
-        .circle-bg {
-            stroke: var(--border);
-        }
-
-        .circle-progress {
-            stroke: var(--primary);
-            stroke-linecap: round;
-            transition: stroke-dashoffset 0.5s ease;
-        }
-
-        .circular-progress-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+        .stat-number {
             font-size: 32px;
-            font-weight: 700;
-            color: var(--primary);
+            font-weight: 900;
         }
 
-        /* Streak */
-        .streak-badge {
-            background: linear-gradient(135deg, #f093fb, #f5576c);
-            color: white;
-            padding: 15px;
-            border-radius: 12px;
-            text-align: center;
+        .stat-number.diet { color: var(--secondary); }
+        .stat-number.gym { color: var(--primary); }
+        .stat-number.study { color: var(--warning); }
+
+        .progress-ring {
+            width: 80px;
+            height: 80px;
+            margin: 8px auto;
+        }
+
+        /* Diet Section */
+        .nutrition-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
             margin-bottom: 20px;
         }
 
-        .streak-badge h2 {
-            font-size: 40px;
-            margin-bottom: 5px;
+        .nutrition-input {
+            background: var(--light);
+            padding: 16px;
+            border-radius: 12px;
         }
 
-        .streak-badge p {
-            font-size: 14px;
-            opacity: 0.9;
-        }
-
-        /* Progress Bar */
-        .progress-bar-container {
-            background: var(--border);
-            border-radius: 10px;
-            height: 20px;
-            overflow: hidden;
-            margin: 10px 0;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            border-radius: 10px;
-            transition: width 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            padding-right: 8px;
-            color: white;
+        .nutrition-input label {
+            display: block;
             font-size: 12px;
             font-weight: 600;
-        }
-
-        /* Inputs */
-        .input-group {
-            margin-bottom: 15px;
-        }
-
-        .input-group label {
-            display: block;
-            font-size: 14px;
-            font-weight: 500;
-            margin-bottom: 5px;
             color: var(--text-light);
+            margin-bottom: 6px;
+            text-transform: uppercase;
         }
 
-        .input-group input,
-        .input-group select {
+        .nutrition-input input {
             width: 100%;
-            padding: 12px;
+            padding: 10px;
             border: 2px solid var(--border);
             border-radius: 8px;
             font-size: 16px;
-            transition: border-color 0.3s;
+            font-weight: 600;
         }
 
-        .input-group input:focus,
-        .input-group select:focus {
+        .nutrition-input input:focus {
             outline: none;
             border-color: var(--primary);
         }
 
+        .nutrition-display {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .nutrition-item {
+            text-align: center;
+            padding: 16px;
+            background: var(--light);
+            border-radius: 12px;
+        }
+
+        .nutrition-value {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--primary);
+        }
+
+        .nutrition-label {
+            font-size: 11px;
+            color: var(--text-light);
+            margin-top: 4px;
+            text-transform: uppercase;
+        }
+
+        .meal-time-section {
+            margin-bottom: 24px;
+        }
+
+        .meal-time-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .meal-item {
+            background: var(--light);
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .meal-item.completed {
+            opacity: 0.6;
+        }
+
+        .meal-check {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 3px solid var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .meal-check.checked {
+            background: var(--primary);
+            color: white;
+        }
+
+        .meal-info {
+            flex: 1;
+        }
+
+        .meal-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .meal-nutrition {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        /* Gym Section - Weekly Schedule */
+        .gym-tabs {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .gym-tab {
+            padding: 12px 8px;
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .gym-tab.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .gym-plan {
+            background: var(--light);
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+        }
+
+        .gym-plan-header {
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+
+        .exercise-list {
+            margin-top: 12px;
+        }
+
+        .exercise-item {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .exercise-check {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            margin-right: 12px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .exercise-check.checked {
+            background: var(--primary);
+            position: relative;
+        }
+
+        .exercise-check.checked::after {
+            content: '✓';
+            color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 14px;
+        }
+
+        /* Study Section */
+        .task-input-group {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .task-input-group input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 16px;
+        }
+
+        .task-input-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .task-input-group select {
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .task-item {
+            background: var(--light);
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .task-item.completed {
+            opacity: 0.6;
+        }
+
+        .task-check {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 3px solid var(--primary);
+            margin-right: 12px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .task-check.checked {
+            background: var(--primary);
+            position: relative;
+        }
+
+        .task-check.checked::after {
+            content: '✓';
+            color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: 900;
+        }
+
+        .task-info {
+            flex: 1;
+        }
+
+        .task-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .task-meta {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .history-item {
+            background: var(--light);
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .history-date {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 6px;
+        }
+
+        .history-subjects {
+            font-size: 14px;
+            color: var(--text);
+        }
+
         /* Buttons */
         .btn {
-            padding: 12px 24px;
+            padding: 14px 24px;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             font-size: 16px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s;
             width: 100%;
-            margin-top: 10px;
         }
 
         .btn-primary {
@@ -258,180 +476,29 @@
             color: white;
         }
 
-        .btn-primary:hover {
-            background: #5f4dd1;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(108, 92, 231, 0.3);
+        .btn-primary:active {
+            transform: scale(0.98);
         }
 
-        .btn-secondary {
+        .btn-add {
             background: var(--secondary);
             color: white;
-        }
-
-        .btn-danger {
-            background: var(--danger);
-            color: white;
+            margin-top: 12px;
         }
 
         .btn-small {
             padding: 8px 16px;
             font-size: 14px;
             width: auto;
-            margin: 5px;
         }
 
-        /* Meal Sections */
-        .meal-section {
-            border-left: 4px solid var(--primary);
-            padding-left: 15px;
-            margin-bottom: 20px;
-        }
-
-        .meal-header {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: var(--primary);
-        }
-
-        .meal-item {
-            background: var(--light);
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-        }
-
-        .meal-item-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-
-        .meal-item-name {
-            font-weight: 600;
-        }
-
-        .meal-item-details {
-            font-size: 12px;
-            color: var(--text-light);
-        }
-
-        /* Exercise Sections */
-        .muscle-group {
-            margin-bottom: 20px;
-        }
-
-        .muscle-group-header {
-            background: var(--primary);
-            color: white;
-            padding: 12px;
-            border-radius: 8px;
-            font-weight: 600;
-            margin-bottom: 10px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .muscle-group-content {
-            display: none;
+        .btn-icon {
             padding: 10px;
-        }
-
-        .muscle-group-content.active {
-            display: block;
-        }
-
-        .exercise-item {
-            background: var(--light);
-            padding: 12px;
             border-radius: 8px;
-            margin-bottom: 10px;
-        }
-
-        .exercise-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-
-        .exercise-name {
-            font-weight: 600;
-        }
-
-        .exercise-details {
-            font-size: 12px;
-            color: var(--text-light);
-        }
-
-        /* Study Session */
-        .study-session {
-            background: var(--light);
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .study-session-info h4 {
-            font-size: 16px;
-            margin-bottom: 5px;
-        }
-
-        .study-session-meta {
-            font-size: 12px;
-            color: var(--text-light);
-        }
-
-        .study-session-time {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        /* Timer */
-        .timer-container {
-            text-align: center;
-            padding: 30px;
-            background: linear-gradient(135deg, var(--primary), #a29bfe);
-            border-radius: 12px;
+            border: none;
+            background: var(--danger);
             color: white;
-            margin-bottom: 20px;
-        }
-
-        .timer-display {
-            font-size: 60px;
-            font-weight: 700;
-            margin: 20px 0;
-            font-family: 'Courier New', monospace;
-        }
-
-        .timer-controls {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-        }
-
-        .timer-controls button {
-            padding: 10px 20px;
-            border: 2px solid white;
-            background: transparent;
-            color: white;
-            border-radius: 8px;
-            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .timer-controls button:hover {
-            background: white;
-            color: var(--primary);
         }
 
         /* Bottom Navigation */
@@ -441,21 +508,20 @@
             left: 0;
             right: 0;
             background: white;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
+            box-shadow: 0 -4px 12px rgba(0,0,0,0.1);
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            padding: 8px 0;
             z-index: 1000;
         }
 
         .nav-item {
-            flex: 1;
+            padding: 12px;
             text-align: center;
-            padding: 8px;
             cursor: pointer;
-            transition: all 0.3s;
             border: none;
             background: none;
+            transition: all 0.3s;
         }
 
         .nav-item.active {
@@ -463,13 +529,13 @@
         }
 
         .nav-icon {
-            font-size: 24px;
+            font-size: 28px;
             margin-bottom: 4px;
         }
 
         .nav-label {
-            font-size: 12px;
-            font-weight: 500;
+            font-size: 11px;
+            font-weight: 600;
         }
 
         /* Modal */
@@ -480,7 +546,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.6);
             z-index: 2000;
             align-items: center;
             justify-content: center;
@@ -493,8 +559,8 @@
 
         .modal-content {
             background: white;
-            border-radius: 12px;
-            padding: 20px;
+            border-radius: 20px;
+            padding: 24px;
             max-width: 500px;
             width: 100%;
             max-height: 80vh;
@@ -502,106 +568,98 @@
         }
 
         .modal-header {
-            font-size: 20px;
-            font-weight: 600;
+            font-size: 22px;
+            font-weight: 700;
             margin-bottom: 20px;
         }
 
         .close-modal {
             float: right;
-            font-size: 24px;
+            font-size: 28px;
             cursor: pointer;
             color: var(--text-light);
+            line-height: 1;
         }
 
-        /* Grid Layouts */
-        .grid-2 {
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 16px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            gap: 12px;
         }
 
-        .grid-4 {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-        }
-
-        /* Stats */
-        .stat-item {
-            text-align: center;
-            padding: 10px;
-        }
-
-        .stat-value {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .stat-label {
-            font-size: 12px;
-            color: var(--text-light);
-            margin-top: 5px;
-        }
-
-        /* Utility Classes */
-        .text-center { text-align: center; }
-        .mt-20 { margin-top: 20px; }
-        .mb-20 { margin-bottom: 20px; }
-        
-        /* Responsive */
-        @media (max-width: 480px) {
-            .container {
-                padding: 15px;
+        @media (max-width: 600px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
             }
             
-            .progress-grid {
-                grid-template-columns: 1fr;
+            .nutrition-display {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
+    <div class="app-header">
+        <h1>💪 Discipline</h1>
+        <p id="current-date"></p>
+    </div>
+
     <!-- Home Page -->
     <div id="home-page" class="page active">
-        <div class="container">
+        <div class="hero-section">
+            <div class="hero-label">Overall Score</div>
+            <div class="hero-score" id="overall-score">0%</div>
+        </div>
 
-            <!-- Overall Score -->
-            <div class="card">
-                <div class="card-title text-center">Overall Discipline Score</div>
-                <div class="circular-progress">
-                    <svg width="150" height="150">
-                        <circle class="circle-bg" cx="75" cy="75" r="65"></circle>
-                        <circle id="overall-progress-circle" class="circle-progress" cx="75" cy="75" r="65" 
-                                stroke-dasharray="408.4" stroke-dashoffset="408.4"></circle>
-                    </svg>
-                    <div class="circular-progress-text" id="overall-score">0%</div>
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Diet</h3>
+                    <div class="stat-number diet" id="diet-progress">0%</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Gym</h3>
+                    <div class="stat-number gym" id="gym-progress">0%</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Study</h3>
+                    <div class="stat-number study" id="study-progress">0%</div>
                 </div>
             </div>
 
-            <!-- Progress Cards -->
-            <div class="progress-grid">
-                <div class="progress-card">
-                    <h3>Diet</h3>
-                    <div class="progress-number diet" id="diet-progress">0%</div>
-                    <div class="progress-bar-container">
-                        <div class="progress-bar" id="diet-bar" style="width: 0%"></div>
-                    </div>
-                </div>
-                <div class="progress-card">
-                    <h3>Gym</h3>
-                    <div class="progress-number gym" id="gym-progress">0%</div>
-                    <div class="progress-bar-container">
-                        <div class="progress-bar" id="gym-bar" style="width: 0%"></div>
-                    </div>
-                </div>
-                <div class="progress-card">
-                    <h3>Study</h3>
-                    <div class="progress-number study" id="study-progress">0%</div>
-                    <div class="progress-bar-container">
-                        <div class="progress-bar" id="study-bar" style="width: 0%"></div>
-                    </div>
+            <div class="card">
+                <div class="card-title">🔥 Current Streak</div>
+                <div style="text-align: center;">
+                    <div style="font-size: 64px; font-weight: 900; color: var(--warning);" id="streak-count">0</div>
+                    <div style="color: var(--text-light); margin-top: 8px;">days</div>
                 </div>
             </div>
         </div>
@@ -610,84 +668,81 @@
     <!-- Diet Page -->
     <div id="diet-page" class="page">
         <div class="container">
-            <!-- Targets -->
             <div class="card">
-                <div class="card-title">Daily Nutrition Targets</div>
-                <div class="grid-2">
-                    <div class="input-group">
+                <div class="card-title">🎯 Daily Targets</div>
+                <div class="nutrition-grid">
+                    <div class="nutrition-input">
                         <label>Calories</label>
-                        <input type="number" id="target-calories" placeholder="2000">
+                        <input type="number" id="target-calories" value="2000">
                     </div>
-                    <div class="input-group">
+                    <div class="nutrition-input">
                         <label>Carbs (g)</label>
-                        <input type="number" id="target-carbs" placeholder="250">
+                        <input type="number" id="target-carbs" value="250">
                     </div>
-                    <div class="input-group">
+                    <div class="nutrition-input">
                         <label>Protein (g)</label>
-                        <input type="number" id="target-protein" placeholder="150">
+                        <input type="number" id="target-protein" value="150">
                     </div>
-                    <div class="input-group">
+                    <div class="nutrition-input">
                         <label>Fats (g)</label>
-                        <input type="number" id="target-fats" placeholder="65">
+                        <input type="number" id="target-fats" value="65">
                     </div>
                 </div>
                 <button class="btn btn-primary" onclick="saveTargets()">Save Targets</button>
             </div>
 
-            <!-- Progress -->
             <div class="card">
-                <div class="card-title">Today's Nutrition</div>
-                <div class="grid-4">
-                    <div class="stat-item">
-                        <div class="stat-value" id="total-calories">0</div>
-                        <div class="stat-label">Calories</div>
+                <div class="card-title">📊 Today's Nutrition</div>
+                <div class="nutrition-display">
+                    <div class="nutrition-item">
+                        <div class="nutrition-value" id="total-calories">0</div>
+                        <div class="nutrition-label">Calories</div>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-value" id="total-carbs">0</div>
-                        <div class="stat-label">Carbs</div>
+                    <div class="nutrition-item">
+                        <div class="nutrition-value" id="total-carbs">0</div>
+                        <div class="nutrition-label">Carbs</div>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-value" id="total-protein">0</div>
-                        <div class="stat-label">Protein</div>
+                    <div class="nutrition-item">
+                        <div class="nutrition-value" id="total-protein">0</div>
+                        <div class="nutrition-label">Protein</div>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-value" id="total-fats">0</div>
-                        <div class="stat-label">Fats</div>
+                    <div class="nutrition-item">
+                        <div class="nutrition-value" id="total-fats">0</div>
+                        <div class="nutrition-label">Fats</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Meals -->
-            <div class="card">
-                <div class="card-title">Meals</div>
-                
-                <!-- Morning -->
-                <div class="meal-section">
-                    <div class="meal-header">🌅 Morning</div>
-                    <div id="morning-meals"></div>
-                    <button class="btn btn-secondary" onclick="openMealModal('morning')">+ Add Meal</button>
+            <div id="morning-section" class="meal-time-section">
+                <div class="meal-time-header">
+                    <span>🌅 Morning</span>
+                    <button class="btn-small btn-add" onclick="openMealModal('morning')">+ Add</button>
                 </div>
+                <div id="morning-meals"></div>
+            </div>
 
-                <!-- Afternoon -->
-                <div class="meal-section">
-                    <div class="meal-header">☀️ Afternoon</div>
-                    <div id="afternoon-meals"></div>
-                    <button class="btn btn-secondary" onclick="openMealModal('afternoon')">+ Add Meal</button>
+            <div id="afternoon-section" class="meal-time-section">
+                <div class="meal-time-header">
+                    <span>☀️ Afternoon</span>
+                    <button class="btn-small btn-add" onclick="openMealModal('afternoon')">+ Add</button>
                 </div>
+                <div id="afternoon-meals"></div>
+            </div>
 
-                <!-- Evening -->
-                <div class="meal-section">
-                    <div class="meal-header">🌆 Evening</div>
-                    <div id="evening-meals"></div>
-                    <button class="btn btn-secondary" onclick="openMealModal('evening')">+ Add Meal</button>
+            <div id="evening-section" class="meal-time-section">
+                <div class="meal-time-header">
+                    <span>🌆 Evening</span>
+                    <button class="btn-small btn-add" onclick="openMealModal('evening')">+ Add</button>
                 </div>
+                <div id="evening-meals"></div>
+            </div>
 
-                <!-- Night -->
-                <div class="meal-section">
-                    <div class="meal-header">🌙 Night</div>
-                    <div id="night-meals"></div>
-                    <button class="btn btn-secondary" onclick="openMealModal('night')">+ Add Meal</button>
+            <div id="night-section" class="meal-time-section">
+                <div class="meal-time-header">
+                    <span>🌙 Night</span>
+                    <button class="btn-small btn-add" onclick="openMealModal('night')">+ Add</button>
                 </div>
+                <div id="night-meals"></div>
             </div>
         </div>
     </div>
@@ -695,77 +750,19 @@
     <!-- Gym Page -->
     <div id="gym-page" class="page">
         <div class="container">
-            <!-- Progress -->
             <div class="card">
-                <div class="card-title">Today's Workout Progress</div>
-                <div class="progress-bar-container">
-                    <div class="progress-bar" id="workout-progress-bar" style="width: 0%">0%</div>
-                </div>
-            </div>
-
-            <!-- Muscle Groups -->
-            <div class="card">
-                <div class="card-title">Exercises</div>
-                
-                <div class="muscle-group">
-                    <div class="muscle-group-header" onclick="toggleMuscleGroup('chest')">
-                        💪 Chest <span id="chest-toggle">+</span>
-                    </div>
-                    <div id="chest-content" class="muscle-group-content">
-                        <div id="chest-exercises"></div>
-                        <button class="btn btn-secondary" onclick="openExerciseModal('chest')">+ Add Exercise</button>
-                    </div>
+                <div class="card-title">📅 Weekly Schedule</div>
+                <div class="gym-tabs">
+                    <div class="gym-tab active" onclick="selectDay('mon')">MON</div>
+                    <div class="gym-tab" onclick="selectDay('tue')">TUE</div>
+                    <div class="gym-tab" onclick="selectDay('wed')">WED</div>
+                    <div class="gym-tab" onclick="selectDay('thu')">THU</div>
+                    <div class="gym-tab" onclick="selectDay('fri')">FRI</div>
+                    <div class="gym-tab" onclick="selectDay('sat')">SAT</div>
+                    <div class="gym-tab" onclick="selectDay('sun')">SUN</div>
                 </div>
 
-                <div class="muscle-group">
-                    <div class="muscle-group-header" onclick="toggleMuscleGroup('back')">
-                        🏋️ Back <span id="back-toggle">+</span>
-                    </div>
-                    <div id="back-content" class="muscle-group-content">
-                        <div id="back-exercises"></div>
-                        <button class="btn btn-secondary" onclick="openExerciseModal('back')">+ Add Exercise</button>
-                    </div>
-                </div>
-
-                <div class="muscle-group">
-                    <div class="muscle-group-header" onclick="toggleMuscleGroup('shoulders')">
-                        🤸 Shoulders <span id="shoulders-toggle">+</span>
-                    </div>
-                    <div id="shoulders-content" class="muscle-group-content">
-                        <div id="shoulders-exercises"></div>
-                        <button class="btn btn-secondary" onclick="openExerciseModal('shoulders')">+ Add Exercise</button>
-                    </div>
-                </div>
-
-                <div class="muscle-group">
-                    <div class="muscle-group-header" onclick="toggleMuscleGroup('biceps')">
-                        💪 Biceps <span id="biceps-toggle">+</span>
-                    </div>
-                    <div id="biceps-content" class="muscle-group-content">
-                        <div id="biceps-exercises"></div>
-                        <button class="btn btn-secondary" onclick="openExerciseModal('biceps')">+ Add Exercise</button>
-                    </div>
-                </div>
-
-                <div class="muscle-group">
-                    <div class="muscle-group-header" onclick="toggleMuscleGroup('triceps')">
-                        🦾 Triceps <span id="triceps-toggle">+</span>
-                    </div>
-                    <div id="triceps-content" class="muscle-group-content">
-                        <div id="triceps-exercises"></div>
-                        <button class="btn btn-secondary" onclick="openExerciseModal('triceps')">+ Add Exercise</button>
-                    </div>
-                </div>
-
-                <div class="muscle-group">
-                    <div class="muscle-group-header" onclick="toggleMuscleGroup('legs')">
-                        🦵 Legs <span id="legs-toggle">+</span>
-                    </div>
-                    <div id="legs-content" class="muscle-group-content">
-                        <div id="legs-exercises"></div>
-                        <button class="btn btn-secondary" onclick="openExerciseModal('legs')">+ Add Exercise</button>
-                    </div>
-                </div>
+                <div id="gym-day-content"></div>
             </div>
         </div>
     </div>
@@ -773,20 +770,35 @@
     <!-- Study Page -->
     <div id="study-page" class="page">
         <div class="container">
-            <!-- Progress -->
             <div class="card">
-                <div class="card-title">Today's Study Time</div>
-                <div class="text-center">
-                    <div class="stat-value" id="total-study-time">0h 0m</div>
-                    <div class="stat-label">Total Time Studied</div>
+                <div class="card-title">📚 Daily Tasks</div>
+                <div class="task-input-group">
+                    <input type="text" id="task-subject" placeholder="Subject/Topic">
+                    <select id="task-hours">
+                        <option value="0.5">30m</option>
+                        <option value="1" selected>1h</option>
+                        <option value="1.5">1.5h</option>
+                        <option value="2">2h</option>
+                        <option value="3">3h</option>
+                        <option value="4">4h</option>
+                        <option value="5">5h</option>
+                    </select>
+                    <button class="btn-add" onclick="addTask()">Add</button>
+                </div>
+                <div id="tasks-list"></div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">📊 Today's Progress</div>
+                <div style="text-align: center; padding: 20px 0;">
+                    <div style="font-size: 48px; font-weight: 900; color: var(--primary);" id="total-hours">0h</div>
+                    <div style="color: var(--text-light); margin-top: 8px;">Total Study Time</div>
                 </div>
             </div>
 
-            <!-- Study Sessions -->
             <div class="card">
-                <div class="card-title">Study Sessions</div>
-                <div id="study-sessions"></div>
-                <button class="btn btn-secondary" onclick="openAddSessionModal()">+ Add New Session</button>
+                <div class="card-title">📖 History</div>
+                <div id="study-history"></div>
             </div>
         </div>
     </div>
@@ -798,24 +810,24 @@
                 <span class="close-modal" onclick="closeMealModal()">&times;</span>
                 Add Meal
             </div>
-            <div class="input-group">
+            <div class="form-group">
                 <label>Meal Name</label>
-                <input type="text" id="meal-name" placeholder="Oatmeal with fruits">
+                <input type="text" id="meal-name" placeholder="e.g., Oatmeal with fruits">
             </div>
-            <div class="grid-2">
-                <div class="input-group">
+            <div class="form-grid">
+                <div class="form-group">
                     <label>Calories</label>
                     <input type="number" id="meal-calories" placeholder="350">
                 </div>
-                <div class="input-group">
+                <div class="form-group">
                     <label>Carbs (g)</label>
                     <input type="number" id="meal-carbs" placeholder="45">
                 </div>
-                <div class="input-group">
+                <div class="form-group">
                     <label>Protein (g)</label>
                     <input type="number" id="meal-protein" placeholder="12">
                 </div>
-                <div class="input-group">
+                <div class="form-group">
                     <label>Fats (g)</label>
                     <input type="number" id="meal-fats" placeholder="8">
                 </div>
@@ -824,89 +836,22 @@
         </div>
     </div>
 
-    <!-- Exercise Modal -->
-    <div id="exercise-modal" class="modal">
+    <!-- Gym Plan Modal -->
+    <div id="gym-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <span class="close-modal" onclick="closeExerciseModal()">&times;</span>
-                Add Exercise
+                <span class="close-modal" onclick="closeGymModal()">&times;</span>
+                Set Workout Plan
             </div>
-            <div class="input-group">
-                <label>Exercise</label>
-                <select id="exercise-name">
-                    <option value="">Select Exercise</option>
-                </select>
+            <div class="form-group">
+                <label>Muscle Group</label>
+                <input type="text" id="gym-muscle" placeholder="e.g., Chest, Back, Legs">
             </div>
-            <div class="grid-2">
-                <div class="input-group">
-                    <label>Sets</label>
-                    <input type="number" id="exercise-sets" placeholder="3">
-                </div>
-                <div class="input-group">
-                    <label>Reps</label>
-                    <input type="number" id="exercise-reps" placeholder="10">
-                </div>
+            <div class="form-group">
+                <label>Exercises (one per line)</label>
+                <textarea id="gym-exercises" rows="6" style="width: 100%; padding: 12px; border: 2px solid var(--border); border-radius: 12px; font-size: 16px;" placeholder="Bench Press 4x10&#10;Incline Press 3x12&#10;Cable Flyes 3x15"></textarea>
             </div>
-            <div class="input-group">
-                <label>Weight (kg)</label>
-                <input type="number" id="exercise-weight" placeholder="40">
-            </div>
-            <button class="btn btn-primary" onclick="addExercise()">Add Exercise</button>
-        </div>
-    </div>
-
-    <!-- Add Session Modal -->
-    <div id="add-session-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <span class="close-modal" onclick="closeAddSessionModal()">&times;</span>
-                Add New Study Session
-            </div>
-            <div class="input-group">
-                <label>Session Name</label>
-                <input type="text" id="session-name" placeholder="Mathematics - Calculus">
-            </div>
-            <div class="input-group">
-                <label>Purpose</label>
-                <select id="session-purpose">
-                    <option value="exam">Exam Preparation</option>
-                    <option value="skill">Skill Development</option>
-                    <option value="revision">Revision</option>
-                    <option value="coding">Coding Practice</option>
-                </select>
-            </div>
-            <div class="input-group">
-                <label>Target Time (minutes)</label>
-                <input type="number" id="session-target-time" placeholder="60">
-            </div>
-            <button class="btn btn-primary" onclick="addNewSession()">Add Session</button>
-        </div>
-    </div>
-
-    <!-- Timer Modal -->
-    <div id="timer-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <span class="close-modal" onclick="closeTimerModal()">&times;</span>
-                <span id="timer-session-name">Study Session</span>
-            </div>
-            
-            <!-- Timer Display -->
-            <div class="timer-container">
-                <div class="card-title">Session Timer</div>
-                <div class="timer-display" id="session-timer-display">00:00</div>
-                <div style="text-align: center; color: white; margin: 10px 0;">
-                    <span id="timer-target-display">Target: 60 min</span>
-                </div>
-                <div class="timer-controls">
-                    <button onclick="startSessionTimer()">Start</button>
-                    <button onclick="pauseSessionTimer()">Pause</button>
-                    <button onclick="resetSessionTimer()">Reset</button>
-                </div>
-                <div style="text-align: center; margin-top: 15px;">
-                    <button class="btn btn-primary" onclick="completeSession()">✓ Complete Session</button>
-                </div>
-            </div>
+            <button class="btn btn-primary" onclick="saveGymPlan()">Save Plan</button>
         </div>
     </div>
 
@@ -931,20 +876,6 @@
     </div>
 
     <script>
-        // Exercise Library
-        const exerciseLibrary = {
-            chest: ['Bench Press', 'Incline Press', 'Dumbbell Flyes', 'Push-ups', 'Cable Crossover'],
-            back: ['Pull-ups', 'Deadlift', 'Barbell Row', 'Lat Pulldown', 'Seated Row'],
-            shoulders: ['Overhead Press', 'Lateral Raise', 'Front Raise', 'Arnold Press', 'Face Pulls'],
-            biceps: ['Barbell Curl', 'Dumbbell Curl', 'Hammer Curl', 'Concentration Curl', 'Preacher Curl'],
-            triceps: ['Tricep Dips', 'Close Grip Bench', 'Overhead Extension', 'Tricep Pushdown', 'Skull Crushers'],
-            legs: ['Squats', 'Leg Press', 'Lunges', 'Leg Curl', 'Calf Raise', 'Romanian Deadlift']
-        };
-
-        // Initialize
-        let currentMealType = '';
-        let currentMuscleGroup = '';
-
         // Data Structure
         let data = {
             streak: 0,
@@ -954,48 +885,67 @@
                 meals: { morning: [], afternoon: [], evening: [], night: [] }
             },
             gym: {
-                exercises: { chest: [], back: [], shoulders: [], biceps: [], triceps: [], legs: [] }
+                plans: {
+                    mon: { muscle: '', exercises: [], completed: [] },
+                    tue: { muscle: '', exercises: [], completed: [] },
+                    wed: { muscle: '', exercises: [], completed: [] },
+                    thu: { muscle: '', exercises: [], completed: [] },
+                    fri: { muscle: '', exercises: [], completed: [] },
+                    sat: { muscle: '', exercises: [], completed: [] },
+                    sun: { muscle: '', exercises: [], completed: [] }
+                }
             },
             study: {
-                sessions: [] // Each session: { name, purpose, targetTime, completions: [{date, actualTime, completed}] }
+                tasks: [], // { subject, hours, completed, date }
+                history: [] // { date, tasks: [{subject, hours}] }
             }
         };
 
-        // Load data from localStorage
-        function loadData() {
-            const saved = localStorage.getItem('disciplineData');
-            if (saved) {
-                data = JSON.parse(saved);
-            }
-            updateStreak();
+        let currentMealType = '';
+        let currentDay = 'mon';
+
+        // Initialize
+        function init() {
+            loadData();
+            updateDate();
             updateAllProgress();
             renderDiet();
             renderGym();
             renderStudy();
-        }
-
-        // Save data to localStorage
-        function saveData() {
-            localStorage.setItem('disciplineData', JSON.stringify(data));
-        }
-
-        // Update Streak
-        function updateStreak() {
-            const today = new Date().toDateString();
-            if (data.lastActiveDate !== today) {
-                const yesterday = new Date();
-                yesterday.setDate(yesterday.getDate() - 1);
-                if (data.lastActiveDate === yesterday.toDateString()) {
-                    data.streak++;
-                } else if (data.lastActiveDate !== null) {
-                    data.streak = 1;
-                } else {
-                    data.streak = 1;
-                }
-                data.lastActiveDate = today;
-                saveData();
+            
+            // PWA Service Worker
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('service-worker.js').catch(() => {});
             }
-            document.getElementById('streak-count').textContent = data.streak;
+        }
+
+        // Load/Save Data
+        function loadData() {
+            try {
+                const saved = localStorage.getItem('disciplineData');
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    data = { ...data, ...parsed };
+                }
+            } catch (e) {
+                console.error('Error loading data:', e);
+            }
+        }
+
+        function saveData() {
+            try {
+                localStorage.setItem('disciplineData', JSON.stringify(data));
+            } catch (e) {
+                console.error('Error saving data:', e);
+                alert('Error saving data!');
+            }
+        }
+
+        // Date
+        function updateDate() {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('current-date').textContent = 
+                new Date().toLocaleDateString('en-US', options);
         }
 
         // Navigation
@@ -1007,32 +957,38 @@
             event.target.closest('.nav-item').classList.add('active');
         }
 
-        // Update All Progress
+        // Progress Calculations
         function updateAllProgress() {
-            const dietProgress = calculateDietProgress();
-            const gymProgress = calculateGymProgress();
-            const studyProgress = calculateStudyProgress();
-            const overall = Math.round((dietProgress + gymProgress + studyProgress) / 3);
+            const diet = calculateDietProgress();
+            const gym = calculateGymProgress();
+            const study = calculateStudyProgress();
+            const overall = Math.round((diet + gym + study) / 3);
 
-            // Update home page
-            document.getElementById('diet-progress').textContent = dietProgress + '%';
-            document.getElementById('diet-bar').style.width = dietProgress + '%';
-            
-            document.getElementById('gym-progress').textContent = gymProgress + '%';
-            document.getElementById('gym-bar').style.width = gymProgress + '%';
-            
-            document.getElementById('study-progress').textContent = studyProgress + '%';
-            document.getElementById('study-bar').style.width = studyProgress + '%';
-
+            document.getElementById('diet-progress').textContent = diet + '%';
+            document.getElementById('gym-progress').textContent = gym + '%';
+            document.getElementById('study-progress').textContent = study + '%';
             document.getElementById('overall-score').textContent = overall + '%';
             
-            const circle = document.getElementById('overall-progress-circle');
-            const circumference = 408.4;
-            const offset = circumference - (overall / 100) * circumference;
-            circle.style.strokeDashoffset = offset;
+            updateStreak();
         }
 
-        // Diet Functions
+        function updateStreak() {
+            const today = new Date().toDateString();
+            if (data.lastActiveDate !== today) {
+                const yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                if (data.lastActiveDate === yesterday.toDateString()) {
+                    data.streak++;
+                } else {
+                    data.streak = 1;
+                }
+                data.lastActiveDate = today;
+                saveData();
+            }
+            document.getElementById('streak-count').textContent = data.streak;
+        }
+
+        // DIET FUNCTIONS
         function saveTargets() {
             data.diet.targets = {
                 calories: parseInt(document.getElementById('target-calories').value) || 2000,
@@ -1041,8 +997,8 @@
                 fats: parseInt(document.getElementById('target-fats').value) || 65
             };
             saveData();
+            alert('✅ Targets saved!');
             renderDiet();
-            alert('Targets saved!');
         }
 
         function openMealModal(type) {
@@ -1060,8 +1016,15 @@
         }
 
         function addMeal() {
+            const name = document.getElementById('meal-name').value.trim();
+            if (!name) {
+                alert('Please enter meal name');
+                return;
+            }
+
             const meal = {
-                name: document.getElementById('meal-name').value,
+                id: Date.now(),
+                name: name,
                 calories: parseInt(document.getElementById('meal-calories').value) || 0,
                 carbs: parseInt(document.getElementById('meal-carbs').value) || 0,
                 protein: parseInt(document.getElementById('meal-protein').value) || 0,
@@ -1069,46 +1032,41 @@
                 completed: false
             };
 
-            if (!meal.name) {
-                alert('Please enter a meal name');
-                return;
-            }
-
             data.diet.meals[currentMealType].push(meal);
             saveData();
             renderDiet();
             closeMealModal();
         }
 
-        function toggleMealComplete(type, index) {
-            if (!data.diet.meals[type][index].completed) {
-                data.diet.meals[type][index].completed = true;
-            } else {
-                data.diet.meals[type][index].completed = false;
+        function toggleMeal(type, id) {
+            const meal = data.diet.meals[type].find(m => m.id === id);
+            if (meal) {
+                meal.completed = !meal.completed;
+                saveData();
+                renderDiet();
+                updateAllProgress();
             }
-            saveData();
-            renderDiet();
         }
 
-        function deleteMeal(type, index) {
-            if (confirm('Delete this permanent meal?')) {
-                data.diet.meals[type].splice(index, 1);
+        function deleteMeal(type, id) {
+            if (confirm('Delete this meal?')) {
+                data.diet.meals[type] = data.diet.meals[type].filter(m => m.id !== id);
                 saveData();
                 renderDiet();
             }
         }
 
         function renderDiet() {
-            // Set targets in inputs
+            // Set targets
             document.getElementById('target-calories').value = data.diet.targets.calories;
             document.getElementById('target-carbs').value = data.diet.targets.carbs;
             document.getElementById('target-protein').value = data.diet.targets.protein;
             document.getElementById('target-fats').value = data.diet.targets.fats;
 
-            // Calculate totals (only completed meals)
+            // Calculate totals
             let totals = { calories: 0, carbs: 0, protein: 0, fats: 0 };
-            Object.values(data.diet.meals).forEach(mealType => {
-                mealType.forEach(meal => {
+            Object.values(data.diet.meals).forEach(meals => {
+                meals.forEach(meal => {
                     if (meal.completed) {
                         totals.calories += meal.calories;
                         totals.carbs += meal.carbs;
@@ -1119,432 +1077,264 @@
             });
 
             document.getElementById('total-calories').textContent = totals.calories;
-            document.getElementById('total-carbs').textContent = totals.carbs + 'g';
-            document.getElementById('total-protein').textContent = totals.protein + 'g';
-            document.getElementById('total-fats').textContent = totals.fats + 'g';
+            document.getElementById('total-carbs').textContent = totals.carbs;
+            document.getElementById('total-protein').textContent = totals.protein;
+            document.getElementById('total-fats').textContent = totals.fats;
 
             // Render meals
             ['morning', 'afternoon', 'evening', 'night'].forEach(type => {
                 const container = document.getElementById(`${type}-meals`);
                 container.innerHTML = '';
                 
-                data.diet.meals[type].forEach((meal, index) => {
-                    const checkIcon = meal.completed ? '✓' : '○';
-                    const completedClass = meal.completed ? 'style="opacity: 0.6;"' : '';
-                    
+                data.diet.meals[type].forEach(meal => {
                     container.innerHTML += `
-                        <div class="meal-item" ${completedClass}>
-                            <div class="meal-item-header">
-                                <span class="meal-item-name">
-                                    <span onclick="toggleMealComplete('${type}', ${index})" style="cursor: pointer; margin-right: 8px; font-size: 18px;">${checkIcon}</span>
-                                    ${meal.name}
-                                </span>
-                                <button class="btn btn-danger btn-small" onclick="deleteMeal('${type}', ${index})">Delete</button>
+                        <div class="meal-item ${meal.completed ? 'completed' : ''}">
+                            <div style="display: flex; align-items: center; flex: 1;">
+                                <div class="meal-check ${meal.completed ? 'checked' : ''}" onclick="toggleMeal('${type}', ${meal.id})">
+                                    ${meal.completed ? '✓' : ''}
+                                </div>
+                                <div class="meal-info">
+                                    <div class="meal-name">${meal.name}</div>
+                                    <div class="meal-nutrition">${meal.calories}cal • C:${meal.carbs}g P:${meal.protein}g F:${meal.fats}g</div>
+                                </div>
                             </div>
-                            <div class="meal-item-details">
-                                ${meal.calories} cal | C: ${meal.carbs}g | P: ${meal.protein}g | F: ${meal.fats}g
-                            </div>
+                            <button class="btn-icon" onclick="deleteMeal('${type}', ${meal.id})">🗑️</button>
                         </div>
                     `;
                 });
             });
-
-            updateAllProgress();
         }
 
         function calculateDietProgress() {
-            let totals = { calories: 0, carbs: 0, protein: 0, fats: 0 };
-            let completedCount = 0;
-            let totalMeals = 0;
-            
-            Object.values(data.diet.meals).forEach(mealType => {
-                mealType.forEach(meal => {
-                    totalMeals++;
-                    if (meal.completed) {
-                        completedCount++;
-                        totals.calories += meal.calories;
-                        totals.carbs += meal.carbs;
-                        totals.protein += meal.protein;
-                        totals.fats += meal.fats;
-                    }
-                });
-            });
-
-            if (totalMeals === 0) return 0;
-
-            const caloriesProgress = Math.min((totals.calories / data.diet.targets.calories) * 100, 100);
-            const carbsProgress = Math.min((totals.carbs / data.diet.targets.carbs) * 100, 100);
-            const proteinProgress = Math.min((totals.protein / data.diet.targets.protein) * 100, 100);
-            const fatsProgress = Math.min((totals.fats / data.diet.targets.fats) * 100, 100);
-
-            return Math.round((caloriesProgress + carbsProgress + proteinProgress + fatsProgress) / 4);
-        }
-
-        // Gym Functions
-        function toggleMuscleGroup(group) {
-            const content = document.getElementById(`${group}-content`);
-            const toggle = document.getElementById(`${group}-toggle`);
-            
-            if (content.classList.contains('active')) {
-                content.classList.remove('active');
-                toggle.textContent = '+';
-            } else {
-                content.classList.add('active');
-                toggle.textContent = '-';
-            }
-        }
-
-        function openExerciseModal(group) {
-            currentMuscleGroup = group;
-            const select = document.getElementById('exercise-name');
-            select.innerHTML = '<option value="">Select Exercise</option>';
-            
-            exerciseLibrary[group].forEach(ex => {
-                select.innerHTML += `<option value="${ex}">${ex}</option>`;
-            });
-            
-            document.getElementById('exercise-modal').classList.add('active');
-        }
-
-        function closeExerciseModal() {
-            document.getElementById('exercise-modal').classList.remove('active');
-            document.getElementById('exercise-name').value = '';
-            document.getElementById('exercise-sets').value = '';
-            document.getElementById('exercise-reps').value = '';
-            document.getElementById('exercise-weight').value = '';
-        }
-
-        function addExercise() {
-            const exercise = {
-                name: document.getElementById('exercise-name').value,
-                sets: parseInt(document.getElementById('exercise-sets').value) || 0,
-                reps: parseInt(document.getElementById('exercise-reps').value) || 0,
-                weight: parseFloat(document.getElementById('exercise-weight').value) || 0,
-                completed: false
-            };
-
-            if (!exercise.name) {
-                alert('Please select an exercise');
-                return;
-            }
-
-            data.gym.exercises[currentMuscleGroup].push(exercise);
-            saveData();
-            renderGym();
-            closeExerciseModal();
-        }
-
-        function toggleExerciseComplete(group, index) {
-            data.gym.exercises[group][index].completed = !data.gym.exercises[group][index].completed;
-            saveData();
-            renderGym();
-        }
-
-        function deleteExercise(group, index) {
-            if (confirm('Delete this exercise?')) {
-                data.gym.exercises[group].splice(index, 1);
-                saveData();
-                renderGym();
-            }
-        }
-
-        function renderGym() {
-            Object.keys(data.gym.exercises).forEach(group => {
-                const container = document.getElementById(`${group}-exercises`);
-                container.innerHTML = '';
-                
-                data.gym.exercises[group].forEach((ex, index) => {
-                    const checkIcon = ex.completed ? '✓' : '○';
-                    const completedClass = ex.completed ? 'style="opacity: 0.6; text-decoration: line-through;"' : '';
-                    
-                    container.innerHTML += `
-                        <div class="exercise-item" ${completedClass}>
-                            <div class="exercise-header">
-                                <span class="exercise-name">
-                                    <span onclick="toggleExerciseComplete('${group}', ${index})" style="cursor: pointer; margin-right: 8px;">${checkIcon}</span>
-                                    ${ex.name}
-                                </span>
-                                <button class="btn btn-danger btn-small" onclick="deleteExercise('${group}', ${index})">Delete</button>
-                            </div>
-                            <div class="exercise-details">
-                                ${ex.sets} sets × ${ex.reps} reps @ ${ex.weight}kg
-                            </div>
-                        </div>
-                    `;
-                });
-            });
-
-            updateWorkoutProgress();
-            updateAllProgress();
-        }
-
-        function updateWorkoutProgress() {
-            let total = 0;
             let completed = 0;
-            
-            Object.values(data.gym.exercises).forEach(group => {
-                group.forEach(ex => {
-                    total++;
-                    if (ex.completed) completed++;
-                });
-            });
-
-            const progress = total > 0 ? Math.round((completed / total) * 100) : 0;
-            const bar = document.getElementById('workout-progress-bar');
-            bar.style.width = progress + '%';
-            bar.textContent = progress + '%';
-        }
-
-        function calculateGymProgress() {
             let total = 0;
-            let completed = 0;
-            
-            Object.values(data.gym.exercises).forEach(group => {
-                group.forEach(ex => {
+            Object.values(data.diet.meals).forEach(meals => {
+                meals.forEach(meal => {
                     total++;
-                    if (ex.completed) completed++;
+                    if (meal.completed) completed++;
                 });
             });
-
             return total > 0 ? Math.round((completed / total) * 100) : 0;
         }
 
-        // Study Functions
-        let currentSessionIndex = -1;
-        
-        function openAddSessionModal() {
-            document.getElementById('add-session-modal').classList.add('active');
+        // GYM FUNCTIONS
+        function selectDay(day) {
+            currentDay = day;
+            document.querySelectorAll('.gym-tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            renderGym();
         }
 
-        function closeAddSessionModal() {
-            document.getElementById('add-session-modal').classList.remove('active');
-            document.getElementById('session-name').value = '';
-            document.getElementById('session-purpose').value = 'exam';
-            document.getElementById('session-target-time').value = '';
+        function openGymModal() {
+            const plan = data.gym.plans[currentDay];
+            document.getElementById('gym-muscle').value = plan.muscle || '';
+            document.getElementById('gym-exercises').value = plan.exercises.join('\n');
+            document.getElementById('gym-modal').classList.add('active');
         }
 
-        function addNewSession() {
-            const session = {
-                name: document.getElementById('session-name').value,
-                purpose: document.getElementById('session-purpose').value,
-                targetTime: parseInt(document.getElementById('session-target-time').value) || 60,
-                completions: []
-            };
+        function closeGymModal() {
+            document.getElementById('gym-modal').classList.remove('active');
+        }
 
-            if (!session.name) {
-                alert('Please enter a session name');
+        function saveGymPlan() {
+            const muscle = document.getElementById('gym-muscle').value.trim();
+            const exercisesText = document.getElementById('gym-exercises').value.trim();
+            
+            if (!muscle || !exercisesText) {
+                alert('Please fill all fields');
                 return;
             }
 
-            data.study.sessions.push(session);
+            const exercises = exercisesText.split('\n').filter(e => e.trim());
+            data.gym.plans[currentDay] = {
+                muscle: muscle,
+                exercises: exercises,
+                completed: []
+            };
+            
             saveData();
-            renderStudy();
-            closeAddSessionModal();
+            renderGym();
+            closeGymModal();
         }
 
-        function openTimerModal(index) {
-            currentSessionIndex = index;
-            const session = data.study.sessions[index];
-            
-            document.getElementById('timer-session-name').textContent = session.name;
-            document.getElementById('timer-target-display').textContent = `Target: ${session.targetTime} min`;
-            document.getElementById('timer-modal').classList.add('active');
-            
-            resetSessionTimer();
-        }
-
-        function closeTimerModal() {
-            document.getElementById('timer-modal').classList.remove('active');
-            pauseSessionTimer();
-            resetSessionTimer();
-            currentSessionIndex = -1;
-        }
-
-        function deleteSession(index) {
-            if (confirm('Delete this permanent session?')) {
-                data.study.sessions.splice(index, 1);
-                saveData();
-                renderStudy();
+        function toggleExercise(index) {
+            const plan = data.gym.plans[currentDay];
+            const idx = plan.completed.indexOf(index);
+            if (idx > -1) {
+                plan.completed.splice(idx, 1);
+            } else {
+                plan.completed.push(index);
             }
+            saveData();
+            renderGym();
+            updateAllProgress();
         }
 
-        function getTodayCompletions() {
-            const today = new Date().toDateString();
-            let completions = [];
+        function renderGym() {
+            const plan = data.gym.plans[currentDay];
+            const container = document.getElementById('gym-day-content');
             
-            data.study.sessions.forEach(session => {
-                session.completions.forEach(comp => {
-                    const compDate = new Date(comp.date).toDateString();
-                    if (compDate === today && comp.completed) {
-                        completions.push(comp);
-                    }
-                });
-            });
-            
-            return completions;
-        }
+            if (!plan.muscle) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 40px 20px; color: var(--text-light);">
+                        <div style="font-size: 48px; margin-bottom: 16px;">💪</div>
+                        <div style="font-size: 18px; margin-bottom: 20px;">No workout planned</div>
+                        <button class="btn btn-primary" onclick="openGymModal()">Set Workout Plan</button>
+                    </div>
+                `;
+                return;
+            }
 
-        function isTodayCompleted(session) {
-            const today = new Date().toDateString();
-            return session.completions.some(comp => {
-                const compDate = new Date(comp.date).toDateString();
-                return compDate === today && comp.completed;
-            });
-        }
+            let html = `
+                <div class="gym-plan">
+                    <div class="gym-plan-header">${plan.muscle}</div>
+                    <div class="exercise-list">
+            `;
 
-        function renderStudy() {
-            // Calculate total time from today's completions
-            let totalMinutes = 0;
-            getTodayCompletions().forEach(comp => {
-                totalMinutes += comp.actualTime;
-            });
-
-            const hours = Math.floor(totalMinutes / 60);
-            const minutes = totalMinutes % 60;
-            document.getElementById('total-study-time').textContent = `${hours}h ${minutes}m`;
-
-            // Render sessions
-            const container = document.getElementById('study-sessions');
-            container.innerHTML = '';
-            
-            data.study.sessions.forEach((session, index) => {
-                const isCompleted = isTodayCompleted(session);
-                const checkIcon = isCompleted ? '✓' : '○';
-                const completedClass = isCompleted ? 'style="opacity: 0.6;"' : '';
-                
-                // Get today's completion if exists
-                const today = new Date().toDateString();
-                const todayCompletion = session.completions.find(comp => {
-                    return new Date(comp.date).toDateString() === today && comp.completed;
-                });
-                
-                const timeDisplay = todayCompletion 
-                    ? `${todayCompletion.actualTime} min` 
-                    : `Target: ${session.targetTime} min`;
-                
-                container.innerHTML += `
-                    <div class="study-session" ${completedClass}>
-                        <div class="study-session-info">
-                            <h4>
-                                <span style="font-size: 18px; margin-right: 8px;">${checkIcon}</span>
-                                ${session.name}
-                            </h4>
-                            <div class="study-session-meta">${session.purpose} • ${timeDisplay}</div>
-                        </div>
-                        <div style="text-align: right;">
-                            <button class="btn btn-primary btn-small" onclick="openTimerModal(${index})" ${isCompleted ? 'disabled' : ''}>
-                                ${isCompleted ? 'Done ✓' : 'Start'}
-                            </button>
-                            <button class="btn btn-danger btn-small" onclick="deleteSession(${index})">Delete</button>
+            plan.exercises.forEach((exercise, index) => {
+                const checked = plan.completed.includes(index);
+                html += `
+                    <div class="exercise-item">
+                        <div style="display: flex; align-items: center; flex: 1;">
+                            <div class="exercise-check ${checked ? 'checked' : ''}" onclick="toggleExercise(${index})"></div>
+                            <div style="flex: 1;">${exercise}</div>
                         </div>
                     </div>
                 `;
             });
 
-            updateAllProgress();
+            html += `
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="openGymModal()">Edit Plan</button>
+            `;
+
+            container.innerHTML = html;
         }
 
-        function calculateStudyProgress() {
-            let totalSessions = data.study.sessions.length;
-            if (totalSessions === 0) return 0;
+        function calculateGymProgress() {
+            const plan = data.gym.plans[currentDay];
+            if (!plan.exercises || plan.exercises.length === 0) return 0;
+            return Math.round((plan.completed.length / plan.exercises.length) * 100);
+        }
+
+        // STUDY FUNCTIONS
+        function addTask() {
+            const subject = document.getElementById('task-subject').value.trim();
+            const hours = parseFloat(document.getElementById('task-hours').value);
             
-            let completedToday = 0;
-            data.study.sessions.forEach(session => {
-                if (isTodayCompleted(session)) {
-                    completedToday++;
-                }
-            });
-
-            return Math.round((completedToday / totalSessions) * 100);
-        }
-
-        // Session Timer Functions
-        let sessionTimerInterval = null;
-        let sessionTimerSeconds = 0;
-        let isSessionTimerRunning = false;
-
-        function updateSessionTimerDisplay() {
-            const minutes = Math.floor(sessionTimerSeconds / 60);
-            const seconds = sessionTimerSeconds % 60;
-            document.getElementById('session-timer-display').textContent = 
-                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-        }
-
-        function startSessionTimer() {
-            if (!isSessionTimerRunning) {
-                isSessionTimerRunning = true;
-                sessionTimerInterval = setInterval(() => {
-                    sessionTimerSeconds++;
-                    updateSessionTimerDisplay();
-                }, 1000);
-            }
-        }
-
-        function pauseSessionTimer() {
-            isSessionTimerRunning = false;
-            clearInterval(sessionTimerInterval);
-        }
-
-        function resetSessionTimer() {
-            pauseSessionTimer();
-            sessionTimerSeconds = 0;
-            updateSessionTimerDisplay();
-        }
-
-        function completeSession() {
-            if (sessionTimerSeconds === 0) {
-                alert('Please start the timer first');
+            if (!subject) {
+                alert('Please enter subject');
                 return;
             }
-            
-            if (currentSessionIndex === -1) return;
-            
-            pauseSessionTimer();
-            
-            const timeMinutes = Math.ceil(sessionTimerSeconds / 60);
-            
-            // Add completion to this session
-            const completion = {
-                date: new Date().toISOString(),
-                actualTime: timeMinutes,
-                completed: true
+
+            const task = {
+                id: Date.now(),
+                subject: subject,
+                hours: hours,
+                completed: false,
+                date: new Date().toISOString()
             };
-            
-            data.study.sessions[currentSessionIndex].completions.push(completion);
+
+            data.study.tasks.push(task);
             saveData();
             renderStudy();
-            
-            alert(`Session completed! You studied for ${timeMinutes} minutes.`);
-            closeTimerModal();
+            document.getElementById('task-subject').value = '';
         }
 
-        function deleteStudySession(index) {
-            if (confirm('Delete this session?')) {
-                data.study.sessions.splice(index, 1);
+        function toggleTask(id) {
+            const task = data.study.tasks.find(t => t.id === id);
+            if (task) {
+                task.completed = !task.completed;
+                
+                // Add to history if completed
+                if (task.completed) {
+                    const today = new Date().toDateString();
+                    let historyEntry = data.study.history.find(h => h.date === today);
+                    
+                    if (!historyEntry) {
+                        historyEntry = { date: today, tasks: [] };
+                        data.study.history.push(historyEntry);
+                    }
+                    
+                    historyEntry.tasks.push({
+                        subject: task.subject,
+                        hours: task.hours
+                    });
+                }
+                
+                saveData();
+                renderStudy();
+                updateAllProgress();
+            }
+        }
+
+        function deleteTask(id) {
+            if (confirm('Delete this task?')) {
+                data.study.tasks = data.study.tasks.filter(t => t.id !== id);
                 saveData();
                 renderStudy();
             }
         }
 
-        // Set current date
-        function updateDate() {
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            document.getElementById('current-date').textContent = 
-                new Date().toLocaleDateString('en-US', options);
+        function renderStudy() {
+            // Render tasks
+            const tasksContainer = document.getElementById('tasks-list');
+            const today = new Date().toDateString();
+            const todayTasks = data.study.tasks.filter(t => new Date(t.date).toDateString() === today);
+            
+            if (todayTasks.length === 0) {
+                tasksContainer.innerHTML = '<div style="text-align: center; padding: 20px; color: var(--text-light);">No tasks yet. Add one above!</div>';
+            } else {
+                tasksContainer.innerHTML = todayTasks.map(task => `
+                    <div class="task-item ${task.completed ? 'completed' : ''}">
+                        <div style="display: flex; align-items: center; flex: 1;">
+                            <div class="task-check ${task.completed ? 'checked' : ''}" onclick="toggleTask(${task.id})"></div>
+                            <div class="task-info">
+                                <div class="task-name">${task.subject}</div>
+                                <div class="task-meta">${task.hours}h planned</div>
+                            </div>
+                        </div>
+                        <button class="btn-icon" onclick="deleteTask(${task.id})">🗑️</button>
+                    </div>
+                `).join('');
+            }
+
+            // Calculate total hours
+            const totalHours = todayTasks.filter(t => t.completed).reduce((sum, t) => sum + t.hours, 0);
+            document.getElementById('total-hours').textContent = totalHours.toFixed(1) + 'h';
+
+            // Render history
+            const historyContainer = document.getElementById('study-history');
+            const sortedHistory = [...data.study.history].reverse().slice(0, 7);
+            
+            if (sortedHistory.length === 0) {
+                historyContainer.innerHTML = '<div style="text-align: center; padding: 20px; color: var(--text-light);">No history yet</div>';
+            } else {
+                historyContainer.innerHTML = sortedHistory.map(entry => {
+                    const subjects = entry.tasks.map(t => t.subject).join(', ');
+                    const totalHours = entry.tasks.reduce((sum, t) => sum + t.hours, 0);
+                    return `
+                        <div class="history-item">
+                            <div class="history-date">${new Date(entry.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</div>
+                            <div class="history-subjects">${subjects} (${totalHours.toFixed(1)}h)</div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+
+        function calculateStudyProgress() {
+            const today = new Date().toDateString();
+            const todayTasks = data.study.tasks.filter(t => new Date(t.date).toDateString() === today);
+            if (todayTasks.length === 0) return 0;
+            
+            const completed = todayTasks.filter(t => t.completed).length;
+            return Math.round((completed / todayTasks.length) * 100);
         }
 
         // Initialize on load
-        window.addEventListener('load', () => {
-            updateDate();
-            loadData();
-            
-            // Register Service Worker for PWA
-            if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('service-worker.js')
-                    .then(reg => console.log('Service Worker registered'))
-                    .catch(err => console.log('Service Worker registration failed'));
-            }
-        });
+        window.addEventListener('load', init);
     </script>
 </body>
 </html>
