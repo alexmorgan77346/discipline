@@ -404,7 +404,7 @@
             box-shadow: 0 8px 16px rgba(139, 92, 246, 0.4);
         }
 
-        /* Bottom Navigation */
+        /* Bottom Navigation - 3 items */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -432,12 +432,12 @@
         }
 
         .nav-icon {
-            font-size: 28px;
+            font-size: 24px;
             margin-bottom: 4px;
         }
 
         .nav-label {
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 600;
         }
 
@@ -561,6 +561,7 @@
             }
         }
     </style>
+<base target="_blank">
 </head>
 <body>
     <!-- Header -->
@@ -569,7 +570,7 @@
         <p id="current-date"></p>
     </div>
 
-    <!-- Home/Dashboard Page -->
+    <!-- Home/Dashboard Page with Complete Nutrition -->
     <div id="home-page" class="page active">
         <div class="hero-section">
             <div class="hero-label">Nutrition Goal</div>
@@ -578,7 +579,7 @@
         </div>
 
         <div class="container">
-            <!-- Nutrition Goals Card -->
+            <!-- Quick Macros Card -->
             <div class="card">
                 <div class="card-title">
                     🎯 Daily Nutrition Goals
@@ -608,21 +609,7 @@
                 </div>
             </div>
 
-            <!-- Quick Stats -->
-            <div class="card">
-                <div class="card-title">🔥 Streak</div>
-                <div style="text-align: center; padding: 20px;">
-                    <div style="font-size: 64px; font-weight: 900; color: var(--warning);" id="streak-count">0</div>
-                    <div style="color: var(--text-light); margin-top: 8px; font-size: 16px;">consecutive days</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Nutrition Page (Detailed) -->
-    <div id="nutrition-page" class="page">
-        <div class="container">
-            <!-- Comprehensive Nutrition Display -->
+            <!-- Complete Nutrition Overview - Now on Dashboard -->
             <div class="card">
                 <div class="card-title">📊 Complete Nutrition Overview</div>
                 
@@ -739,6 +726,20 @@
                 </div>
             </div>
 
+            <!-- Streak Card -->
+            <div class="card">
+                <div class="card-title">🔥 Streak</div>
+                <div style="text-align: center; padding: 20px;">
+                    <div style="font-size: 64px; font-weight: 900; color: var(--warning);" id="streak-count">0</div>
+                    <div style="color: var(--text-light); margin-top: 8px; font-size: 16px;">consecutive days</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Meals Page -->
+    <div id="meals-page" class="page">
+        <div class="container">
             <!-- Meals by Time -->
             <div class="card">
                 <div class="card-title">🍽️ Meals</div>
@@ -852,14 +853,6 @@
             <!-- Reset Data -->
             <div class="card">
                 <div class="card-title">⚙️ Settings</div>
-                <div class="form-group">
-    <label>🔑 OpenAI API Key</label>
-    <input type="password" id="openai-key" placeholder="sk-xxxxxxxx">
-    <button class="btn btn-primary btn-small" 
-        style="margin-top:10px;" 
-        onclick="saveOpenAIKey()">Save API Key</button>
-</div>
-
                 <button class="btn btn-primary" onclick="resetAllData()" style="background: var(--danger);">🗑️ Reset All Data</button>
                 <div style="text-align: center; color: var(--text-light); font-size: 12px; margin-top: 8px;">
                     This will delete all meals, history, and settings. Cannot be undone!
@@ -879,7 +872,7 @@
             <!-- AI-Powered Goals -->
             <div class="ai-section">
                 <div class="form-group">
-                    <label>🤖 AI-Powered Goal Calculation</label>
+                    <label>🤖 Smart Goal Calculator</label>
                     <textarea id="ai-goals-description" rows="4" placeholder="Describe yourself and your goals:&#10;&#10;Example:&#10;Age: 25, Male, Weight: 75kg, Height: 180cm&#10;Activity: Moderate (gym 4x/week)&#10;Goal: Build muscle and lose fat"></textarea>
                 </div>
                 <button class="btn-ai" onclick="calculateGoalsWithAI()" id="goals-ai-btn">
@@ -945,7 +938,7 @@
             <!-- AI Section -->
             <div class="ai-section">
                 <div class="form-group">
-                    <label>🤖 AI-Powered Calculation</label>
+                    <label>🤖 Smart Meal Calculator</label>
                     <textarea id="ai-description" rows="3" placeholder="Describe your meal (e.g., grilled chicken breast 200g with brown rice and broccoli)"></textarea>
                 </div>
                 <button class="btn-ai" onclick="calculateWithAI()" id="ai-btn">
@@ -1026,37 +1019,23 @@
         </div>
     </div>
 
-    <!-- Bottom Navigation -->
+    <!-- Bottom Navigation - 3 buttons -->
     <div class="bottom-nav">
         <button class="nav-item active" onclick="navigateTo('home')">
             <div class="nav-icon">🏠</div>
             <div class="nav-label">Dashboard</div>
         </button>
-        <button class="nav-item" onclick="navigateTo('nutrition')">
-            <div class="nav-icon">🥗</div>
-            <div class="nav-label">Nutrition</div>
+        <button class="nav-item" onclick="navigateTo('meals')">
+            <div class="nav-icon">🍽️</div>
+            <div class="nav-label">Meals</div>
         </button>
         <button class="nav-item" onclick="navigateTo('history')">
-            <div class="nav-icon">📊</div>
+            <div class="nav-icon">📈</div>
             <div class="nav-label">History</div>
         </button>
     </div>
 
     <script>
-        function saveOpenAIKey() {
-    const key = document.getElementById('openai-key').value.trim();
-    if (!key.startsWith('sk-')) {
-        alert("Invalid API key");
-        return;
-    }
-    localStorage.setItem('openai_api_key', key);
-    alert("API key saved locally");
-}
-
-function getOpenAIKey() {
-    return localStorage.getItem('openai_api_key');
-}
-
         // Data Structure
         let data = {
             streak: 0,
@@ -1157,6 +1136,7 @@ function getOpenAIKey() {
             event.target.closest('.nav-item').classList.add('active');
             
             if (page === 'history') renderHistory();
+            if (page === 'home') renderNutrition();
         }
 
         // Calculate Totals
@@ -1328,7 +1308,7 @@ function getOpenAIKey() {
         function renderNutrition() {
             const totals = calculateTotals();
             
-            // Update totals display
+            // Update totals display on Dashboard
             document.getElementById('total-calories').textContent = Math.round(totals.calories);
             document.getElementById('total-protein').textContent = Math.round(totals.protein);
             document.getElementById('total-carbs').textContent = Math.round(totals.carbs);
@@ -1354,7 +1334,7 @@ function getOpenAIKey() {
             document.getElementById('total-sodium').textContent = Math.round(totals.sodium);
             document.getElementById('total-zinc').textContent = Math.round(totals.zinc);
             
-            // Render meals
+            // Render meals on Meals page
             ['morning', 'afternoon', 'evening', 'night'].forEach(type => {
                 const container = document.getElementById(`${type}-meals`);
                 container.innerHTML = '';
@@ -1408,68 +1388,126 @@ function getOpenAIKey() {
             document.getElementById('goals-modal').classList.remove('active');
         }
 
-      async function calculateGoalsWithAI() {
-    const description = document.getElementById('ai-goals-description').value.trim();
-    const apiKey = getOpenAIKey();
+        // Offline Smart Calculator - No API needed!
+        function calculateGoalsWithAI() {
+            const description = document.getElementById('ai-goals-description').value.trim().toLowerCase();
+            
+            if (!description) {
+                alert('Please describe yourself and your goals');
+                return;
+            }
 
-    if (!apiKey) {
-        alert("Set OpenAI API key in Settings first.");
-        return;
-    }
+            // Show loading
+            document.getElementById('goals-ai-text').style.display = 'none';
+            document.getElementById('goals-ai-loading').style.display = 'inline';
 
-    if (!description) {
-        alert('Please describe yourself and your goals');
-        return;
-    }
+            // Simulate calculation delay
+            setTimeout(() => {
+                const goals = smartCalculateGoals(description);
+                
+                // Fill in the form
+                document.getElementById('goal-calories').value = goals.calories;
+                document.getElementById('goal-protein').value = goals.protein;
+                document.getElementById('goal-carbs').value = goals.carbs;
+                document.getElementById('goal-fats').value = goals.fats;
+                document.getElementById('goal-fiber').value = goals.fiber;
+                document.getElementById('goal-sugar').value = goals.sugar;
+                document.getElementById('goal-vit-c').value = goals.vitC;
+                document.getElementById('goal-vit-d').value = goals.vitD;
+                document.getElementById('goal-calcium').value = goals.calcium;
+                document.getElementById('goal-iron').value = goals.iron;
+                document.getElementById('goal-potassium').value = goals.potassium;
+                document.getElementById('goal-sodium').value = goals.sodium;
 
-    try {
-        const response = await fetch("https://api.openai.com/v1/responses", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${apiKey}`
-            },
-            body: JSON.stringify({
-                model: "gpt-4.1-mini",
-                input: `You are a nutrition expert. Based on:
+                // Hide loading
+                document.getElementById('goals-ai-text').style.display = 'inline';
+                document.getElementById('goals-ai-loading').style.display = 'none';
 
-${description}
+                alert('✅ Goals calculated based on your profile!');
+            }, 1000);
+        }
 
-Return ONLY JSON:
-{
-  "calories": number,
-  "protein": number,
-  "carbs": number,
-  "fats": number,
-  "fiber": number,
-  "sugar": number,
-  "vitC": number,
-  "vitD": number,
-  "calcium": number,
-  "iron": number,
-  "potassium": number,
-  "sodium": number
-}`
-            })
-        });
-
-        const result = await response.json();
-        const text = result.output[0].content[0].text;
-        const goals = JSON.parse(text);
-
-        Object.keys(goals).forEach(key => {
-            const el = document.getElementById(`goal-${key.replace(/[A-Z]/g, m => '-' + m.toLowerCase())}`);
-            if (el) el.value = Math.round(goals[key]);
-        });
-
-        alert("Goals calculated");
-
-    } catch (error) {
-        console.error(error);
-        alert("AI failed");
-    }
-}
-
+        // Smart offline goal calculator
+        function smartCalculateGoals(description) {
+            // Extract numbers using regex
+            const ageMatch = description.match(/age[:\s]+(\d+)/i);
+            const weightMatch = description.match(/weight[:\s]+(\d+)\s*(kg|lbs?|pounds?)?/i);
+            const heightMatch = description.match(/height[:\s]+(\d+)\s*(cm|m|ft|feet)?/i);
+            
+            const age = ageMatch ? parseInt(ageMatch[1]) : 30;
+            let weight = weightMatch ? parseInt(weightMatch[1]) : 70;
+            let height = heightMatch ? parseInt(heightMatch[1]) : 175;
+            
+            // Convert to metric if needed
+            if (weightMatch && weightMatch[2] && weightMatch[2].toLowerCase().includes('lb')) {
+                weight = Math.round(weight * 0.453592);
+            }
+            if (heightMatch && heightMatch[2] && (heightMatch[2].toLowerCase().includes('ft') || heightMatch[2].toLowerCase().includes('foot'))) {
+                height = Math.round(height * 30.48);
+            }
+            
+            // Detect gender
+            const isMale = description.includes('male') || description.includes('man') || description.includes('boy');
+            const isFemale = description.includes('female') || description.includes('woman') || description.includes('girl');
+            
+            // Detect activity level
+            const isSedentary = description.includes('sedentary') || description.includes('desk') || description.includes('office');
+            const isActive = description.includes('active') || description.includes('gym') || description.includes('exercise') || description.includes('sport');
+            const isVeryActive = description.includes('very active') || description.includes('athlete') || description.includes('training') || description.includes('competition');
+            
+            // Detect goals
+            const wantsLoseWeight = description.includes('lose') || description.includes('cut') || description.includes('fat loss') || description.includes('slim');
+            const wantsGainMuscle = description.includes('muscle') || description.includes('bulk') || description.includes('gain') || description.includes('build');
+            const wantsMaintain = description.includes('maintain') || description.includes('stay') || description.includes('keep');
+            
+            // Calculate BMR using Mifflin-St Jeor Equation
+            let bmr;
+            if (isMale) {
+                bmr = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+            } else {
+                bmr = (10 * weight) + (6.25 * height) - (5 * age) - 161;
+            }
+            
+            // Apply activity multiplier
+            let tdee = bmr;
+            if (isSedentary) tdee *= 1.2;
+            else if (isVeryActive) tdee *= 1.725;
+            else if (isActive) tdee *= 1.55;
+            else tdee *= 1.375; // Lightly active default
+            
+            // Adjust for goals
+            let calories = Math.round(tdee);
+            if (wantsLoseWeight) calories -= 500;
+            if (wantsGainMuscle) calories += 300;
+            
+            // Calculate macros
+            let protein = weight * (wantsGainMuscle ? 2.2 : 1.8); // g per kg
+            if (wantsLoseWeight) protein = weight * 2.0; // Higher protein for cutting
+            
+            let fats = weight * 0.9; // 0.9g per kg
+            let carbs = (calories - (protein * 4) - (fats * 9)) / 4;
+            
+            // Ensure minimums
+            if (carbs < 100) {
+                carbs = 100;
+                fats = (calories - (protein * 4) - (carbs * 4)) / 9;
+            }
+            
+            return {
+                calories: calories,
+                protein: Math.round(protein),
+                carbs: Math.round(carbs),
+                fats: Math.round(fats),
+                fiber: 30,
+                sugar: 50,
+                vitC: isActive ? 120 : 90,
+                vitD: 600,
+                calcium: 1000,
+                iron: isFemale ? 18 : 8,
+                potassium: 3500,
+                sodium: 2300
+            };
+        }
 
         function saveGoals() {
             data.goals = {
@@ -1647,76 +1685,229 @@ Return ONLY JSON:
             ctx.fillText('100%', 5, padding + 5);
         }
 
-        // AI Calculation
-       async function calculateWithAI() {
-    const description = document.getElementById('ai-description').value.trim();
-    const apiKey = getOpenAIKey();
+        // Offline Smart Meal Calculator - No API needed!
+        function calculateWithAI() {
+            const description = document.getElementById('ai-description').value.trim().toLowerCase();
+            
+            if (!description) {
+                alert('Please describe your meal');
+                return;
+            }
 
-    if (!apiKey) {
-        alert("Set OpenAI API key in Settings first.");
-        return;
-    }
+            // Show loading
+            document.getElementById('ai-text').style.display = 'none';
+            document.getElementById('ai-loading').style.display = 'inline';
 
-    if (!description) {
-        alert('Please describe your meal');
-        return;
-    }
+            // Simulate calculation delay
+            setTimeout(() => {
+                const nutrition = smartCalculateMeal(description);
+                
+                // Fill in the form
+                document.getElementById('meal-name').value = nutrition.name;
+                document.getElementById('meal-calories').value = nutrition.calories;
+                document.getElementById('meal-protein').value = nutrition.protein;
+                document.getElementById('meal-carbs').value = nutrition.carbs;
+                document.getElementById('meal-fats').value = nutrition.fats;
+                document.getElementById('meal-fiber').value = nutrition.fiber;
+                document.getElementById('meal-sugar').value = nutrition.sugar;
+                document.getElementById('meal-sat-fat').value = nutrition.satFat;
+                document.getElementById('meal-unsat-fat').value = nutrition.unsatFat;
+                document.getElementById('meal-trans-fat').value = nutrition.transFat;
+                document.getElementById('meal-vit-a').value = nutrition.vitA;
+                document.getElementById('meal-vit-c').value = nutrition.vitC;
+                document.getElementById('meal-vit-d').value = nutrition.vitD;
+                document.getElementById('meal-vit-e').value = nutrition.vitE;
+                document.getElementById('meal-vit-k').value = nutrition.vitK;
+                document.getElementById('meal-vit-b12').value = nutrition.vitB12;
+                document.getElementById('meal-calcium').value = nutrition.calcium;
+                document.getElementById('meal-iron').value = nutrition.iron;
+                document.getElementById('meal-magnesium').value = nutrition.magnesium;
+                document.getElementById('meal-potassium').value = nutrition.potassium;
+                document.getElementById('meal-sodium').value = nutrition.sodium;
+                document.getElementById('meal-zinc').value = nutrition.zinc;
 
-    try {
-        const response = await fetch("https://api.openai.com/v1/responses", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${apiKey}`
-            },
-            body: JSON.stringify({
-                model: "gpt-4.1-mini",
-                input: `Analyze this meal and return ONLY JSON:
-{
-  "name": string,
-  "calories": number,
-  "protein": number,
-  "carbs": number,
-  "fats": number,
-  "fiber": number,
-  "sugar": number,
-  "satFat": number,
-  "unsatFat": number,
-  "transFat": number,
-  "vitA": number,
-  "vitC": number,
-  "vitD": number,
-  "vitE": number,
-  "vitK": number,
-  "vitB12": number,
-  "calcium": number,
-  "iron": number,
-  "magnesium": number,
-  "potassium": number,
-  "sodium": number,
-  "zinc": number
-}
-Meal: ${description}`
-            })
-        });
+                // Hide loading
+                document.getElementById('ai-text').style.display = 'inline';
+                document.getElementById('ai-loading').style.display = 'none';
 
-        const result = await response.json();
-        const text = result.output[0].content[0].text;
-        const nutrition = JSON.parse(text);
+                alert('✅ Nutrition calculated! Review and click "Add Meal" to save.');
+            }, 800);
+        }
 
-        Object.keys(nutrition).forEach(key => {
-            const id = `meal-${key.replace(/[A-Z]/g, m => '-' + m.toLowerCase())}`;
-            const el = document.getElementById(id);
-            if (el) el.value = nutrition[key];
-        });
+        // Smart offline meal calculator with extensive food database
+        function smartCalculateMeal(description) {
+            // Extract quantity
+            const quantityMatch = description.match(/(\d+)\s*(g|gram|oz|ounce|cup|bowl|plate|piece|slice|serving|servings?|lb|pound|kg)/i);
+            let quantity = 100; // default 100g
+            let unit = 'g';
+            
+            if (quantityMatch) {
+                quantity = parseInt(quantityMatch[1]);
+                unit = quantityMatch[2].toLowerCase();
+            }
+            
+            // Convert to grams
+            let grams = quantity;
+            if (unit.includes('oz') || unit.includes('ounce')) grams = quantity * 28.35;
+            else if (unit.includes('lb') || unit.includes('pound')) grams = quantity * 453.592;
+            else if (unit.includes('kg')) grams = quantity * 1000;
+            else if (unit.includes('cup')) grams = quantity * 240;
+            else if (unit.includes('bowl')) grams = quantity * 350;
+            else if (unit.includes('plate')) grams = quantity * 500;
+            else if (unit.includes('piece') || unit.includes('slice')) grams = quantity * 30;
+            else if (unit.includes('serving')) grams = quantity * 250;
+            
+            const multiplier = grams / 100; // Convert to per 100g basis
+            
+            // Food database with nutrition per 100g
+            const foodDatabase = {
+                // Proteins
+                'chicken': { name: 'Chicken Breast', calories: 165, protein: 31, carbs: 0, fats: 3.6, fiber: 0, sugar: 0, satFat: 1, unsatFat: 2, transFat: 0, vitA: 20, vitC: 0, vitD: 5, vitE: 0.3, vitK: 0, vitB12: 0.3, calcium: 11, iron: 0.7, magnesium: 29, potassium: 256, sodium: 74, zinc: 0.9 },
+                'beef': { name: 'Beef Steak', calories: 250, protein: 26, carbs: 0, fats: 15, fiber: 0, sugar: 0, satFat: 6, unsatFat: 7, transFat: 1, vitA: 0, vitC: 0, vitD: 3, vitE: 0.4, vitK: 1.4, vitB12: 2.6, calcium: 18, iron: 2.6, magnesium: 21, potassium: 318, sodium: 72, zinc: 6.3 },
+                'fish': { name: 'Fish (Salmon)', calories: 208, protein: 20, carbs: 0, fats: 13, fiber: 0, sugar: 0, satFat: 3, unsatFat: 8, transFat: 0, vitA: 50, vitC: 0, vitD: 11, vitE: 3.5, vitK: 0.5, vitB12: 3.2, calcium: 9, iron: 0.3, magnesium: 27, potassium: 363, sodium: 59, zinc: 0.4 },
+                'salmon': { name: 'Salmon', calories: 208, protein: 20, carbs: 0, fats: 13, fiber: 0, sugar: 0, satFat: 3, unsatFat: 8, transFat: 0, vitA: 50, vitC: 0, vitD: 11, vitE: 3.5, vitK: 0.5, vitB12: 3.2, calcium: 9, iron: 0.3, magnesium: 27, potassium: 363, sodium: 59, zinc: 0.4 },
+                'tuna': { name: 'Tuna', calories: 132, protein: 28, carbs: 0, fats: 1, fiber: 0, sugar: 0, satFat: 0.2, unsatFat: 0.3, transFat: 0, vitA: 60, vitC: 0, vitD: 6, vitE: 0.3, vitK: 0, vitB12: 2.2, calcium: 17, iron: 1, magnesium: 35, potassium: 333, sodium: 47, zinc: 0.4 },
+                'egg': { name: 'Eggs', calories: 155, protein: 13, carbs: 1.1, fats: 11, fiber: 0, sugar: 1.1, satFat: 3.3, unsatFat: 5.5, transFat: 0, vitA: 160, vitC: 0, vitD: 2, vitE: 1, vitK: 0.3, vitB12: 1.1, calcium: 50, iron: 1.2, magnesium: 10, potassium: 126, sodium: 124, zinc: 1.1 },
+                'eggs': { name: 'Eggs', calories: 155, protein: 13, carbs: 1.1, fats: 11, fiber: 0, sugar: 1.1, satFat: 3.3, unsatFat: 5.5, transFat: 0, vitA: 160, vitC: 0, vitD: 2, vitE: 1, vitK: 0.3, vitB12: 1.1, calcium: 50, iron: 1.2, magnesium: 10, potassium: 126, sodium: 124, zinc: 1.1 },
+                'tofu': { name: 'Tofu', calories: 76, protein: 8, carbs: 1.9, fats: 4.8, fiber: 0.3, sugar: 0.6, satFat: 0.7, unsatFat: 3.3, transFat: 0, vitA: 10, vitC: 0.1, vitD: 0, vitE: 0.01, vitK: 2.4, vitB12: 0, calcium: 350, iron: 5.4, magnesium: 30, potassium: 121, sodium: 7, zinc: 0.8 },
+                
+                // Carbs
+                'rice': { name: 'Rice (Cooked)', calories: 130, protein: 2.7, carbs: 28, fats: 0.3, fiber: 0.4, sugar: 0.1, satFat: 0.1, unsatFat: 0.1, transFat: 0, vitA: 0, vitC: 0, vitD: 0, vitE: 0.04, vitK: 0, vitB12: 0, calcium: 10, iron: 0.2, magnesium: 12, potassium: 35, sodium: 1, zinc: 0.5 },
+                'pasta': { name: 'Pasta (Cooked)', calories: 131, protein: 5, carbs: 25, fats: 1.1, fiber: 1.8, sugar: 0.6, satFat: 0.2, unsatFat: 0.4, transFat: 0, vitA: 0, vitC: 0, vitD: 0, vitE: 0.06, vitK: 0, vitB12: 0, calcium: 6, iron: 0.5, magnesium: 18, potassium: 44, sodium: 6, zinc: 0.4 },
+                'bread': { name: 'Bread', calories: 265, protein: 9, carbs: 49, fats: 3.2, fiber: 2.7, sugar: 5, satFat: 0.7, unsatFat: 1.5, transFat: 0, vitA: 0, vitC: 0, vitD: 0, vitE: 0.25, vitK: 1.2, vitB12: 0, calcium: 160, iron: 2.5, magnesium: 76, potassium: 250, sodium: 491, zinc: 1.5 },
+                'oats': { name: 'Oatmeal', calories: 389, protein: 16.9, carbs: 66, fats: 6.9, fiber: 10.6, sugar: 0.9, satFat: 1.2, unsatFat: 4.3, transFat: 0, vitA: 0, vitC: 0, vitD: 0, vitE: 0.42, vitK: 5.9, vitB12: 0, calcium: 54, iron: 4.7, magnesium: 177, potassium: 429, sodium: 2, zinc: 4 },
+                'potato': { name: 'Potato', calories: 77, protein: 2, carbs: 17, fats: 0.1, fiber: 2.2, sugar: 0.8, satFat: 0, unsatFat: 0, transFat: 0, vitA: 2, vitC: 19.7, vitD: 0, vitE: 0.01, vitK: 2, vitB12: 0, calcium: 12, iron: 0.8, magnesium: 23, potassium: 421, sodium: 6, zinc: 0.3 },
+                'potatoes': { name: 'Potatoes', calories: 77, protein: 2, carbs: 17, fats: 0.1, fiber: 2.2, sugar: 0.8, satFat: 0, unsatFat: 0, transFat: 0, vitA: 2, vitC: 19.7, vitD: 0, vitE: 0.01, vitK: 2, vitB12: 0, calcium: 12, iron: 0.8, magnesium: 23, potassium: 421, sodium: 6, zinc: 0.3 },
+                'sweet potato': { name: 'Sweet Potato', calories: 86, protein: 1.6, carbs: 20, fats: 0.1, fiber: 3, sugar: 4.2, satFat: 0, unsatFat: 0, transFat: 0, vitA: 14187, vitC: 2.4, vitD: 0, vitE: 0.26, vitK: 1.8, vitB12: 0, calcium: 30, iron: 0.6, magnesium: 25, potassium: 337, sodium: 55, zinc: 0.3 },
+                'quinoa': { name: 'Quinoa (Cooked)', calories: 120, protein: 4.4, carbs: 21, fats: 1.9, fiber: 2.8, sugar: 0, satFat: 0.2, unsatFat: 1.2, transFat: 0, vitA: 5, vitC: 0, vitD: 0, vitE: 0.6, vitK: 0, vitB12: 0, calcium: 17, iron: 2.8, magnesium: 64, potassium: 172, sodium: 7, zinc: 1.1 },
+                
+                // Vegetables
+                'broccoli': { name: 'Broccoli', calories: 34, protein: 2.8, carbs: 7, fats: 0.4, fiber: 2.6, sugar: 1.7, satFat: 0, unsatFat: 0, transFat: 0, vitA: 623, vitC: 89.2, vitD: 0, vitE: 0.78, vitK: 101.6, vitB12: 0, calcium: 47, iron: 0.7, magnesium: 21, potassium: 316, sodium: 33, zinc: 0.4 },
+                'spinach': { name: 'Spinach', calories: 23, protein: 2.9, carbs: 3.6, fats: 0.4, fiber: 2.2, sugar: 0.4, satFat: 0.06, unsatFat: 0.03, transFat: 0, vitA: 9377, vitC: 28.1, vitD: 0, vitE: 2, vitK: 482.9, vitB12: 0, calcium: 99, iron: 2.7, magnesium: 79, potassium: 558, sodium: 79, zinc: 0.5 },
+                'carrot': { name: 'Carrots', calories: 41, protein: 0.9, carbs: 10, fats: 0.2, fiber: 2.8, sugar: 4.7, satFat: 0, unsatFat: 0.1, transFat: 0, vitA: 16706, vitC: 5.9, vitD: 0, vitE: 0.66, vitK: 13.2, vitB12: 0, calcium: 33, iron: 0.3, magnesium: 12, potassium: 320, sodium: 55, zinc: 0.2 },
+                'carrots': { name: 'Carrots', calories: 41, protein: 0.9, carbs: 10, fats: 0.2, fiber: 2.8, sugar: 4.7, satFat: 0, unsatFat: 0.1, transFat: 0, vitA: 16706, vitC: 5.9, vitD: 0, vitE: 0.66, vitK: 13.2, vitB12: 0, calcium: 33, iron: 0.3, magnesium: 12, potassium: 320, sodium: 55, zinc: 0.2 },
+                'lettuce': { name: 'Lettuce', calories: 15, protein: 1.4, carbs: 2.9, fats: 0.2, fiber: 1.3, sugar: 1.8, satFat: 0, unsatFat: 0.1, transFat: 0, vitA: 166, vitC: 9.2, vitD: 0, vitE: 0.18, vitK: 102.5, vitB12: 0, calcium: 36, iron: 0.9, magnesium: 13, potassium: 194, sodium: 28, zinc: 0.2 },
+                'tomato': { name: 'Tomato', calories: 18, protein: 0.9, carbs: 3.9, fats: 0.2, fiber: 1.2, sugar: 2.6, satFat: 0, unsatFat: 0.1, transFat: 0, vitA: 833, vitC: 13.7, vitD: 0, vitE: 0.54, vitK: 7.9, vitB12: 0, calcium: 10, iron: 0.3, magnesium: 11, potassium: 237, sodium: 5, zinc: 0.2 },
+                'tomatoes': { name: 'Tomatoes', calories: 18, protein: 0.9, carbs: 3.9, fats: 0.2, fiber: 1.2, sugar: 2.6, satFat: 0, unsatFat: 0.1, transFat: 0, vitA: 833, vitC: 13.7, vitD: 0, vitE: 0.54, vitK: 7.9, vitB12: 0, calcium: 10, iron: 0.3, magnesium: 11, potassium: 237, sodium: 5, zinc: 0.2 },
+                'cucumber': { name: 'Cucumber', calories: 15, protein: 0.7, carbs: 3.6, fats: 0.1, fiber: 0.5, sugar: 1.7, satFat: 0, unsatFat: 0, transFat: 0, vitA: 105, vitC: 2.8, vitD: 0, vitE: 0.03, vitK: 16.4, vitB12: 0, calcium: 16, iron: 0.3, magnesium: 13, potassium: 147, sodium: 2, zinc: 0.2 },
+                'pepper': { name: 'Bell Pepper', calories: 31, protein: 1, carbs: 6, fats: 0.3, fiber: 2.1, sugar: 4.2, satFat: 0, unsatFat: 0, transFat: 0, vitA: 3131, vitC: 127.7, vitD: 0, vitE: 1.6, vitK: 4.9, vitB12: 0, calcium: 7, iron: 0.4, magnesium: 12, potassium: 211, sodium: 4, zinc: 0.3 },
+                'onion': { name: 'Onion', calories: 40, protein: 1.1, carbs: 9, fats: 0.1, fiber: 1.7, sugar: 4.2, satFat: 0, unsatFat: 0.1, transFat: 0, vitA: 2, vitC: 7.4, vitD: 0, vitE: 0.02, vitK: 0.4, vitB12: 0, calcium: 23, iron: 0.2, magnesium: 10, potassium: 146, sodium: 4, zinc: 0.2 },
+                'garlic': { name: 'Garlic', calories: 149, protein: 6.4, carbs: 33, fats: 0.5, fiber: 2.1, sugar: 1, satFat: 0.1, unsatFat: 0.2, transFat: 0, vitA: 9, vitC: 31.2, vitD: 0, vitE: 0.08, vitK: 1.7, vitB12: 0, calcium: 181, iron: 1.7, magnesium: 25, potassium: 401, sodium: 17, zinc: 1.2 },
+                'mushroom': { name: 'Mushrooms', calories: 22, protein: 3.1, carbs: 3.3, fats: 0.3, fiber: 1, sugar: 2, satFat: 0, unsatFat: 0.1, transFat: 0, vitA: 0, vitC: 2.1, vitD: 0.2, vitE: 0.01, vitK: 0, vitB12: 0, calcium: 3, iron: 0.5, magnesium: 9, potassium: 318, sodium: 5, zinc: 0.5 },
+                'mushrooms': { name: 'Mushrooms', calories: 22, protein: 3.1, carbs: 3.3, fats: 0.3, fiber: 1, sugar: 2, satFat: 0, unsatFat: 0.1, transFat: 0, vitA: 0, vitC: 2.1, vitD: 0.2, vitE: 0.01, vitK: 0, vitB12: 0, calcium: 3, iron: 0.5, magnesium: 9, potassium: 318, sodium: 5, zinc: 0.5 },
+                
+                // Fruits
+                'apple': { name: 'Apple', calories: 52, protein: 0.3, carbs: 14, fats: 0.2, fiber: 2.4, sugar: 10, satFat: 0, unsatFat: 0.1, transFat: 0, vitA: 54, vitC: 4.6, vitD: 0, vitE: 0.18, vitK: 2.2, vitB12: 0, calcium: 6, iron: 0.1, magnesium: 5, potassium: 107, sodium: 1, zinc: 0 },
+                'banana': { name: 'Banana', calories: 89, protein: 1.1, carbs: 23, fats: 0.3, fiber: 2.6, sugar: 12, satFat: 0.1, unsatFat: 0.1, transFat: 0, vitA: 64, vitC: 8.7, vitD: 0, vitE: 0.1, vitK: 0.5, vitB12: 0, calcium: 5, iron: 0.3, magnesium: 27, potassium: 358, sodium: 1, zinc: 0.2 },
+                'orange': { name: 'Orange', calories: 47, protein: 0.9, carbs: 12, fats: 0.1, fiber: 2.4, sugar: 9, satFat: 0, unsatFat: 0, transFat: 0, vitA: 225, vitC: 53.2, vitD: 0, vitE: 0.18, vitK: 0, vitB12: 0, calcium: 40, iron: 0.1, magnesium: 10, potassium: 181, sodium: 0, zinc: 0.1 },
+                'blueberry': { name: 'Blueberries', calories: 57, protein: 0.7, carbs: 14, fats: 0.3, fiber: 2.4, sugar: 10, satFat: 0, unsatFat: 0.1, transFat: 0, vitA: 54, vitC: 9.7, vitD: 0, vitE: 0.57, vitK: 19.3, vitB12: 0, calcium: 6, iron: 0.3, magnesium: 6, potassium: 77, sodium: 1, zinc: 0.2 },
+                'blueberries': { name: 'Blueberries', calories: 57, protein: 0.7, carbs: 14, fats: 0.3, fiber: 2.4, sugar: 10, satFat: 0, unsatFat: 0.1, transFat: 0, vitA: 54, vitC: 9.7, vitD: 0, vitE: 0.57, vitK: 19.3, vitB12: 0, calcium: 6, iron: 0.3, magnesium: 6, potassium: 77, sodium: 1, zinc: 0.2 },
+                'strawberry': { name: 'Strawberries', calories: 32, protein: 0.7, carbs: 7.7, fats: 0.3, fiber: 2, sugar: 4.9, satFat: 0, unsatFat: 0.1, transFat: 0, vitA: 12, vitC: 58.8, vitD: 0, vitE: 0.29, vitK: 2.2, vitB12: 0, calcium: 16, iron: 0.4, magnesium: 13, potassium: 153, sodium: 1, zinc: 0.1 },
+                'strawberries': { name: 'Strawberries', calories: 32, protein: 0.7, carbs: 7.7, fats: 0.3, fiber: 2, sugar: 4.9, satFat: 0, unsatFat: 0.1, transFat: 0, vitA: 12, vitC: 58.8, vitD: 0, vitE: 0.29, vitK: 2.2, vitB12: 0, calcium: 16, iron: 0.4, magnesium: 13, potassium: 153, sodium: 1, zinc: 0.1 },
+                'avocado': { name: 'Avocado', calories: 160, protein: 2, carbs: 9, fats: 15, fiber: 7, sugar: 0.7, satFat: 2.1, unsatFat: 11.6, transFat: 0, vitA: 146, vitC: 10, vitD: 0, vitE: 2.1, vitK: 21, vitB12: 0, calcium: 12, iron: 0.6, magnesium: 29, potassium: 485, sodium: 7, zinc: 0.6 },
+                
+                // Dairy
+                'milk': { name: 'Milk (Whole)', calories: 61, protein: 3.2, carbs: 4.8, fats: 3.3, fiber: 0, sugar: 5.1, satFat: 1.9, unsatFat: 0.9, transFat: 0, vitA: 126, vitC: 0, vitD: 1, vitE: 0.08, vitK: 0.3, vitB12: 0.4, calcium: 113, iron: 0, magnesium: 10, potassium: 132, sodium: 43, zinc: 0.4 },
+                'cheese': { name: 'Cheese (Cheddar)', calories: 402, protein: 25, carbs: 1.3, fats: 33, fiber: 0, sugar: 0.5, satFat: 21, unsatFat: 9, transFat: 1, vitA: 994, vitC: 0, vitD: 0.6, vitE: 0.7, vitK: 2.4, vitB12: 1.1, calcium: 721, iron: 0.7, magnesium: 28, potassium: 98, sodium: 621, zinc: 3.1 },
+                'yogurt': { name: 'Yogurt (Greek)', calories: 59, protein: 10, carbs: 3.6, fats: 0.4, fiber: 0, sugar: 3.2, satFat: 0.1, unsatFat: 0.1, transFat: 0, vitA: 8, vitC: 0.5, vitD: 0, vitE: 0.01, vitK: 0.1, vitB12: 0.5, calcium: 110, iron: 0.1, magnesium: 11, potassium: 141, sodium: 36, zinc: 0.4 },
+                
+                // Nuts & Seeds
+                'almond': { name: 'Almonds', calories: 579, protein: 21, carbs: 22, fats: 50, fiber: 12.5, sugar: 4.4, satFat: 3.8, unsatFat: 43, transFat: 0, vitA: 2, vitC: 0, vitD: 0, vitE: 25.6, vitK: 0, vitB12: 0, calcium: 269, iron: 3.7, magnesium: 270, potassium: 733, sodium: 1, zinc: 3.1 },
+                'almonds': { name: 'Almonds', calories: 579, protein: 21, carbs: 22, fats: 50, fiber: 12.5, sugar: 4.4, satFat: 3.8, unsatFat: 43, transFat: 0, vitA: 2, vitC: 0, vitD: 0, vitE: 25.6, vitK: 0, vitB12: 0, calcium: 269, iron: 3.7, magnesium: 270, potassium: 733, sodium: 1, zinc: 3.1 },
+                'walnut': { name: 'Walnuts', calories: 654, protein: 15, carbs: 14, fats: 65, fiber: 6.7, sugar: 2.6, satFat: 6.1, unsatFat: 53, transFat: 0, vitA: 20, vitC: 1.3, vitD: 0, vitE: 0.7, vitK: 2.7, vitB12: 0, calcium: 98, iron: 2.9, magnesium: 158, potassium: 441, sodium: 2, zinc: 3.1 },
+                'walnuts': { name: 'Walnuts', calories: 654, protein: 15, carbs: 14, fats: 65, fiber: 6.7, sugar: 2.6, satFat: 6.1, unsatFat: 53, transFat: 0, vitA: 20, vitC: 1.3, vitD: 0, vitE: 0.7, vitK: 2.7, vitB12: 0, calcium: 98, iron: 2.9, magnesium: 158, potassium: 441, sodium: 2, zinc: 3.1 },
+                'peanut': { name: 'Peanuts', calories: 567, protein: 26, carbs: 16, fats: 49, fiber: 8.5, sugar: 4.7, satFat: 6.8, unsatFat: 25, transFat: 0, vitA: 0, vitC: 0, vitD: 0, vitE: 8.3, vitK: 0, vitB12: 0, calcium: 92, iron: 4.6, magnesium: 168, potassium: 705, sodium: 18, zinc: 3.3 },
+                'peanuts': { name: 'Peanuts', calories: 567, protein: 26, carbs: 16, fats: 49, fiber: 8.5, sugar: 4.7, satFat: 6.8, unsatFat: 25, transFat: 0, vitA: 0, vitC: 0, vitD: 0, vitE: 8.3, vitK: 0, vitB12: 0, calcium: 92, iron: 4.6, magnesium: 168, potassium: 705, sodium: 18, zinc: 3.3 },
+                
+                // Oils & Fats
+                'olive oil': { name: 'Olive Oil', calories: 884, protein: 0, carbs: 0, fats: 100, fiber: 0, sugar: 0, satFat: 13.8, unsatFat: 73, transFat: 0, vitA: 0, vitC: 0, vitD: 0, vitE: 14.4, vitK: 60.2, vitB12: 0, calcium: 1, iron: 0.6, magnesium: 0, potassium: 1, sodium: 2, zinc: 0 },
+                'butter': { name: 'Butter', calories: 717, protein: 0.9, carbs: 0.1, fats: 81, fiber: 0, sugar: 0.1, satFat: 51, unsatFat: 21, transFat: 3, vitA: 684, vitC: 0, vitD: 1.5, vitE: 2.3, vitK: 7, vitB12: 0.2, calcium: 24, iron: 0, magnesium: 2, potassium: 24, sodium: 11, zinc: 0.1 },
+                
+                // Beverages
+                'coffee': { name: 'Black Coffee', calories: 2, protein: 0.3, carbs: 0, fats: 0, fiber: 0, sugar: 0, satFat: 0, unsatFat: 0, transFat: 0, vitA: 0, vitC: 0, vitD: 0, vitE: 0.01, vitK: 0.1, vitB12: 0, calcium: 2, iron: 0, magnesium: 3, potassium: 49, sodium: 2, zinc: 0 },
+                'tea': { name: 'Green Tea', calories: 1, protein: 0.2, carbs: 0.2, fats: 0, fiber: 0, sugar: 0, satFat: 0, unsatFat: 0, transFat: 0, vitA: 0, vitC: 0, vitD: 0, vitE: 0, vitK: 0, vitB12: 0, calcium: 0, iron: 0, magnesium: 1, potassium: 8, sodium: 1, zinc: 0 },
+                'juice': { name: 'Orange Juice', calories: 45, protein: 0.7, carbs: 10, fats: 0.2, fiber: 0.2, sugar: 8, satFat: 0, unsatFat: 0, transFat: 0, vitA: 200, vitC: 50, vitD: 0, vitE: 0.04, vitK: 0.1, vitB12: 0, calcium: 11, iron: 0.2, magnesium: 11, potassium: 200, sodium: 1, zinc: 0.1 },
+                
+                // Prepared foods
+                'salad': { name: 'Mixed Green Salad', calories: 33, protein: 2.9, carbs: 5, fats: 0.5, fiber: 2.8, sugar: 2.5, satFat: 0.1, unsatFat: 0.2, transFat: 0, vitA: 5000, vitC: 35, vitD: 0, vitE: 1.5, vitK: 300, vitB12: 0, calcium: 100, iron: 2, magnesium: 40, potassium: 450, sodium: 50, zinc: 0.5 },
+                'soup': { name: 'Vegetable Soup', calories: 45, protein: 2, carbs: 7, fats: 1.5, fiber: 2, sugar: 3, satFat: 0.5, unsatFat: 0.8, transFat: 0, vitA: 3000, vitC: 15, vitD: 0, vitE: 0.5, vitK: 10, vitB12: 0, calcium: 30, iron: 1, magnesium: 15, potassium: 300, sodium: 400, zinc: 0.3 },
+                'sandwich': { name: 'Turkey Sandwich', calories: 250, protein: 18, carbs: 30, fats: 8, fiber: 3, sugar: 4, satFat: 2, unsatFat: 4, transFat: 0, vitA: 100, vitC: 5, vitD: 0.2, vitE: 1, vitK: 15, vitB12: 0.5, calcium: 150, iron: 2.5, magnesium: 40, potassium: 350, sodium: 600, zinc: 2 },
+                'pizza': { name: 'Cheese Pizza', calories: 266, protein: 11, carbs: 33, fats: 10, fiber: 2.3, sugar: 3.6, satFat: 4.5, unsatFat: 3.5, transFat: 0.2, vitA: 200, vitC: 2, vitD: 0, vitE: 1, vitK: 7, vitB12: 0.4, calcium: 200, iron: 2.5, magnesium: 20, potassium: 180, sodium: 600, zinc: 1.5 },
+                'burger': { name: 'Beef Burger', calories: 295, protein: 17, carbs: 30, fats: 12, fiber: 1.5, sugar: 5, satFat: 4.5, unsatFat: 5, transFat: 0.5, vitA: 50, vitC: 2, vitD: 0.2, vitE: 0.5, vitK: 5, vitB12: 1.5, calcium: 80, iron: 3, magnesium: 25, potassium: 250, sodium: 500, zinc: 3 },
+                'fries': { name: 'French Fries', calories: 312, protein: 3.4, carbs: 41, fats: 15, fiber: 3.8, sugar: 0.3, satFat: 2.3, unsatFat: 9, transFat: 0.1, vitA: 0, vitC: 2.7, vitD: 0, vitE: 1.7, vitK: 11.2, vitB12: 0, calcium: 15, iron: 0.8, magnesium: 35, potassium: 579, sodium: 246, zinc: 0.5 },
+                'pancake': { name: 'Pancakes', calories: 227, protein: 6, carbs: 28, fats: 10, fiber: 1, sugar: 8, satFat: 2.5, unsatFat: 5, transFat: 0.1, vitA: 80, vitC: 0.3, vitD: 0.2, vitE: 0.8, vitK: 5, vitB12: 0.3, calcium: 180, iron: 1.5, magnesium: 15, potassium: 150, sodium: 400, zinc: 0.5 },
+                'cereal': { name: 'Breakfast Cereal', calories: 379, protein: 8, carbs: 83, fats: 3, fiber: 10, sugar: 20, satFat: 0.5, unsatFat: 1.5, transFat: 0, vitA: 500, vitC: 20, vitD: 3, vitE: 1, vitK: 1.5, vitB12: 6, calcium: 30, iron: 30, magnesium: 80, potassium: 300, sodium: 500, zinc: 10 },
+                
+                // Default fallback
+                'default': { name: 'Mixed Meal', calories: 150, protein: 8, carbs: 20, fats: 5, fiber: 3, sugar: 5, satFat: 1.5, unsatFat: 2.5, transFat: 0, vitA: 100, vitC: 10, vitD: 0.5, vitE: 1, vitK: 5, vitB12: 0.2, calcium: 50, iron: 1.5, magnesium: 25, potassium: 200, sodium: 150, zinc: 0.8 }
+            };
 
-        alert("Nutrition calculated");
-
-    } catch (error) {
-        console.error(error);
-        alert("AI failed");
-    }
-}
+            // Find matching foods in description
+            const foundFoods = [];
+            const words = description.split(/\s+/);
+            
+            // Check for multi-word matches first
+            for (let key in foodDatabase) {
+                if (key !== 'default' && description.includes(key)) {
+                    foundFoods.push({ key: key, data: foodDatabase[key] });
+                }
+            }
+            
+            // If no specific foods found, use default
+            if (foundFoods.length === 0) {
+                foundFoods.push({ key: 'default', data: foodDatabase['default'] });
+            }
+            
+            // Calculate weighted average based on found foods
+            let totalWeight = foundFoods.length;
+            let result = {
+                name: foundFoods.map(f => f.data.name).join(' + '),
+                calories: 0, protein: 0, carbs: 0, fats: 0, fiber: 0, sugar: 0,
+                satFat: 0, unsatFat: 0, transFat: 0,
+                vitA: 0, vitC: 0, vitD: 0, vitE: 0, vitK: 0, vitB12: 0,
+                calcium: 0, iron: 0, magnesium: 0, potassium: 0, sodium: 0, zinc: 0
+            };
+            
+            foundFoods.forEach(food => {
+                result.calories += food.data.calories;
+                result.protein += food.data.protein;
+                result.carbs += food.data.carbs;
+                result.fats += food.data.fats;
+                result.fiber += food.data.fiber;
+                result.sugar += food.data.sugar;
+                result.satFat += food.data.satFat;
+                result.unsatFat += food.data.unsatFat;
+                result.transFat += food.data.transFat;
+                result.vitA += food.data.vitA;
+                result.vitC += food.data.vitC;
+                result.vitD += food.data.vitD;
+                result.vitE += food.data.vitE;
+                result.vitK += food.data.vitK;
+                result.vitB12 += food.data.vitB12;
+                result.calcium += food.data.calcium;
+                result.iron += food.data.iron;
+                result.magnesium += food.data.magnesium;
+                result.potassium += food.data.potassium;
+                result.sodium += food.data.sodium;
+                result.zinc += food.data.zinc;
+            });
+            
+            // Average the values
+            Object.keys(result).forEach(key => {
+                if (key !== 'name') {
+                    result[key] = Math.round((result[key] / totalWeight) * multiplier);
+                }
+            });
+            
+            // Adjust name based on quantity
+            if (grams >= 250) {
+                result.name = 'Large ' + result.name;
+            } else if (grams <= 50) {
+                result.name = 'Small ' + result.name;
+            }
+            
+            return result;
+        }
 
         window.addEventListener('load', init);
     </script>
