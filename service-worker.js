@@ -1,7 +1,6 @@
-const CACHE_NAME = 'NutriTrack-v1';
+const CACHE_NAME = 'nutritrack-v1';
 const urlsToCache = [
-  './',
-  './index.html',
+
   './manifest.json',
   './icon-192.png',
   './icon-512.png'
@@ -50,6 +49,7 @@ self.addEventListener('activate', event => {
   );
   self.clients.claim();
 });
+
 
 
 
