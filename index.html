@@ -3,14 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#1a1a2e">
+    <meta name="theme-color" content="#10b981">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="NutriTrack">
-    <meta name="description" content="Complete nutrition tracking with vitamins, minerals, and macros">
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="icon-192.png">
-    <title>NutriTrack - Complete Nutrition</title>
+    <title>NutriTrack</title>
     <style>
         * {
             margin: 0;
@@ -24,7 +20,6 @@
             --secondary: #3b82f6;
             --danger: #ef4444;
             --warning: #f59e0b;
-            --success: #22c55e;
             --dark: #0f172a;
             --light: #f8fafc;
             --text: #1e293b;
@@ -51,16 +46,10 @@
         .app-header h1 {
             font-size: 28px;
             font-weight: 700;
-            margin-bottom: 5px;
-        }
-
-        .app-header p {
-            font-size: 14px;
-            opacity: 0.9;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 800px;
             margin: 20px auto;
             padding: 0 20px;
         }
@@ -92,72 +81,80 @@
             font-weight: 700;
             margin-bottom: 16px;
             color: var(--text);
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
-        /* Home/Dashboard */
+        /* Hero Section */
         .hero-section {
             text-align: center;
             color: white;
-            margin-bottom: 20px;
-            padding: 40px 20px;
+            padding: 40px 20px 20px;
         }
 
         .hero-score {
             font-size: 72px;
             font-weight: 900;
-            margin: 20px 0;
+            margin: 20px 0 10px;
             text-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
 
         .hero-label {
-            font-size: 18px;
+            font-size: 16px;
             opacity: 0.9;
             text-transform: uppercase;
             letter-spacing: 2px;
         }
 
-        /* Comprehensive Nutrition Grid */
-        .nutrition-overview {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .nutrition-card {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.1));
-            padding: 16px;
+        /* Compact Streak */
+        .streak-compact {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: white;
+            padding: 12px 20px;
             border-radius: 12px;
+            margin-bottom: 16px;
             text-align: center;
-            border: 2px solid var(--border);
+            font-size: 16px;
+            font-weight: 700;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        .nutrition-value {
+        .streak-compact span {
             font-size: 24px;
             font-weight: 900;
-            color: var(--primary);
-            margin-bottom: 4px;
         }
 
-        .nutrition-label {
-            font-size: 11px;
+        /* Nutrition Progress Items */
+        .nutrition-progress-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 16px;
+        }
+
+        .nutrition-progress-item {
+            background: var(--light);
+            padding: 16px;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .nutrition-progress-item .label {
+            font-size: 12px;
             color: var(--text-light);
+            margin-bottom: 8px;
             text-transform: uppercase;
             font-weight: 600;
         }
 
-        .nutrition-target {
-            font-size: 10px;
-            color: var(--text-light);
-            margin-top: 4px;
+        .nutrition-progress-item .progress-text {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 6px;
         }
 
-        /* Detailed Nutrition Sections */
-        .nutrition-section {
-            margin-bottom: 20px;
+        .nutrition-progress-item .progress-percent {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--primary);
         }
 
         .section-header {
@@ -170,29 +167,8 @@
             border-radius: 8px;
         }
 
-        .nutrition-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: 10px;
-        }
-
-        .nutrition-item-small {
-            background: var(--light);
-            padding: 12px;
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        .nutrition-item-small .value {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--text);
-        }
-
-        .nutrition-item-small .label {
-            font-size: 10px;
-            color: var(--text-light);
-            margin-top: 4px;
+        .nutrition-section {
+            margin-bottom: 20px;
         }
 
         /* Meal Items */
@@ -223,7 +199,7 @@
 
         .meal-item.completed {
             opacity: 0.6;
-            border-left-color: var(--success);
+            border-left-color: var(--primary-dark);
         }
 
         .meal-header-row {
@@ -274,72 +250,41 @@
             text-align: center;
         }
 
-        /* History Page */
-        .achievement-card {
-            background: linear-gradient(135deg, #fbbf24, #f59e0b);
-            color: white;
-            padding: 24px;
-            border-radius: 16px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .achievement-number {
-            font-size: 64px;
-            font-weight: 900;
-            margin-bottom: 8px;
-        }
-
-        .achievement-label {
-            font-size: 16px;
-            opacity: 0.9;
-        }
-
-        .history-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        /* History */
+        .date-navigator {
+            display: flex;
+            align-items: center;
             gap: 12px;
             margin-bottom: 20px;
         }
 
-        .history-stat {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            text-align: center;
+        .date-navigator input {
+            flex: 1;
+            padding: 12px;
             border: 2px solid var(--border);
-        }
-
-        .history-stat-value {
-            font-size: 32px;
-            font-weight: 900;
-            color: var(--primary);
-            margin-bottom: 8px;
-        }
-
-        .history-stat-label {
-            font-size: 12px;
-            color: var(--text-light);
-            text-transform: uppercase;
-        }
-
-        .history-item {
-            background: var(--light);
-            padding: 16px;
             border-radius: 12px;
-            margin-bottom: 12px;
-            border-left: 4px solid var(--primary);
+            font-size: 16px;
+            font-weight: 600;
         }
 
-        .history-date {
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 8px;
+        .days-tracked {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: white;
+            padding: 16px;
+            border-radius: 16px;
+            text-align: center;
+            margin-bottom: 16px;
         }
 
-        .history-details {
+        .days-tracked-number {
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 4px;
+        }
+
+        .days-tracked-label {
             font-size: 14px;
-            color: var(--text);
+            opacity: 0.9;
         }
 
         /* Buttons */
@@ -377,34 +322,21 @@
         }
 
         .btn-icon {
-            padding: 8px 12px;
+            padding: 10px 16px;
             border-radius: 8px;
             border: none;
-            background: var(--danger);
+            background: var(--primary);
             color: white;
             cursor: pointer;
             font-size: 18px;
-        }
-
-        .btn-ai {
-            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
-            color: white;
-            padding: 14px 24px;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
             font-weight: 700;
-            cursor: pointer;
-            width: 100%;
-            transition: all 0.3s;
         }
 
-        .btn-ai:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 16px rgba(139, 92, 246, 0.4);
+        .btn-danger {
+            background: var(--danger);
         }
 
-        /* Bottom Navigation - 3 items */
+        /* Bottom Navigation */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -432,12 +364,12 @@
         }
 
         .nav-icon {
-            font-size: 24px;
+            font-size: 28px;
             margin-bottom: 4px;
         }
 
         .nav-label {
-            font-size: 10px;
+            font-size: 11px;
             font-weight: 600;
         }
 
@@ -464,9 +396,9 @@
             background: white;
             border-radius: 20px;
             padding: 24px;
-            max-width: 600px;
+            max-width: 500px;
             width: 100%;
-            max-height: 85vh;
+            max-height: 80vh;
             overflow-y: auto;
         }
 
@@ -497,7 +429,7 @@
         }
 
         .form-group input,
-        .form-group textarea {
+        .form-group select {
             width: 100%;
             padding: 12px 16px;
             border: 2px solid var(--border);
@@ -506,7 +438,7 @@
         }
 
         .form-group input:focus,
-        .form-group textarea:focus {
+        .form-group select:focus {
             outline: none;
             border-color: var(--primary);
         }
@@ -517,14 +449,8 @@
             gap: 12px;
         }
 
-        .form-grid-3 {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-        }
-
-        .ai-section {
-            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(124, 58, 237, 0.1));
+        .smart-calc-section {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.1));
             padding: 20px;
             border-radius: 12px;
             margin-bottom: 20px;
@@ -551,196 +477,124 @@
         .divider::before { left: 0; }
         .divider::after { right: 0; }
 
-        @media (max-width: 768px) {
-            .nutrition-overview {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .form-grid-3 {
-                grid-template-columns: repeat(2, 1fr);
+        #progress-chart {
+            width: 100%;
+            height: 250px;
+        }
+
+        @media (max-width: 600px) {
+            .nutrition-progress-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
-<base target="_blank">
 </head>
 <body>
     <!-- Header -->
     <div class="app-header">
         <h1>🥗 NutriTrack</h1>
-        <p id="current-date"></p>
     </div>
 
-    <!-- Home/Dashboard Page with Complete Nutrition -->
+    <!-- Dashboard Page -->
     <div id="home-page" class="page active">
         <div class="hero-section">
-            <div class="hero-label">Nutrition Goal</div>
+            <div class="hero-label">Overall Progress</div>
             <div class="hero-score" id="overall-score">0%</div>
-            <div class="hero-label">Completed Today</div>
+            <button class="btn-small btn-add" onclick="openGoalsModal()">⚙️ Edit Goals</button>
         </div>
 
         <div class="container">
-            <!-- Quick Macros Card -->
-            <div class="card">
-                <div class="card-title">
-                    🎯 Daily Nutrition Goals
-                    <button class="btn-small btn-add" onclick="openGoalsModal()" style="margin-left: auto;">Edit Goals</button>
-                </div>
-                <div class="nutrition-overview">
-                    <div class="nutrition-card">
-                        <div class="nutrition-value" id="dash-calories">0</div>
-                        <div class="nutrition-label">Calories</div>
-                        <div class="nutrition-target" id="dash-cal-target">/ 2000</div>
-                    </div>
-                    <div class="nutrition-card">
-                        <div class="nutrition-value" id="dash-protein">0</div>
-                        <div class="nutrition-label">Protein (g)</div>
-                        <div class="nutrition-target" id="dash-pro-target">/ 150</div>
-                    </div>
-                    <div class="nutrition-card">
-                        <div class="nutrition-value" id="dash-carbs">0</div>
-                        <div class="nutrition-label">Carbs (g)</div>
-                        <div class="nutrition-target" id="dash-car-target">/ 250</div>
-                    </div>
-                    <div class="nutrition-card">
-                        <div class="nutrition-value" id="dash-fats">0</div>
-                        <div class="nutrition-label">Fats (g)</div>
-                        <div class="nutrition-target" id="dash-fat-target">/ 65</div>
-                    </div>
-                </div>
-            </div>
+            <!-- Streak -->
+            
 
-            <!-- Complete Nutrition Overview - Now on Dashboard -->
+            <!-- Nutrition Progress -->
             <div class="card">
-                <div class="card-title">📊 Complete Nutrition Overview</div>
+                <div class="card-title">🔍 Nutrition Progress</div>
                 
-                <!-- Macronutrients -->
                 <div class="nutrition-section">
                     <div class="section-header">Macronutrients</div>
-                    <div class="nutrition-grid">
-                        <div class="nutrition-item-small">
-                            <div class="value" id="total-calories">0</div>
+                    <div class="nutrition-progress-grid">
+                        <div class="nutrition-progress-item">
                             <div class="label">Calories</div>
+                            <div class="progress-text"><span id="cal-done">0</span> / <span id="cal-need">2000</span></div>
+                            <div class="progress-percent" id="cal-percent">0%</div>
                         </div>
-                        <div class="nutrition-item-small">
-                            <div class="value" id="total-protein">0g</div>
+                        <div class="nutrition-progress-item">
                             <div class="label">Protein</div>
+                            <div class="progress-text"><span id="pro-done">0</span>g / <span id="pro-need">150</span>g</div>
+                            <div class="progress-percent" id="pro-percent">0%</div>
                         </div>
-                        <div class="nutrition-item-small">
-                            <div class="value" id="total-carbs">0g</div>
+                        <div class="nutrition-progress-item">
                             <div class="label">Carbs</div>
+                            <div class="progress-text"><span id="car-done">0</span>g / <span id="car-need">250</span>g</div>
+                            <div class="progress-percent" id="car-percent">0%</div>
                         </div>
-                        <div class="nutrition-item-small">
-                            <div class="value" id="total-fats">0g</div>
-                            <div class="label">Total Fat</div>
+                        <div class="nutrition-progress-item">
+                            <div class="label">Fats</div>
+                            <div class="progress-text"><span id="fat-done">0</span>g / <span id="fat-need">65</span>g</div>
+                            <div class="progress-percent" id="fat-percent">0%</div>
                         </div>
-                        <div class="nutrition-item-small">
-                            <div class="value" id="total-fiber">0g</div>
+                        <div class="nutrition-progress-item">
                             <div class="label">Fiber</div>
+                            <div class="progress-text"><span id="fib-done">0</span>g / <span id="fib-need">30</span>g</div>
+                            <div class="progress-percent" id="fib-percent">0%</div>
                         </div>
-                        <div class="nutrition-item-small">
-                            <div class="value" id="total-sugar">0g</div>
+                        <div class="nutrition-progress-item">
                             <div class="label">Sugar</div>
+                            <div class="progress-text"><span id="sug-done">0</span>g / <span id="sug-need">50</span>g</div>
+                            <div class="progress-percent" id="sug-percent">0%</div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Fats Breakdown -->
-                <div class="nutrition-section">
-                    <div class="section-header">Fat Breakdown</div>
-                    <div class="nutrition-grid">
-                        <div class="nutrition-item-small">
-                            <div class="value" id="total-sat-fat">0g</div>
-                            <div class="label">Saturated</div>
-                        </div>
-                        <div class="nutrition-item-small">
-                            <div class="value" id="total-unsat-fat">0g</div>
-                            <div class="label">Unsaturated</div>
-                        </div>
-                        <div class="nutrition-item-small">
-                            <div class="value" id="total-trans-fat">0g</div>
-                            <div class="label">Trans Fat</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Vitamins -->
                 <div class="nutrition-section">
                     <div class="section-header">Vitamins</div>
-                    <div class="nutrition-grid">
-                        <div class="nutrition-item-small">
-                            <div class="value" id="total-vit-a">0</div>
-                            <div class="label">Vit A (IU)</div>
+                    <div class="nutrition-progress-grid">
+                        <div class="nutrition-progress-item">
+                            <div class="label">Vitamin C</div>
+                            <div class="progress-text"><span id="vitc-done">0</span> / <span id="vitc-need">90</span> mg</div>
+                            <div class="progress-percent" id="vitc-percent">0%</div>
                         </div>
-                        <div class="nutrition-item-small">
-                            <div class="value" id="total-vit-c">0</div>
-                            <div class="label">Vit C (mg)</div>
-                        </div>
-                        <div class="nutrition-item-small">
-                            <div class="value" id="total-vit-d">0</div>
-                            <div class="label">Vit D (IU)</div>
-                        </div>
-                        <div class="nutrition-item-small">
-                            <div class="value" id="total-vit-e">0</div>
-                            <div class="label">Vit E (mg)</div>
-                        </div>
-                        <div class="nutrition-item-small">
-                            <div class="value" id="total-vit-k">0</div>
-                            <div class="label">Vit K (mcg)</div>
-                        </div>
-                        <div class="nutrition-item-small">
-                            <div class="value" id="total-vit-b12">0</div>
-                            <div class="label">Vit B12 (mcg)</div>
+                        <div class="nutrition-progress-item">
+                            <div class="label">Vitamin D</div>
+                            <div class="progress-text"><span id="vitd-done">0</span> / <span id="vitd-need">600</span> IU</div>
+                            <div class="progress-percent" id="vitd-percent">0%</div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Minerals -->
                 <div class="nutrition-section">
                     <div class="section-header">Minerals</div>
-                    <div class="nutrition-grid">
-                        <div class="nutrition-item-small">
-                            <div class="value" id="total-calcium">0</div>
-                            <div class="label">Calcium (mg)</div>
+                    <div class="nutrition-progress-grid">
+                        <div class="nutrition-progress-item">
+                            <div class="label">Calcium</div>
+                            <div class="progress-text"><span id="ca-done">0</span> / <span id="ca-need">1000</span> mg</div>
+                            <div class="progress-percent" id="ca-percent">0%</div>
                         </div>
-                        <div class="nutrition-item-small">
-                            <div class="value" id="total-iron">0</div>
-                            <div class="label">Iron (mg)</div>
+                        <div class="nutrition-progress-item">
+                            <div class="label">Iron</div>
+                            <div class="progress-text"><span id="fe-done">0</span> / <span id="fe-need">18</span> mg</div>
+                            <div class="progress-percent" id="fe-percent">0%</div>
                         </div>
-                        <div class="nutrition-item-small">
-                            <div class="value" id="total-magnesium">0</div>
-                            <div class="label">Magnesium (mg)</div>
+                        <div class="nutrition-progress-item">
+                            <div class="label">Potassium</div>
+                            <div class="progress-text"><span id="po-done">0</span> / <span id="po-need">3500</span> mg</div>
+                            <div class="progress-percent" id="po-percent">0%</div>
                         </div>
-                        <div class="nutrition-item-small">
-                            <div class="value" id="total-potassium">0</div>
-                            <div class="label">Potassium (mg)</div>
-                        </div>
-                        <div class="nutrition-item-small">
-                            <div class="value" id="total-sodium">0</div>
-                            <div class="label">Sodium (mg)</div>
-                        </div>
-                        <div class="nutrition-item-small">
-                            <div class="value" id="total-zinc">0</div>
-                            <div class="label">Zinc (mg)</div>
+                        <div class="nutrition-progress-item">
+                            <div class="label">Sodium</div>
+                            <div class="progress-text"><span id="so-done">0</span> / <span id="so-need">2300</span> mg</div>
+                            <div class="progress-percent" id="so-percent">0%</div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <!-- Streak Card -->
-            <div class="card">
-                <div class="card-title">🔥 Streak</div>
-                <div style="text-align: center; padding: 20px;">
-                    <div style="font-size: 64px; font-weight: 900; color: var(--warning);" id="streak-count">0</div>
-                    <div style="color: var(--text-light); margin-top: 8px; font-size: 16px;">consecutive days</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Meals Page -->
-    <div id="meals-page" class="page">
+    <!-- Nutrition Page (Meals Only) -->
+    <div id="nutrition-page" class="page">
         <div class="container">
-            <!-- Meals by Time -->
             <div class="card">
                 <div class="card-title">🍽️ Meals</div>
                 
@@ -779,84 +633,31 @@
         </div>
     </div>
 
-    <!-- History Page -->
+    <!-- History Page (Minimal) -->
     <div id="history-page" class="page">
         <div class="container">
+        
+
             <!-- Date Navigator -->
             <div class="card">
                 <div class="card-title">📅 Select Date</div>
-                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
-                    <button class="btn-icon" onclick="changeDate(-1)" style="background: var(--primary);">◀</button>
-                    <input type="date" id="history-date" onchange="loadHistoryForDate()" style="flex: 1; padding: 12px; border: 2px solid var(--border); border-radius: 12px; font-size: 16px; font-weight: 600;">
-                    <button class="btn-icon" onclick="changeDate(1)" style="background: var(--primary);">▶</button>
+                <div class="date-navigator">
+                    <button class="btn-icon" onclick="changeDate(-1)">◀</button>
+                    <input type="date" id="history-date" onchange="loadHistoryForDate()">
+                    <button class="btn-icon" onclick="changeDate(1)">▶</button>
                     <button class="btn-small btn-add" onclick="goToToday()">Today</button>
                 </div>
             </div>
 
-            <!-- Daily Progress Chart -->
+            <!-- Progress Chart -->
             <div class="card">
-                <div class="card-title">📊 Daily Progress</div>
-                <canvas id="progress-chart" style="max-height: 300px;"></canvas>
+                <div class="card-title">📊 7-Day Progress</div>
+                <canvas id="progress-chart"></canvas>
             </div>
 
-            <!-- Selected Day Stats -->
+            <!-- Reset -->
             <div class="card">
-                <div class="card-title">📈 Selected Day: <span id="selected-date-display"></span></div>
-                <div class="nutrition-overview" id="selected-day-nutrition">
-                    <div class="nutrition-card">
-                        <div class="nutrition-value" id="hist-calories">0</div>
-                        <div class="nutrition-label">Calories</div>
-                    </div>
-                    <div class="nutrition-card">
-                        <div class="nutrition-value" id="hist-protein">0</div>
-                        <div class="nutrition-label">Protein (g)</div>
-                    </div>
-                    <div class="nutrition-card">
-                        <div class="nutrition-value" id="hist-carbs">0</div>
-                        <div class="nutrition-label">Carbs (g)</div>
-                    </div>
-                    <div class="nutrition-card">
-                        <div class="nutrition-value" id="hist-fats">0</div>
-                        <div class="nutrition-label">Fats (g)</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Overall Statistics -->
-            <div class="achievement-card">
-                <div class="achievement-number" id="total-days-tracked">0</div>
-                <div class="achievement-label">Days Tracked</div>
-            </div>
-
-            <div class="card">
-                <div class="card-title">📊 All-Time Statistics</div>
-                <div class="history-grid">
-                    <div class="history-stat">
-                        <div class="history-stat-value" id="avg-calories">0</div>
-                        <div class="history-stat-label">Avg Calories</div>
-                    </div>
-                    <div class="history-stat">
-                        <div class="history-stat-value" id="avg-protein">0g</div>
-                        <div class="history-stat-label">Avg Protein</div>
-                    </div>
-                    <div class="history-stat">
-                        <div class="history-stat-value" id="best-streak">0</div>
-                        <div class="history-stat-label">Best Streak</div>
-                    </div>
-                    <div class="history-stat">
-                        <div class="history-stat-value" id="total-meals">0</div>
-                        <div class="history-stat-label">Total Meals</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Reset Data -->
-            <div class="card">
-                <div class="card-title">⚙️ Settings</div>
-                <button class="btn btn-primary" onclick="resetAllData()" style="background: var(--danger);">🗑️ Reset All Data</button>
-                <div style="text-align: center; color: var(--text-light); font-size: 12px; margin-top: 8px;">
-                    This will delete all meals, history, and settings. Cannot be undone!
-                </div>
+                <button class="btn btn-primary btn-danger" onclick="resetAllData()">🗑️ Reset All Data</button>
             </div>
         </div>
     </div>
@@ -866,60 +667,88 @@
         <div class="modal-content">
             <div class="modal-header">
                 <span class="close-modal" onclick="closeGoalsModal()">&times;</span>
-                Set Nutrition Goals
+                Set Daily Goals
             </div>
 
-            <!-- AI-Powered Goals -->
-            <div class="ai-section">
+            <!-- Smart Calculator -->
+            <div class="smart-calc-section">
                 <div class="form-group">
-                    <label>🤖 Smart Goal Calculator</label>
-                    <textarea id="ai-goals-description" rows="4" placeholder="Describe yourself and your goals:&#10;&#10;Example:&#10;Age: 25, Male, Weight: 75kg, Height: 180cm&#10;Activity: Moderate (gym 4x/week)&#10;Goal: Build muscle and lose fat"></textarea>
+                    <label>🧮 Smart Calculator</label>
+                    <div class="form-grid-2">
+                        <input type="number" id="calc-weight" placeholder="Weight (kg)">
+                        <input type="number" id="calc-height" placeholder="Height (cm)">
+                        <select id="calc-gender">
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                        <input type="number" id="calc-age" placeholder="Age">
+                        <select id="calc-activity">
+                            <option value="1.2">Sedentary</option>
+                            <option value="1.375">Light</option>
+                            <option value="1.55" selected>Moderate</option>
+                            <option value="1.725">Active</option>
+                            <option value="1.9">Very Active</option>
+                        </select>
+                        <select id="calc-goal">
+                            <option value="lose">Lose Fat</option>
+                            <option value="maintain" selected>Maintain</option>
+                            <option value="gain">Build Muscle</option>
+                        </select>
+                    </div>
                 </div>
-                <button class="btn-ai" onclick="calculateGoalsWithAI()" id="goals-ai-btn">
-                    <span id="goals-ai-text">✨ Calculate My Goals</span>
-                    <span id="goals-ai-loading" style="display:none">⏳ Calculating...</span>
-                </button>
+                <button class="btn btn-primary" onclick="calculateGoals()">✨ Calculate</button>
             </div>
 
             <div class="divider">OR SET MANUALLY</div>
 
-            <!-- Manual Input -->
             <div class="form-grid-2">
                 <div class="form-group">
                     <label>Calories</label>
-                    <input type="number" id="goal-calories" placeholder="2000">
+                    <input type="number" id="goal-calories" value="2000">
                 </div>
                 <div class="form-group">
                     <label>Protein (g)</label>
-                    <input type="number" id="goal-protein" placeholder="150">
+                    <input type="number" id="goal-protein" value="150">
                 </div>
                 <div class="form-group">
                     <label>Carbs (g)</label>
-                    <input type="number" id="goal-carbs" placeholder="250">
+                    <input type="number" id="goal-carbs" value="250">
                 </div>
                 <div class="form-group">
                     <label>Fats (g)</label>
-                    <input type="number" id="goal-fats" placeholder="65">
+                    <input type="number" id="goal-fats" value="65">
                 </div>
                 <div class="form-group">
                     <label>Fiber (g)</label>
-                    <input type="number" id="goal-fiber" placeholder="30">
+                    <input type="number" id="goal-fiber" value="30">
                 </div>
                 <div class="form-group">
-                    <label>Sugar (g max)</label>
-                    <input type="number" id="goal-sugar" placeholder="50">
+                    <label>Sugar (g)</label>
+                    <input type="number" id="goal-sugar" value="50">
                 </div>
-            </div>
-
-            <div class="form-group">
-                <label>Vitamins & Minerals (Daily Values)</label>
-                <div class="form-grid-3">
-                    <input type="number" id="goal-vit-c" placeholder="Vit C (90mg)">
-                    <input type="number" id="goal-vit-d" placeholder="Vit D (600 IU)">
-                    <input type="number" id="goal-calcium" placeholder="Calcium (1000mg)">
-                    <input type="number" id="goal-iron" placeholder="Iron (18mg)">
-                    <input type="number" id="goal-potassium" placeholder="Potassium (3500mg)">
-                    <input type="number" id="goal-sodium" placeholder="Sodium (2300mg)">
+                <div class="form-group">
+                    <label>Vit C (mg)</label>
+                    <input type="number" id="goal-vitc" value="90">
+                </div>
+                <div class="form-group">
+                    <label>Vit D (IU)</label>
+                    <input type="number" id="goal-vitd" value="600">
+                </div>
+                <div class="form-group">
+                    <label>Calcium (mg)</label>
+                    <input type="number" id="goal-ca" value="1000">
+                </div>
+                <div class="form-group">
+                    <label>Iron (mg)</label>
+                    <input type="number" id="goal-fe" value="18">
+                </div>
+                <div class="form-group">
+                    <label>Potassium (mg)</label>
+                    <input type="number" id="goal-po" value="3500">
+                </div>
+                <div class="form-group">
+                    <label>Sodium (mg)</label>
+                    <input type="number" id="goal-so" value="2300">
                 </div>
             </div>
 
@@ -934,25 +763,10 @@
                 <span class="close-modal" onclick="closeMealModal()">&times;</span>
                 Add Meal
             </div>
-            
-            <!-- AI Section -->
-            <div class="ai-section">
-                <div class="form-group">
-                    <label>🤖 Smart Meal Calculator</label>
-                    <textarea id="ai-description" rows="3" placeholder="Describe your meal (e.g., grilled chicken breast 200g with brown rice and broccoli)"></textarea>
-                </div>
-                <button class="btn-ai" onclick="calculateWithAI()" id="ai-btn">
-                    <span id="ai-text">✨ Calculate Nutrition</span>
-                    <span id="ai-loading" style="display:none">⏳ Calculating...</span>
-                </button>
-            </div>
 
-            <div class="divider">OR ENTER MANUALLY</div>
-
-            <!-- Manual Input -->
             <div class="form-group">
                 <label>Meal Name</label>
-                <input type="text" id="meal-name" placeholder="e.g., Grilled Chicken with Rice">
+                <input type="text" id="meal-name" placeholder="e.g., Chicken with Rice">
             </div>
 
             <div class="form-grid-2">
@@ -980,57 +794,48 @@
                     <label>Sugar (g)</label>
                     <input type="number" id="meal-sugar" placeholder="0">
                 </div>
-            </div>
-
-            <div class="form-group">
-                <label>Fat Breakdown</label>
-                <div class="form-grid-3">
-                    <input type="number" id="meal-sat-fat" placeholder="Saturated">
-                    <input type="number" id="meal-unsat-fat" placeholder="Unsaturated">
-                    <input type="number" id="meal-trans-fat" placeholder="Trans">
+                <div class="form-group">
+                    <label>Vit C (mg)</label>
+                    <input type="number" id="meal-vitc" placeholder="0">
+                </div>
+                <div class="form-group">
+                    <label>Vit D (IU)</label>
+                    <input type="number" id="meal-vitd" placeholder="0">
+                </div>
+                <div class="form-group">
+                    <label>Calcium (mg)</label>
+                    <input type="number" id="meal-ca" placeholder="0">
+                </div>
+                <div class="form-group">
+                    <label>Iron (mg)</label>
+                    <input type="number" id="meal-fe" placeholder="0">
+                </div>
+                <div class="form-group">
+                    <label>Potassium (mg)</label>
+                    <input type="number" id="meal-po" placeholder="0">
+                </div>
+                <div class="form-group">
+                    <label>Sodium (mg)</label>
+                    <input type="number" id="meal-so" placeholder="0">
                 </div>
             </div>
 
-            <div class="form-group">
-                <label>Vitamins</label>
-                <div class="form-grid-3">
-                    <input type="number" id="meal-vit-a" placeholder="Vit A (IU)">
-                    <input type="number" id="meal-vit-c" placeholder="Vit C (mg)">
-                    <input type="number" id="meal-vit-d" placeholder="Vit D (IU)">
-                    <input type="number" id="meal-vit-e" placeholder="Vit E (mg)">
-                    <input type="number" id="meal-vit-k" placeholder="Vit K (mcg)">
-                    <input type="number" id="meal-vit-b12" placeholder="Vit B12 (mcg)">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Minerals</label>
-                <div class="form-grid-3">
-                    <input type="number" id="meal-calcium" placeholder="Calcium (mg)">
-                    <input type="number" id="meal-iron" placeholder="Iron (mg)">
-                    <input type="number" id="meal-magnesium" placeholder="Magnesium (mg)">
-                    <input type="number" id="meal-potassium" placeholder="Potassium (mg)">
-                    <input type="number" id="meal-sodium" placeholder="Sodium (mg)">
-                    <input type="number" id="meal-zinc" placeholder="Zinc (mg)">
-                </div>
-            </div>
-
-            <button class="btn btn-primary" onclick="addMeal()">Add Meal</button>
+            <button class="btn btn-primary" onclick="addMeal()">➕ Add Meal</button>
         </div>
     </div>
 
-    <!-- Bottom Navigation - 3 buttons -->
+    <!-- Bottom Navigation -->
     <div class="bottom-nav">
         <button class="nav-item active" onclick="navigateTo('home')">
             <div class="nav-icon">🏠</div>
             <div class="nav-label">Dashboard</div>
         </button>
-        <button class="nav-item" onclick="navigateTo('meals')">
-            <div class="nav-icon">🍽️</div>
+        <button class="nav-item" onclick="navigateTo('nutrition')">
+            <div class="nav-icon">🥗</div>
             <div class="nav-label">Meals</div>
         </button>
         <button class="nav-item" onclick="navigateTo('history')">
-            <div class="nav-icon">📈</div>
+            <div class="nav-icon">📊</div>
             <div class="nav-label">History</div>
         </button>
     </div>
@@ -1061,7 +866,7 @@
                 evening: [],
                 night: []
             },
-            history: [] // { date, totals: {...} }
+            history: []
         };
 
         let currentMealType = '';
@@ -1070,21 +875,18 @@
         // Initialize
         function init() {
             loadData();
-            updateDate();
-            renderNutrition();
-            
-            // Set history date to today
             selectedHistoryDate = new Date().toISOString().split('T')[0];
             document.getElementById('history-date').value = selectedHistoryDate;
-            
+            renderDashboard();
+            renderMeals();
             renderHistory();
-            updateDashboard();
             
             if ('serviceWorker' in navigator) {
                 navigator.serviceWorker.register('service-worker.js').catch(() => {});
             }
         }
 
+        // Data Management
         function loadData() {
             try {
                 const saved = localStorage.getItem('nutriTrackData');
@@ -1117,14 +919,7 @@
                 data.history.push({ date: today, totals });
             }
             
-            // Keep last 90 days
             data.history = data.history.slice(-90);
-        }
-
-        function updateDate() {
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            document.getElementById('current-date').textContent = 
-                new Date().toLocaleDateString('en-US', options);
         }
 
         // Navigation
@@ -1136,100 +931,254 @@
             event.target.closest('.nav-item').classList.add('active');
             
             if (page === 'history') renderHistory();
-            if (page === 'home') renderNutrition();
         }
 
         // Calculate Totals
         function calculateTotals() {
             const totals = {
                 calories: 0, protein: 0, carbs: 0, fats: 0, fiber: 0, sugar: 0,
-                satFat: 0, unsatFat: 0, transFat: 0,
-                vitA: 0, vitC: 0, vitD: 0, vitE: 0, vitK: 0, vitB12: 0,
-                calcium: 0, iron: 0, magnesium: 0, potassium: 0, sodium: 0, zinc: 0
+                vitC: 0, vitD: 0, calcium: 0, iron: 0, potassium: 0, sodium: 0
             };
 
             Object.values(data.meals).forEach(meals => {
                 meals.forEach(meal => {
-                    if (meal.completed) {
-                        totals.calories += meal.calories || 0;
-                        totals.protein += meal.protein || 0;
-                        totals.carbs += meal.carbs || 0;
-                        totals.fats += meal.fats || 0;
-                        totals.fiber += meal.fiber || 0;
-                        totals.sugar += meal.sugar || 0;
-                        totals.satFat += meal.satFat || 0;
-                        totals.unsatFat += meal.unsatFat || 0;
-                        totals.transFat += meal.transFat || 0;
-                        totals.vitA += meal.vitA || 0;
-                        totals.vitC += meal.vitC || 0;
-                        totals.vitD += meal.vitD || 0;
-                        totals.vitE += meal.vitE || 0;
-                        totals.vitK += meal.vitK || 0;
-                        totals.vitB12 += meal.vitB12 || 0;
-                        totals.calcium += meal.calcium || 0;
-                        totals.iron += meal.iron || 0;
-                        totals.magnesium += meal.magnesium || 0;
-                        totals.potassium += meal.potassium || 0;
-                        totals.sodium += meal.sodium || 0;
-                        totals.zinc += meal.zinc || 0;
-                    }
+                    // Count ALL meals, not just completed ones
+                    totals.calories += meal.calories || 0;
+                    totals.protein += meal.protein || 0;
+                    totals.carbs += meal.carbs || 0;
+                    totals.fats += meal.fats || 0;
+                    totals.fiber += meal.fiber || 0;
+                    totals.sugar += meal.sugar || 0;
+                    totals.vitC += meal.vitC || 0;
+                    totals.vitD += meal.vitD || 0;
+                    totals.calcium += meal.calcium || 0;
+                    totals.iron += meal.iron || 0;
+                    totals.potassium += meal.potassium || 0;
+                    totals.sodium += meal.sodium || 0;
                 });
             });
 
             return totals;
         }
 
-        function updateDashboard() {
+        // Dashboard
+        function renderDashboard() {
             const totals = calculateTotals();
             
-            document.getElementById('dash-calories').textContent = Math.round(totals.calories);
-            document.getElementById('dash-protein').textContent = Math.round(totals.protein);
-            document.getElementById('dash-carbs').textContent = Math.round(totals.carbs);
-            document.getElementById('dash-fats').textContent = Math.round(totals.fats);
+            // Update all done/need/percent
+            updateProgress('cal', totals.calories, data.goals.calories);
+            updateProgress('pro', totals.protein, data.goals.protein);
+            updateProgress('car', totals.carbs, data.goals.carbs);
+            updateProgress('fat', totals.fats, data.goals.fats);
+            updateProgress('fib', totals.fiber, data.goals.fiber);
+            updateProgress('sug', totals.sugar, data.goals.sugar);
+            updateProgress('vitc', totals.vitC, data.goals.vitC);
+            updateProgress('vitd', totals.vitD, data.goals.vitD);
+            updateProgress('ca', totals.calcium, data.goals.calcium);
+            updateProgress('fe', totals.iron, data.goals.iron);
+            updateProgress('po', totals.potassium, data.goals.potassium);
+            updateProgress('so', totals.sodium, data.goals.sodium);
             
-            // Update targets
-            document.getElementById('dash-cal-target').textContent = '/ ' + data.goals.calories;
-            document.getElementById('dash-pro-target').textContent = '/ ' + data.goals.protein;
-            document.getElementById('dash-car-target').textContent = '/ ' + data.goals.carbs;
-            document.getElementById('dash-fat-target').textContent = '/ ' + data.goals.fats;
+            // Overall score - ALL nutrients
+            const percentages = [
+                totals.calories / data.goals.calories * 100,
+                totals.protein / data.goals.protein * 100,
+                totals.carbs / data.goals.carbs * 100,
+                totals.fats / data.goals.fats * 100,
+                totals.fiber / data.goals.fiber * 100,
+                Math.min(totals.sugar / data.goals.sugar * 100, 100), // Cap sugar at 100%
+                totals.vitC / data.goals.vitC * 100,
+                totals.vitD / data.goals.vitD * 100,
+                totals.calcium / data.goals.calcium * 100,
+                totals.iron / data.goals.iron * 100,
+                totals.potassium / data.goals.potassium * 100,
+                Math.min(totals.sodium / data.goals.sodium * 100, 100) // Cap sodium at 100%
+            ];
             
-            // Calculate completion %
-            let totalMeals = 0;
-            let completedMeals = 0;
-            Object.values(data.meals).forEach(meals => {
-                meals.forEach(meal => {
-                    totalMeals++;
-                    if (meal.completed) completedMeals++;
-                });
-            });
+            const avg = percentages.reduce((a, b) => a + b, 0) / percentages.length;
+            document.getElementById('overall-score').textContent = Math.min(Math.round(avg), 100) + '%';
             
-            const percentage = totalMeals > 0 ? Math.round((completedMeals / totalMeals) * 100) : 0;
-            document.getElementById('overall-score').textContent = percentage + '%';
-            
-            // Update streak
+            // Streak
             updateStreak();
+        }
+
+        function updateProgress(id, done, need) {
+            document.getElementById(id + '-done').textContent = Math.round(done);
+            document.getElementById(id + '-need').textContent = need;
+            const percent = need > 0 ? Math.min(Math.round((done / need) * 100), 100) : 0;
+            document.getElementById(id + '-percent').textContent = percent + '%';
         }
 
         function updateStreak() {
             const today = new Date().toDateString();
+            const totals = calculateTotals();
+            
+            // Only count streak if user logged at least 50% of calorie goal
+            const hasLoggedEnough = totals.calories >= (data.goals.calories * 0.5);
+            
             if (data.lastActiveDate !== today) {
-                const yesterday = new Date();
-                yesterday.setDate(yesterday.getDate() - 1);
-                if (data.lastActiveDate === yesterday.toDateString()) {
-                    data.streak++;
-                } else {
-                    data.streak = 1;
+                if (hasLoggedEnough) {
+                    const yesterday = new Date();
+                    yesterday.setDate(yesterday.getDate() - 1);
+                    
+                    if (data.lastActiveDate === yesterday.toDateString()) {
+                        data.streak++;
+                    } else {
+                        data.streak = 1;
+                    }
+                    
+                    if (data.streak > data.bestStreak) {
+                        data.bestStreak = data.streak;
+                    }
+                    
+                    data.lastActiveDate = today;
+                    saveData();
                 }
-                if (data.streak > data.bestStreak) {
-                    data.bestStreak = data.streak;
-                }
-                data.lastActiveDate = today;
-                saveData();
             }
+            
             document.getElementById('streak-count').textContent = data.streak;
         }
 
-        // Meal Functions
+        // Goals
+        function openGoalsModal() {
+            document.getElementById('goal-calories').value = data.goals.calories;
+            document.getElementById('goal-protein').value = data.goals.protein;
+            document.getElementById('goal-carbs').value = data.goals.carbs;
+            document.getElementById('goal-fats').value = data.goals.fats;
+            document.getElementById('goal-fiber').value = data.goals.fiber;
+            document.getElementById('goal-sugar').value = data.goals.sugar;
+            document.getElementById('goal-vitc').value = data.goals.vitC;
+            document.getElementById('goal-vitd').value = data.goals.vitD;
+            document.getElementById('goal-ca').value = data.goals.calcium;
+            document.getElementById('goal-fe').value = data.goals.iron;
+            document.getElementById('goal-po').value = data.goals.potassium;
+            document.getElementById('goal-so').value = data.goals.sodium;
+            
+            document.getElementById('goals-modal').classList.add('active');
+        }
+
+        function closeGoalsModal() {
+            document.getElementById('goals-modal').classList.remove('active');
+        }
+
+        function calculateGoals() {
+            const weight = parseFloat(document.getElementById('calc-weight').value);
+            const height = parseFloat(document.getElementById('calc-height').value);
+            const age = parseInt(document.getElementById('calc-age').value);
+            const gender = document.getElementById('calc-gender').value;
+            const activity = parseFloat(document.getElementById('calc-activity').value);
+            const goal = document.getElementById('calc-goal').value;
+            
+            // Validation
+            if (!weight || !height || !age) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            if (weight < 30 || weight > 300) {
+                alert('Please enter a valid weight (30-300 kg)');
+                return;
+            }
+            
+            if (height < 100 || height > 250) {
+                alert('Please enter a valid height (100-250 cm)');
+                return;
+            }
+            
+            if (age < 10 || age > 100) {
+                alert('Please enter a valid age (10-100)');
+                return;
+            }
+            
+            // BMR (Mifflin-St Jeor)
+            let bmr;
+            if (gender === 'male') {
+                bmr = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+            } else {
+                bmr = (10 * weight) + (6.25 * height) - (5 * age) - 161;
+            }
+            
+            // TDEE
+            let tdee = bmr * activity;
+            
+            // Adjust for goal
+            let calories;
+            let proteinMultiplier;
+            let fatPercent;
+            
+            if (goal === 'lose') {
+                calories = tdee - 500;
+                proteinMultiplier = 2.2; // Higher protein for fat loss
+                fatPercent = 0.25;
+            } else if (goal === 'gain') {
+                calories = tdee + 300;
+                proteinMultiplier = 1.8; // Moderate protein for muscle gain
+                fatPercent = 0.25;
+            } else {
+                calories = tdee;
+                proteinMultiplier = 1.6; // Moderate protein for maintenance
+                fatPercent = 0.25;
+            }
+            
+            // Macros - USE THE MULTIPLIER!
+            const protein = weight * proteinMultiplier;
+            const fats = (calories * fatPercent) / 9;
+            const carbs = (calories - (protein * 4) - (fats * 9)) / 4;
+            
+            // Prevent negative values
+            if (carbs < 0) {
+                alert('⚠️ Calculated values seem off. Try adjusting your inputs.');
+                return;
+            }
+            
+            // Fill form
+            document.getElementById('goal-calories').value = Math.round(calories);
+            document.getElementById('goal-protein').value = Math.round(protein);
+            document.getElementById('goal-carbs').value = Math.round(carbs);
+            document.getElementById('goal-fats').value = Math.round(fats);
+            document.getElementById('goal-fiber').value = Math.round(14 * (calories / 1000)); // 14g per 1000 cal
+            document.getElementById('goal-sugar').value = Math.round(calories * 0.1 / 4); // Max 10% calories from sugar
+            
+            // Helpful guidance
+            let message = '✅ Goals calculated based on your profile!\n\n';
+            
+            // Check if calories seem high for weight
+            const caloriesPerKg = calories / weight;
+            if (caloriesPerKg > 45) {
+                message += '⚠️ Note: Calories are quite high for your weight.\n';
+                message += 'This is correct IF you:\n';
+                message += '• Train 5-6 days/week\n';
+                message += '• Do heavy weightlifting\n';
+                message += '• Have an active lifestyle\n\n';
+                message += 'If you\'re less active, consider using "Moderate" activity level.';
+            }
+            
+            alert(message);
+        }
+
+        function saveGoals() {
+            data.goals = {
+                calories: parseInt(document.getElementById('goal-calories').value) || 2000,
+                protein: parseInt(document.getElementById('goal-protein').value) || 150,
+                carbs: parseInt(document.getElementById('goal-carbs').value) || 250,
+                fats: parseInt(document.getElementById('goal-fats').value) || 65,
+                fiber: parseInt(document.getElementById('goal-fiber').value) || 30,
+                sugar: parseInt(document.getElementById('goal-sugar').value) || 50,
+                vitC: parseInt(document.getElementById('goal-vitc').value) || 90,
+                vitD: parseInt(document.getElementById('goal-vitd').value) || 600,
+                calcium: parseInt(document.getElementById('goal-ca').value) || 1000,
+                iron: parseInt(document.getElementById('goal-fe').value) || 18,
+                potassium: parseInt(document.getElementById('goal-po').value) || 3500,
+                sodium: parseInt(document.getElementById('goal-so').value) || 2300
+            };
+            
+            saveData();
+            renderDashboard();
+            closeGoalsModal();
+            alert('✅ Goals saved!');
+        }
+
+        // Meals
         function openMealModal(type) {
             currentMealType = type;
             document.getElementById('meal-modal').classList.add('active');
@@ -1237,12 +1186,7 @@
 
         function closeMealModal() {
             document.getElementById('meal-modal').classList.remove('active');
-            clearMealForm();
-        }
-
-        function clearMealForm() {
-            const inputs = document.querySelectorAll('#meal-modal input, #meal-modal textarea');
-            inputs.forEach(input => input.value = '');
+            document.querySelectorAll('#meal-modal input').forEach(input => input.value = '');
         }
 
         function addMeal() {
@@ -1252,37 +1196,51 @@
                 return;
             }
 
+            // Get and validate values
+            const calories = Math.max(0, parseFloat(document.getElementById('meal-calories').value) || 0);
+            const protein = Math.max(0, parseFloat(document.getElementById('meal-protein').value) || 0);
+            const carbs = Math.max(0, parseFloat(document.getElementById('meal-carbs').value) || 0);
+            const fats = Math.max(0, parseFloat(document.getElementById('meal-fats').value) || 0);
+            const fiber = Math.max(0, parseFloat(document.getElementById('meal-fiber').value) || 0);
+            const sugar = Math.max(0, parseFloat(document.getElementById('meal-sugar').value) || 0);
+            const vitC = Math.max(0, parseFloat(document.getElementById('meal-vitc').value) || 0);
+            const vitD = Math.max(0, parseFloat(document.getElementById('meal-vitd').value) || 0);
+            const calcium = Math.max(0, parseFloat(document.getElementById('meal-ca').value) || 0);
+            const iron = Math.max(0, parseFloat(document.getElementById('meal-fe').value) || 0);
+            const potassium = Math.max(0, parseFloat(document.getElementById('meal-po').value) || 0);
+            const sodium = Math.max(0, parseFloat(document.getElementById('meal-so').value) || 0);
+
+            // Sanity check
+            if (calories > 5000) {
+                if (!confirm('⚠️ Calories seem very high. Continue?')) return;
+            }
+            
+            if (protein > 200) {
+                if (!confirm('⚠️ Protein seems very high. Continue?')) return;
+            }
+
             const meal = {
                 id: Date.now(),
                 name: name,
-                calories: parseFloat(document.getElementById('meal-calories').value) || 0,
-                protein: parseFloat(document.getElementById('meal-protein').value) || 0,
-                carbs: parseFloat(document.getElementById('meal-carbs').value) || 0,
-                fats: parseFloat(document.getElementById('meal-fats').value) || 0,
-                fiber: parseFloat(document.getElementById('meal-fiber').value) || 0,
-                sugar: parseFloat(document.getElementById('meal-sugar').value) || 0,
-                satFat: parseFloat(document.getElementById('meal-sat-fat').value) || 0,
-                unsatFat: parseFloat(document.getElementById('meal-unsat-fat').value) || 0,
-                transFat: parseFloat(document.getElementById('meal-trans-fat').value) || 0,
-                vitA: parseFloat(document.getElementById('meal-vit-a').value) || 0,
-                vitC: parseFloat(document.getElementById('meal-vit-c').value) || 0,
-                vitD: parseFloat(document.getElementById('meal-vit-d').value) || 0,
-                vitE: parseFloat(document.getElementById('meal-vit-e').value) || 0,
-                vitK: parseFloat(document.getElementById('meal-vit-k').value) || 0,
-                vitB12: parseFloat(document.getElementById('meal-vit-b12').value) || 0,
-                calcium: parseFloat(document.getElementById('meal-calcium').value) || 0,
-                iron: parseFloat(document.getElementById('meal-iron').value) || 0,
-                magnesium: parseFloat(document.getElementById('meal-magnesium').value) || 0,
-                potassium: parseFloat(document.getElementById('meal-potassium').value) || 0,
-                sodium: parseFloat(document.getElementById('meal-sodium').value) || 0,
-                zinc: parseFloat(document.getElementById('meal-zinc').value) || 0,
+                calories: calories,
+                protein: protein,
+                carbs: carbs,
+                fats: fats,
+                fiber: fiber,
+                sugar: sugar,
+                vitC: vitC,
+                vitD: vitD,
+                calcium: calcium,
+                iron: iron,
+                potassium: potassium,
+                sodium: sodium,
                 completed: false
             };
 
             data.meals[currentMealType].push(meal);
             saveData();
-            renderNutrition();
-            updateDashboard();
+            renderMeals();
+            renderDashboard();
             closeMealModal();
         }
 
@@ -1291,8 +1249,8 @@
             if (meal) {
                 meal.completed = !meal.completed;
                 saveData();
-                renderNutrition();
-                updateDashboard();
+                renderMeals();
+                renderDashboard();
             }
         }
 
@@ -1300,41 +1258,12 @@
             if (confirm('Delete this meal?')) {
                 data.meals[type] = data.meals[type].filter(m => m.id !== id);
                 saveData();
-                renderNutrition();
-                updateDashboard();
+                renderMeals();
+                renderDashboard();
             }
         }
 
-        function renderNutrition() {
-            const totals = calculateTotals();
-            
-            // Update totals display on Dashboard
-            document.getElementById('total-calories').textContent = Math.round(totals.calories);
-            document.getElementById('total-protein').textContent = Math.round(totals.protein);
-            document.getElementById('total-carbs').textContent = Math.round(totals.carbs);
-            document.getElementById('total-fats').textContent = Math.round(totals.fats);
-            document.getElementById('total-fiber').textContent = Math.round(totals.fiber);
-            document.getElementById('total-sugar').textContent = Math.round(totals.sugar);
-            
-            document.getElementById('total-sat-fat').textContent = Math.round(totals.satFat);
-            document.getElementById('total-unsat-fat').textContent = Math.round(totals.unsatFat);
-            document.getElementById('total-trans-fat').textContent = Math.round(totals.transFat);
-            
-            document.getElementById('total-vit-a').textContent = Math.round(totals.vitA);
-            document.getElementById('total-vit-c').textContent = Math.round(totals.vitC);
-            document.getElementById('total-vit-d').textContent = Math.round(totals.vitD);
-            document.getElementById('total-vit-e').textContent = Math.round(totals.vitE);
-            document.getElementById('total-vit-k').textContent = Math.round(totals.vitK);
-            document.getElementById('total-vit-b12').textContent = totals.vitB12.toFixed(1);
-            
-            document.getElementById('total-calcium').textContent = Math.round(totals.calcium);
-            document.getElementById('total-iron').textContent = Math.round(totals.iron);
-            document.getElementById('total-magnesium').textContent = Math.round(totals.magnesium);
-            document.getElementById('total-potassium').textContent = Math.round(totals.potassium);
-            document.getElementById('total-sodium').textContent = Math.round(totals.sodium);
-            document.getElementById('total-zinc').textContent = Math.round(totals.zinc);
-            
-            // Render meals on Meals page
+        function renderMeals() {
             ['morning', 'afternoon', 'evening', 'night'].forEach(type => {
                 const container = document.getElementById(`${type}-meals`);
                 container.innerHTML = '';
@@ -1349,15 +1278,13 @@
                                     </div>
                                     <div class="meal-name">${meal.name}</div>
                                 </div>
-                                <button class="btn-icon" onclick="deleteMeal('${type}', ${meal.id})">🗑️</button>
+                                <button class="btn-icon btn-danger" style="padding: 8px 12px;" onclick="deleteMeal('${type}', ${meal.id})">🗑️</button>
                             </div>
                             <div class="meal-nutrition-details">
                                 <div class="item">${Math.round(meal.calories)} cal</div>
-                                <div class="item">${Math.round(meal.protein)}g protein</div>
-                                <div class="item">${Math.round(meal.carbs)}g carbs</div>
+                                <div class="item">${Math.round(meal.protein)}g pro</div>
+                                <div class="item">${Math.round(meal.carbs)}g carb</div>
                                 <div class="item">${Math.round(meal.fats)}g fat</div>
-                                ${meal.fiber ? `<div class="item">${Math.round(meal.fiber)}g fiber</div>` : ''}
-                                ${meal.vitC ? `<div class="item">${Math.round(meal.vitC)}mg Vit C</div>` : ''}
                             </div>
                         </div>
                     `;
@@ -1365,185 +1292,19 @@
             });
         }
 
-        // Goals Functions
-        function openGoalsModal() {
-            // Pre-fill with current goals
-            document.getElementById('goal-calories').value = data.goals.calories;
-            document.getElementById('goal-protein').value = data.goals.protein;
-            document.getElementById('goal-carbs').value = data.goals.carbs;
-            document.getElementById('goal-fats').value = data.goals.fats;
-            document.getElementById('goal-fiber').value = data.goals.fiber;
-            document.getElementById('goal-sugar').value = data.goals.sugar;
-            document.getElementById('goal-vit-c').value = data.goals.vitC;
-            document.getElementById('goal-vit-d').value = data.goals.vitD;
-            document.getElementById('goal-calcium').value = data.goals.calcium;
-            document.getElementById('goal-iron').value = data.goals.iron;
-            document.getElementById('goal-potassium').value = data.goals.potassium;
-            document.getElementById('goal-sodium').value = data.goals.sodium;
-            
-            document.getElementById('goals-modal').classList.add('active');
-        }
-
-        function closeGoalsModal() {
-            document.getElementById('goals-modal').classList.remove('active');
-        }
-
-        // Offline Smart Calculator - No API needed!
-        function calculateGoalsWithAI() {
-            const description = document.getElementById('ai-goals-description').value.trim().toLowerCase();
-            
-            if (!description) {
-                alert('Please describe yourself and your goals');
-                return;
-            }
-
-            // Show loading
-            document.getElementById('goals-ai-text').style.display = 'none';
-            document.getElementById('goals-ai-loading').style.display = 'inline';
-
-            // Simulate calculation delay
-            setTimeout(() => {
-                const goals = smartCalculateGoals(description);
-                
-                // Fill in the form
-                document.getElementById('goal-calories').value = goals.calories;
-                document.getElementById('goal-protein').value = goals.protein;
-                document.getElementById('goal-carbs').value = goals.carbs;
-                document.getElementById('goal-fats').value = goals.fats;
-                document.getElementById('goal-fiber').value = goals.fiber;
-                document.getElementById('goal-sugar').value = goals.sugar;
-                document.getElementById('goal-vit-c').value = goals.vitC;
-                document.getElementById('goal-vit-d').value = goals.vitD;
-                document.getElementById('goal-calcium').value = goals.calcium;
-                document.getElementById('goal-iron').value = goals.iron;
-                document.getElementById('goal-potassium').value = goals.potassium;
-                document.getElementById('goal-sodium').value = goals.sodium;
-
-                // Hide loading
-                document.getElementById('goals-ai-text').style.display = 'inline';
-                document.getElementById('goals-ai-loading').style.display = 'none';
-
-                alert('✅ Goals calculated based on your profile!');
-            }, 1000);
-        }
-
-        // Smart offline goal calculator
-        function smartCalculateGoals(description) {
-            // Extract numbers using regex
-            const ageMatch = description.match(/age[:\s]+(\d+)/i);
-            const weightMatch = description.match(/weight[:\s]+(\d+)\s*(kg|lbs?|pounds?)?/i);
-            const heightMatch = description.match(/height[:\s]+(\d+)\s*(cm|m|ft|feet)?/i);
-            
-            const age = ageMatch ? parseInt(ageMatch[1]) : 30;
-            let weight = weightMatch ? parseInt(weightMatch[1]) : 70;
-            let height = heightMatch ? parseInt(heightMatch[1]) : 175;
-            
-            // Convert to metric if needed
-            if (weightMatch && weightMatch[2] && weightMatch[2].toLowerCase().includes('lb')) {
-                weight = Math.round(weight * 0.453592);
-            }
-            if (heightMatch && heightMatch[2] && (heightMatch[2].toLowerCase().includes('ft') || heightMatch[2].toLowerCase().includes('foot'))) {
-                height = Math.round(height * 30.48);
-            }
-            
-            // Detect gender
-            const isMale = description.includes('male') || description.includes('man') || description.includes('boy');
-            const isFemale = description.includes('female') || description.includes('woman') || description.includes('girl');
-            
-            // Detect activity level
-            const isSedentary = description.includes('sedentary') || description.includes('desk') || description.includes('office');
-            const isActive = description.includes('active') || description.includes('gym') || description.includes('exercise') || description.includes('sport');
-            const isVeryActive = description.includes('very active') || description.includes('athlete') || description.includes('training') || description.includes('competition');
-            
-            // Detect goals
-            const wantsLoseWeight = description.includes('lose') || description.includes('cut') || description.includes('fat loss') || description.includes('slim');
-            const wantsGainMuscle = description.includes('muscle') || description.includes('bulk') || description.includes('gain') || description.includes('build');
-            const wantsMaintain = description.includes('maintain') || description.includes('stay') || description.includes('keep');
-            
-            // Calculate BMR using Mifflin-St Jeor Equation
-            let bmr;
-            if (isMale) {
-                bmr = (10 * weight) + (6.25 * height) - (5 * age) + 5;
-            } else {
-                bmr = (10 * weight) + (6.25 * height) - (5 * age) - 161;
-            }
-            
-            // Apply activity multiplier
-            let tdee = bmr;
-            if (isSedentary) tdee *= 1.2;
-            else if (isVeryActive) tdee *= 1.725;
-            else if (isActive) tdee *= 1.55;
-            else tdee *= 1.375; // Lightly active default
-            
-            // Adjust for goals
-            let calories = Math.round(tdee);
-            if (wantsLoseWeight) calories -= 500;
-            if (wantsGainMuscle) calories += 300;
-            
-            // Calculate macros
-            let protein = weight * (wantsGainMuscle ? 2.2 : 1.8); // g per kg
-            if (wantsLoseWeight) protein = weight * 2.0; // Higher protein for cutting
-            
-            let fats = weight * 0.9; // 0.9g per kg
-            let carbs = (calories - (protein * 4) - (fats * 9)) / 4;
-            
-            // Ensure minimums
-            if (carbs < 100) {
-                carbs = 100;
-                fats = (calories - (protein * 4) - (carbs * 4)) / 9;
-            }
-            
-            return {
-                calories: calories,
-                protein: Math.round(protein),
-                carbs: Math.round(carbs),
-                fats: Math.round(fats),
-                fiber: 30,
-                sugar: 50,
-                vitC: isActive ? 120 : 90,
-                vitD: 600,
-                calcium: 1000,
-                iron: isFemale ? 18 : 8,
-                potassium: 3500,
-                sodium: 2300
-            };
-        }
-
-        function saveGoals() {
-            data.goals = {
-                calories: parseInt(document.getElementById('goal-calories').value) || 2000,
-                protein: parseInt(document.getElementById('goal-protein').value) || 150,
-                carbs: parseInt(document.getElementById('goal-carbs').value) || 250,
-                fats: parseInt(document.getElementById('goal-fats').value) || 65,
-                fiber: parseInt(document.getElementById('goal-fiber').value) || 30,
-                sugar: parseInt(document.getElementById('goal-sugar').value) || 50,
-                vitC: parseInt(document.getElementById('goal-vit-c').value) || 90,
-                vitD: parseInt(document.getElementById('goal-vit-d').value) || 600,
-                calcium: parseInt(document.getElementById('goal-calcium').value) || 1000,
-                iron: parseInt(document.getElementById('goal-iron').value) || 18,
-                potassium: parseInt(document.getElementById('goal-potassium').value) || 3500,
-                sodium: parseInt(document.getElementById('goal-sodium').value) || 2300
-            };
-            
-            saveData();
-            updateDashboard();
-            closeGoalsModal();
-            alert('✅ Goals saved successfully!');
-        }
-
-        // History Navigation Functions
+        // History
         function changeDate(days) {
             const current = new Date(selectedHistoryDate);
             current.setDate(current.getDate() + days);
             selectedHistoryDate = current.toISOString().split('T')[0];
             document.getElementById('history-date').value = selectedHistoryDate;
-            loadHistoryForDate();
+            renderHistory();
         }
 
         function goToToday() {
             selectedHistoryDate = new Date().toISOString().split('T')[0];
             document.getElementById('history-date').value = selectedHistoryDate;
-            loadHistoryForDate();
+            renderHistory();
         }
 
         function loadHistoryForDate() {
@@ -1551,58 +1312,10 @@
             renderHistory();
         }
 
-        function resetAllData() {
-            if (!confirm('⚠️ Are you sure? This will delete ALL your data including meals, history, and settings. This cannot be undone!')) {
-                return;
-            }
-            
-            if (!confirm('Final confirmation: Delete everything?')) {
-                return;
-            }
-            
-            localStorage.removeItem('nutriTrackData');
-            location.reload();
-        }
-
         function renderHistory() {
-            // Set date picker to selected date
             document.getElementById('history-date').value = selectedHistoryDate;
-            document.getElementById('selected-date-display').textContent = 
-                new Date(selectedHistoryDate).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+            document.getElementById('total-days').textContent = data.history.length;
             
-            // Get data for selected date
-            const dayData = data.history.find(h => h.date === selectedHistoryDate);
-            
-            if (dayData) {
-                document.getElementById('hist-calories').textContent = Math.round(dayData.totals.calories);
-                document.getElementById('hist-protein').textContent = Math.round(dayData.totals.protein);
-                document.getElementById('hist-carbs').textContent = Math.round(dayData.totals.carbs);
-                document.getElementById('hist-fats').textContent = Math.round(dayData.totals.fats);
-            } else {
-                document.getElementById('hist-calories').textContent = '0';
-                document.getElementById('hist-protein').textContent = '0';
-                document.getElementById('hist-carbs').textContent = '0';
-                document.getElementById('hist-fats').textContent = '0';
-            }
-            
-            // Overall stats
-            document.getElementById('total-days-tracked').textContent = data.history.length;
-            
-            if (data.history.length > 0) {
-                const avgCal = data.history.reduce((sum, h) => sum + h.totals.calories, 0) / data.history.length;
-                const avgPro = data.history.reduce((sum, h) => sum + h.totals.protein, 0) / data.history.length;
-                
-                document.getElementById('avg-calories').textContent = Math.round(avgCal);
-                document.getElementById('avg-protein').textContent = Math.round(avgPro) + 'g';
-            }
-            
-            document.getElementById('best-streak').textContent = data.bestStreak;
-            
-            let totalMeals = 0;
-            Object.values(data.meals).forEach(meals => totalMeals += meals.length);
-            document.getElementById('total-meals').textContent = totalMeals;
-            
-            // Draw chart
             drawProgressChart();
         }
 
@@ -1610,18 +1323,16 @@
             const canvas = document.getElementById('progress-chart');
             const ctx = canvas.getContext('2d');
             
-            // Set canvas size
             canvas.width = canvas.offsetWidth;
-            canvas.height = 300;
+            canvas.height = 250;
             
             const width = canvas.width;
             const height = canvas.height;
             const padding = 40;
             
-            // Clear canvas
             ctx.clearRect(0, 0, width, height);
             
-            // Get last 7 days of data
+            // Get last 7 days
             const last7Days = [];
             for (let i = 6; i >= 0; i--) {
                 const date = new Date();
@@ -1631,17 +1342,37 @@
                 
                 let percentage = 0;
                 if (dayData) {
-                    const calPercent = (dayData.totals.calories / data.goals.calories) * 100;
-                    const proPercent = (dayData.totals.protein / data.goals.protein) * 100;
-                    const carPercent = (dayData.totals.carbs / data.goals.carbs) * 100;
-                    const fatPercent = (dayData.totals.fats / data.goals.fats) * 100;
-                    percentage = (calPercent + proPercent + carPercent + fatPercent) / 4;
+                    // Calculate percentage for ALL tracked nutrients
+                    const percentages = [];
+                    
+                    // Macros
+                    if (data.goals.calories > 0) percentages.push((dayData.totals.calories / data.goals.calories) * 100);
+                    if (data.goals.protein > 0) percentages.push((dayData.totals.protein / data.goals.protein) * 100);
+                    if (data.goals.carbs > 0) percentages.push((dayData.totals.carbs / data.goals.carbs) * 100);
+                    if (data.goals.fats > 0) percentages.push((dayData.totals.fats / data.goals.fats) * 100);
+                    if (data.goals.fiber > 0) percentages.push((dayData.totals.fiber / data.goals.fiber) * 100);
+                    
+                    // Cap sugar and sodium at 100% (these are limits, not targets)
+                    if (data.goals.sugar > 0) percentages.push(Math.min((dayData.totals.sugar / data.goals.sugar) * 100, 100));
+                    if (data.goals.sodium > 0) percentages.push(Math.min((dayData.totals.sodium / data.goals.sodium) * 100, 100));
+                    
+                    // Vitamins & Minerals
+                    if (data.goals.vitC > 0) percentages.push((dayData.totals.vitC / data.goals.vitC) * 100);
+                    if (data.goals.vitD > 0) percentages.push((dayData.totals.vitD / data.goals.vitD) * 100);
+                    if (data.goals.calcium > 0) percentages.push((dayData.totals.calcium / data.goals.calcium) * 100);
+                    if (data.goals.iron > 0) percentages.push((dayData.totals.iron / data.goals.iron) * 100);
+                    if (data.goals.potassium > 0) percentages.push((dayData.totals.potassium / data.goals.potassium) * 100);
+                    
+                    // Average of all
+                    if (percentages.length > 0) {
+                        percentage = percentages.reduce((a, b) => a + b, 0) / percentages.length;
+                    }
                 }
                 
                 last7Days.push({
                     date: dateStr,
                     label: date.toLocaleDateString('en-US', { weekday: 'short' }),
-                    percentage: Math.min(percentage, 100)
+                    percentage: Math.min(Math.round(percentage), 100)
                 });
             }
             
@@ -1649,7 +1380,6 @@
             const barWidth = (width - padding * 2) / 7;
             const maxHeight = height - padding * 2;
             
-            ctx.fillStyle = '#10b981';
             ctx.font = '12px -apple-system, sans-serif';
             
             last7Days.forEach((day, index) => {
@@ -1657,20 +1387,20 @@
                 const barHeight = (day.percentage / 100) * maxHeight;
                 const y = height - padding - barHeight;
                 
-                // Draw bar
+                // Bar
                 ctx.fillStyle = day.date === selectedHistoryDate ? '#059669' : '#10b981';
                 ctx.fillRect(x + 5, y, barWidth - 10, barHeight);
                 
-                // Draw percentage text
+                // Percentage
                 ctx.fillStyle = '#1e293b';
                 ctx.textAlign = 'center';
-                ctx.fillText(Math.round(day.percentage) + '%', x + barWidth / 2, y - 5);
+                ctx.fillText(day.percentage + '%', x + barWidth / 2, y - 5);
                 
-                // Draw day label
+                // Day label
                 ctx.fillText(day.label, x + barWidth / 2, height - padding + 20);
             });
             
-            // Draw 100% reference line
+            // 100% line
             ctx.strokeStyle = '#e2e8f0';
             ctx.setLineDash([5, 5]);
             ctx.beginPath();
@@ -1679,234 +1409,17 @@
             ctx.stroke();
             ctx.setLineDash([]);
             
-            // Draw 100% label
             ctx.fillStyle = '#64748b';
             ctx.textAlign = 'left';
             ctx.fillText('100%', 5, padding + 5);
         }
 
-        // Offline Smart Meal Calculator - No API needed!
-        function calculateWithAI() {
-            const description = document.getElementById('ai-description').value.trim().toLowerCase();
+        function resetAllData() {
+            if (!confirm('⚠️ Delete ALL data? This cannot be undone!')) return;
+            if (!confirm('Final confirmation?')) return;
             
-            if (!description) {
-                alert('Please describe your meal');
-                return;
-            }
-
-            // Show loading
-            document.getElementById('ai-text').style.display = 'none';
-            document.getElementById('ai-loading').style.display = 'inline';
-
-            // Simulate calculation delay
-            setTimeout(() => {
-                const nutrition = smartCalculateMeal(description);
-                
-                // Fill in the form
-                document.getElementById('meal-name').value = nutrition.name;
-                document.getElementById('meal-calories').value = nutrition.calories;
-                document.getElementById('meal-protein').value = nutrition.protein;
-                document.getElementById('meal-carbs').value = nutrition.carbs;
-                document.getElementById('meal-fats').value = nutrition.fats;
-                document.getElementById('meal-fiber').value = nutrition.fiber;
-                document.getElementById('meal-sugar').value = nutrition.sugar;
-                document.getElementById('meal-sat-fat').value = nutrition.satFat;
-                document.getElementById('meal-unsat-fat').value = nutrition.unsatFat;
-                document.getElementById('meal-trans-fat').value = nutrition.transFat;
-                document.getElementById('meal-vit-a').value = nutrition.vitA;
-                document.getElementById('meal-vit-c').value = nutrition.vitC;
-                document.getElementById('meal-vit-d').value = nutrition.vitD;
-                document.getElementById('meal-vit-e').value = nutrition.vitE;
-                document.getElementById('meal-vit-k').value = nutrition.vitK;
-                document.getElementById('meal-vit-b12').value = nutrition.vitB12;
-                document.getElementById('meal-calcium').value = nutrition.calcium;
-                document.getElementById('meal-iron').value = nutrition.iron;
-                document.getElementById('meal-magnesium').value = nutrition.magnesium;
-                document.getElementById('meal-potassium').value = nutrition.potassium;
-                document.getElementById('meal-sodium').value = nutrition.sodium;
-                document.getElementById('meal-zinc').value = nutrition.zinc;
-
-                // Hide loading
-                document.getElementById('ai-text').style.display = 'inline';
-                document.getElementById('ai-loading').style.display = 'none';
-
-                alert('✅ Nutrition calculated! Review and click "Add Meal" to save.');
-            }, 800);
-        }
-
-        // Smart offline meal calculator with extensive food database
-        function smartCalculateMeal(description) {
-            // Extract quantity
-            const quantityMatch = description.match(/(\d+)\s*(g|gram|oz|ounce|cup|bowl|plate|piece|slice|serving|servings?|lb|pound|kg)/i);
-            let quantity = 100; // default 100g
-            let unit = 'g';
-            
-            if (quantityMatch) {
-                quantity = parseInt(quantityMatch[1]);
-                unit = quantityMatch[2].toLowerCase();
-            }
-            
-            // Convert to grams
-            let grams = quantity;
-            if (unit.includes('oz') || unit.includes('ounce')) grams = quantity * 28.35;
-            else if (unit.includes('lb') || unit.includes('pound')) grams = quantity * 453.592;
-            else if (unit.includes('kg')) grams = quantity * 1000;
-            else if (unit.includes('cup')) grams = quantity * 240;
-            else if (unit.includes('bowl')) grams = quantity * 350;
-            else if (unit.includes('plate')) grams = quantity * 500;
-            else if (unit.includes('piece') || unit.includes('slice')) grams = quantity * 30;
-            else if (unit.includes('serving')) grams = quantity * 250;
-            
-            const multiplier = grams / 100; // Convert to per 100g basis
-            
-            // Food database with nutrition per 100g
-            const foodDatabase = {
-                // Proteins
-                'chicken': { name: 'Chicken Breast', calories: 165, protein: 31, carbs: 0, fats: 3.6, fiber: 0, sugar: 0, satFat: 1, unsatFat: 2, transFat: 0, vitA: 20, vitC: 0, vitD: 5, vitE: 0.3, vitK: 0, vitB12: 0.3, calcium: 11, iron: 0.7, magnesium: 29, potassium: 256, sodium: 74, zinc: 0.9 },
-                'beef': { name: 'Beef Steak', calories: 250, protein: 26, carbs: 0, fats: 15, fiber: 0, sugar: 0, satFat: 6, unsatFat: 7, transFat: 1, vitA: 0, vitC: 0, vitD: 3, vitE: 0.4, vitK: 1.4, vitB12: 2.6, calcium: 18, iron: 2.6, magnesium: 21, potassium: 318, sodium: 72, zinc: 6.3 },
-                'fish': { name: 'Fish (Salmon)', calories: 208, protein: 20, carbs: 0, fats: 13, fiber: 0, sugar: 0, satFat: 3, unsatFat: 8, transFat: 0, vitA: 50, vitC: 0, vitD: 11, vitE: 3.5, vitK: 0.5, vitB12: 3.2, calcium: 9, iron: 0.3, magnesium: 27, potassium: 363, sodium: 59, zinc: 0.4 },
-                'salmon': { name: 'Salmon', calories: 208, protein: 20, carbs: 0, fats: 13, fiber: 0, sugar: 0, satFat: 3, unsatFat: 8, transFat: 0, vitA: 50, vitC: 0, vitD: 11, vitE: 3.5, vitK: 0.5, vitB12: 3.2, calcium: 9, iron: 0.3, magnesium: 27, potassium: 363, sodium: 59, zinc: 0.4 },
-                'tuna': { name: 'Tuna', calories: 132, protein: 28, carbs: 0, fats: 1, fiber: 0, sugar: 0, satFat: 0.2, unsatFat: 0.3, transFat: 0, vitA: 60, vitC: 0, vitD: 6, vitE: 0.3, vitK: 0, vitB12: 2.2, calcium: 17, iron: 1, magnesium: 35, potassium: 333, sodium: 47, zinc: 0.4 },
-                'egg': { name: 'Eggs', calories: 155, protein: 13, carbs: 1.1, fats: 11, fiber: 0, sugar: 1.1, satFat: 3.3, unsatFat: 5.5, transFat: 0, vitA: 160, vitC: 0, vitD: 2, vitE: 1, vitK: 0.3, vitB12: 1.1, calcium: 50, iron: 1.2, magnesium: 10, potassium: 126, sodium: 124, zinc: 1.1 },
-                'eggs': { name: 'Eggs', calories: 155, protein: 13, carbs: 1.1, fats: 11, fiber: 0, sugar: 1.1, satFat: 3.3, unsatFat: 5.5, transFat: 0, vitA: 160, vitC: 0, vitD: 2, vitE: 1, vitK: 0.3, vitB12: 1.1, calcium: 50, iron: 1.2, magnesium: 10, potassium: 126, sodium: 124, zinc: 1.1 },
-                'tofu': { name: 'Tofu', calories: 76, protein: 8, carbs: 1.9, fats: 4.8, fiber: 0.3, sugar: 0.6, satFat: 0.7, unsatFat: 3.3, transFat: 0, vitA: 10, vitC: 0.1, vitD: 0, vitE: 0.01, vitK: 2.4, vitB12: 0, calcium: 350, iron: 5.4, magnesium: 30, potassium: 121, sodium: 7, zinc: 0.8 },
-                
-                // Carbs
-                'rice': { name: 'Rice (Cooked)', calories: 130, protein: 2.7, carbs: 28, fats: 0.3, fiber: 0.4, sugar: 0.1, satFat: 0.1, unsatFat: 0.1, transFat: 0, vitA: 0, vitC: 0, vitD: 0, vitE: 0.04, vitK: 0, vitB12: 0, calcium: 10, iron: 0.2, magnesium: 12, potassium: 35, sodium: 1, zinc: 0.5 },
-                'pasta': { name: 'Pasta (Cooked)', calories: 131, protein: 5, carbs: 25, fats: 1.1, fiber: 1.8, sugar: 0.6, satFat: 0.2, unsatFat: 0.4, transFat: 0, vitA: 0, vitC: 0, vitD: 0, vitE: 0.06, vitK: 0, vitB12: 0, calcium: 6, iron: 0.5, magnesium: 18, potassium: 44, sodium: 6, zinc: 0.4 },
-                'bread': { name: 'Bread', calories: 265, protein: 9, carbs: 49, fats: 3.2, fiber: 2.7, sugar: 5, satFat: 0.7, unsatFat: 1.5, transFat: 0, vitA: 0, vitC: 0, vitD: 0, vitE: 0.25, vitK: 1.2, vitB12: 0, calcium: 160, iron: 2.5, magnesium: 76, potassium: 250, sodium: 491, zinc: 1.5 },
-                'oats': { name: 'Oatmeal', calories: 389, protein: 16.9, carbs: 66, fats: 6.9, fiber: 10.6, sugar: 0.9, satFat: 1.2, unsatFat: 4.3, transFat: 0, vitA: 0, vitC: 0, vitD: 0, vitE: 0.42, vitK: 5.9, vitB12: 0, calcium: 54, iron: 4.7, magnesium: 177, potassium: 429, sodium: 2, zinc: 4 },
-                'potato': { name: 'Potato', calories: 77, protein: 2, carbs: 17, fats: 0.1, fiber: 2.2, sugar: 0.8, satFat: 0, unsatFat: 0, transFat: 0, vitA: 2, vitC: 19.7, vitD: 0, vitE: 0.01, vitK: 2, vitB12: 0, calcium: 12, iron: 0.8, magnesium: 23, potassium: 421, sodium: 6, zinc: 0.3 },
-                'potatoes': { name: 'Potatoes', calories: 77, protein: 2, carbs: 17, fats: 0.1, fiber: 2.2, sugar: 0.8, satFat: 0, unsatFat: 0, transFat: 0, vitA: 2, vitC: 19.7, vitD: 0, vitE: 0.01, vitK: 2, vitB12: 0, calcium: 12, iron: 0.8, magnesium: 23, potassium: 421, sodium: 6, zinc: 0.3 },
-                'sweet potato': { name: 'Sweet Potato', calories: 86, protein: 1.6, carbs: 20, fats: 0.1, fiber: 3, sugar: 4.2, satFat: 0, unsatFat: 0, transFat: 0, vitA: 14187, vitC: 2.4, vitD: 0, vitE: 0.26, vitK: 1.8, vitB12: 0, calcium: 30, iron: 0.6, magnesium: 25, potassium: 337, sodium: 55, zinc: 0.3 },
-                'quinoa': { name: 'Quinoa (Cooked)', calories: 120, protein: 4.4, carbs: 21, fats: 1.9, fiber: 2.8, sugar: 0, satFat: 0.2, unsatFat: 1.2, transFat: 0, vitA: 5, vitC: 0, vitD: 0, vitE: 0.6, vitK: 0, vitB12: 0, calcium: 17, iron: 2.8, magnesium: 64, potassium: 172, sodium: 7, zinc: 1.1 },
-                
-                // Vegetables
-                'broccoli': { name: 'Broccoli', calories: 34, protein: 2.8, carbs: 7, fats: 0.4, fiber: 2.6, sugar: 1.7, satFat: 0, unsatFat: 0, transFat: 0, vitA: 623, vitC: 89.2, vitD: 0, vitE: 0.78, vitK: 101.6, vitB12: 0, calcium: 47, iron: 0.7, magnesium: 21, potassium: 316, sodium: 33, zinc: 0.4 },
-                'spinach': { name: 'Spinach', calories: 23, protein: 2.9, carbs: 3.6, fats: 0.4, fiber: 2.2, sugar: 0.4, satFat: 0.06, unsatFat: 0.03, transFat: 0, vitA: 9377, vitC: 28.1, vitD: 0, vitE: 2, vitK: 482.9, vitB12: 0, calcium: 99, iron: 2.7, magnesium: 79, potassium: 558, sodium: 79, zinc: 0.5 },
-                'carrot': { name: 'Carrots', calories: 41, protein: 0.9, carbs: 10, fats: 0.2, fiber: 2.8, sugar: 4.7, satFat: 0, unsatFat: 0.1, transFat: 0, vitA: 16706, vitC: 5.9, vitD: 0, vitE: 0.66, vitK: 13.2, vitB12: 0, calcium: 33, iron: 0.3, magnesium: 12, potassium: 320, sodium: 55, zinc: 0.2 },
-                'carrots': { name: 'Carrots', calories: 41, protein: 0.9, carbs: 10, fats: 0.2, fiber: 2.8, sugar: 4.7, satFat: 0, unsatFat: 0.1, transFat: 0, vitA: 16706, vitC: 5.9, vitD: 0, vitE: 0.66, vitK: 13.2, vitB12: 0, calcium: 33, iron: 0.3, magnesium: 12, potassium: 320, sodium: 55, zinc: 0.2 },
-                'lettuce': { name: 'Lettuce', calories: 15, protein: 1.4, carbs: 2.9, fats: 0.2, fiber: 1.3, sugar: 1.8, satFat: 0, unsatFat: 0.1, transFat: 0, vitA: 166, vitC: 9.2, vitD: 0, vitE: 0.18, vitK: 102.5, vitB12: 0, calcium: 36, iron: 0.9, magnesium: 13, potassium: 194, sodium: 28, zinc: 0.2 },
-                'tomato': { name: 'Tomato', calories: 18, protein: 0.9, carbs: 3.9, fats: 0.2, fiber: 1.2, sugar: 2.6, satFat: 0, unsatFat: 0.1, transFat: 0, vitA: 833, vitC: 13.7, vitD: 0, vitE: 0.54, vitK: 7.9, vitB12: 0, calcium: 10, iron: 0.3, magnesium: 11, potassium: 237, sodium: 5, zinc: 0.2 },
-                'tomatoes': { name: 'Tomatoes', calories: 18, protein: 0.9, carbs: 3.9, fats: 0.2, fiber: 1.2, sugar: 2.6, satFat: 0, unsatFat: 0.1, transFat: 0, vitA: 833, vitC: 13.7, vitD: 0, vitE: 0.54, vitK: 7.9, vitB12: 0, calcium: 10, iron: 0.3, magnesium: 11, potassium: 237, sodium: 5, zinc: 0.2 },
-                'cucumber': { name: 'Cucumber', calories: 15, protein: 0.7, carbs: 3.6, fats: 0.1, fiber: 0.5, sugar: 1.7, satFat: 0, unsatFat: 0, transFat: 0, vitA: 105, vitC: 2.8, vitD: 0, vitE: 0.03, vitK: 16.4, vitB12: 0, calcium: 16, iron: 0.3, magnesium: 13, potassium: 147, sodium: 2, zinc: 0.2 },
-                'pepper': { name: 'Bell Pepper', calories: 31, protein: 1, carbs: 6, fats: 0.3, fiber: 2.1, sugar: 4.2, satFat: 0, unsatFat: 0, transFat: 0, vitA: 3131, vitC: 127.7, vitD: 0, vitE: 1.6, vitK: 4.9, vitB12: 0, calcium: 7, iron: 0.4, magnesium: 12, potassium: 211, sodium: 4, zinc: 0.3 },
-                'onion': { name: 'Onion', calories: 40, protein: 1.1, carbs: 9, fats: 0.1, fiber: 1.7, sugar: 4.2, satFat: 0, unsatFat: 0.1, transFat: 0, vitA: 2, vitC: 7.4, vitD: 0, vitE: 0.02, vitK: 0.4, vitB12: 0, calcium: 23, iron: 0.2, magnesium: 10, potassium: 146, sodium: 4, zinc: 0.2 },
-                'garlic': { name: 'Garlic', calories: 149, protein: 6.4, carbs: 33, fats: 0.5, fiber: 2.1, sugar: 1, satFat: 0.1, unsatFat: 0.2, transFat: 0, vitA: 9, vitC: 31.2, vitD: 0, vitE: 0.08, vitK: 1.7, vitB12: 0, calcium: 181, iron: 1.7, magnesium: 25, potassium: 401, sodium: 17, zinc: 1.2 },
-                'mushroom': { name: 'Mushrooms', calories: 22, protein: 3.1, carbs: 3.3, fats: 0.3, fiber: 1, sugar: 2, satFat: 0, unsatFat: 0.1, transFat: 0, vitA: 0, vitC: 2.1, vitD: 0.2, vitE: 0.01, vitK: 0, vitB12: 0, calcium: 3, iron: 0.5, magnesium: 9, potassium: 318, sodium: 5, zinc: 0.5 },
-                'mushrooms': { name: 'Mushrooms', calories: 22, protein: 3.1, carbs: 3.3, fats: 0.3, fiber: 1, sugar: 2, satFat: 0, unsatFat: 0.1, transFat: 0, vitA: 0, vitC: 2.1, vitD: 0.2, vitE: 0.01, vitK: 0, vitB12: 0, calcium: 3, iron: 0.5, magnesium: 9, potassium: 318, sodium: 5, zinc: 0.5 },
-                
-                // Fruits
-                'apple': { name: 'Apple', calories: 52, protein: 0.3, carbs: 14, fats: 0.2, fiber: 2.4, sugar: 10, satFat: 0, unsatFat: 0.1, transFat: 0, vitA: 54, vitC: 4.6, vitD: 0, vitE: 0.18, vitK: 2.2, vitB12: 0, calcium: 6, iron: 0.1, magnesium: 5, potassium: 107, sodium: 1, zinc: 0 },
-                'banana': { name: 'Banana', calories: 89, protein: 1.1, carbs: 23, fats: 0.3, fiber: 2.6, sugar: 12, satFat: 0.1, unsatFat: 0.1, transFat: 0, vitA: 64, vitC: 8.7, vitD: 0, vitE: 0.1, vitK: 0.5, vitB12: 0, calcium: 5, iron: 0.3, magnesium: 27, potassium: 358, sodium: 1, zinc: 0.2 },
-                'orange': { name: 'Orange', calories: 47, protein: 0.9, carbs: 12, fats: 0.1, fiber: 2.4, sugar: 9, satFat: 0, unsatFat: 0, transFat: 0, vitA: 225, vitC: 53.2, vitD: 0, vitE: 0.18, vitK: 0, vitB12: 0, calcium: 40, iron: 0.1, magnesium: 10, potassium: 181, sodium: 0, zinc: 0.1 },
-                'blueberry': { name: 'Blueberries', calories: 57, protein: 0.7, carbs: 14, fats: 0.3, fiber: 2.4, sugar: 10, satFat: 0, unsatFat: 0.1, transFat: 0, vitA: 54, vitC: 9.7, vitD: 0, vitE: 0.57, vitK: 19.3, vitB12: 0, calcium: 6, iron: 0.3, magnesium: 6, potassium: 77, sodium: 1, zinc: 0.2 },
-                'blueberries': { name: 'Blueberries', calories: 57, protein: 0.7, carbs: 14, fats: 0.3, fiber: 2.4, sugar: 10, satFat: 0, unsatFat: 0.1, transFat: 0, vitA: 54, vitC: 9.7, vitD: 0, vitE: 0.57, vitK: 19.3, vitB12: 0, calcium: 6, iron: 0.3, magnesium: 6, potassium: 77, sodium: 1, zinc: 0.2 },
-                'strawberry': { name: 'Strawberries', calories: 32, protein: 0.7, carbs: 7.7, fats: 0.3, fiber: 2, sugar: 4.9, satFat: 0, unsatFat: 0.1, transFat: 0, vitA: 12, vitC: 58.8, vitD: 0, vitE: 0.29, vitK: 2.2, vitB12: 0, calcium: 16, iron: 0.4, magnesium: 13, potassium: 153, sodium: 1, zinc: 0.1 },
-                'strawberries': { name: 'Strawberries', calories: 32, protein: 0.7, carbs: 7.7, fats: 0.3, fiber: 2, sugar: 4.9, satFat: 0, unsatFat: 0.1, transFat: 0, vitA: 12, vitC: 58.8, vitD: 0, vitE: 0.29, vitK: 2.2, vitB12: 0, calcium: 16, iron: 0.4, magnesium: 13, potassium: 153, sodium: 1, zinc: 0.1 },
-                'avocado': { name: 'Avocado', calories: 160, protein: 2, carbs: 9, fats: 15, fiber: 7, sugar: 0.7, satFat: 2.1, unsatFat: 11.6, transFat: 0, vitA: 146, vitC: 10, vitD: 0, vitE: 2.1, vitK: 21, vitB12: 0, calcium: 12, iron: 0.6, magnesium: 29, potassium: 485, sodium: 7, zinc: 0.6 },
-                
-                // Dairy
-                'milk': { name: 'Milk (Whole)', calories: 61, protein: 3.2, carbs: 4.8, fats: 3.3, fiber: 0, sugar: 5.1, satFat: 1.9, unsatFat: 0.9, transFat: 0, vitA: 126, vitC: 0, vitD: 1, vitE: 0.08, vitK: 0.3, vitB12: 0.4, calcium: 113, iron: 0, magnesium: 10, potassium: 132, sodium: 43, zinc: 0.4 },
-                'cheese': { name: 'Cheese (Cheddar)', calories: 402, protein: 25, carbs: 1.3, fats: 33, fiber: 0, sugar: 0.5, satFat: 21, unsatFat: 9, transFat: 1, vitA: 994, vitC: 0, vitD: 0.6, vitE: 0.7, vitK: 2.4, vitB12: 1.1, calcium: 721, iron: 0.7, magnesium: 28, potassium: 98, sodium: 621, zinc: 3.1 },
-                'yogurt': { name: 'Yogurt (Greek)', calories: 59, protein: 10, carbs: 3.6, fats: 0.4, fiber: 0, sugar: 3.2, satFat: 0.1, unsatFat: 0.1, transFat: 0, vitA: 8, vitC: 0.5, vitD: 0, vitE: 0.01, vitK: 0.1, vitB12: 0.5, calcium: 110, iron: 0.1, magnesium: 11, potassium: 141, sodium: 36, zinc: 0.4 },
-                
-                // Nuts & Seeds
-                'almond': { name: 'Almonds', calories: 579, protein: 21, carbs: 22, fats: 50, fiber: 12.5, sugar: 4.4, satFat: 3.8, unsatFat: 43, transFat: 0, vitA: 2, vitC: 0, vitD: 0, vitE: 25.6, vitK: 0, vitB12: 0, calcium: 269, iron: 3.7, magnesium: 270, potassium: 733, sodium: 1, zinc: 3.1 },
-                'almonds': { name: 'Almonds', calories: 579, protein: 21, carbs: 22, fats: 50, fiber: 12.5, sugar: 4.4, satFat: 3.8, unsatFat: 43, transFat: 0, vitA: 2, vitC: 0, vitD: 0, vitE: 25.6, vitK: 0, vitB12: 0, calcium: 269, iron: 3.7, magnesium: 270, potassium: 733, sodium: 1, zinc: 3.1 },
-                'walnut': { name: 'Walnuts', calories: 654, protein: 15, carbs: 14, fats: 65, fiber: 6.7, sugar: 2.6, satFat: 6.1, unsatFat: 53, transFat: 0, vitA: 20, vitC: 1.3, vitD: 0, vitE: 0.7, vitK: 2.7, vitB12: 0, calcium: 98, iron: 2.9, magnesium: 158, potassium: 441, sodium: 2, zinc: 3.1 },
-                'walnuts': { name: 'Walnuts', calories: 654, protein: 15, carbs: 14, fats: 65, fiber: 6.7, sugar: 2.6, satFat: 6.1, unsatFat: 53, transFat: 0, vitA: 20, vitC: 1.3, vitD: 0, vitE: 0.7, vitK: 2.7, vitB12: 0, calcium: 98, iron: 2.9, magnesium: 158, potassium: 441, sodium: 2, zinc: 3.1 },
-                'peanut': { name: 'Peanuts', calories: 567, protein: 26, carbs: 16, fats: 49, fiber: 8.5, sugar: 4.7, satFat: 6.8, unsatFat: 25, transFat: 0, vitA: 0, vitC: 0, vitD: 0, vitE: 8.3, vitK: 0, vitB12: 0, calcium: 92, iron: 4.6, magnesium: 168, potassium: 705, sodium: 18, zinc: 3.3 },
-                'peanuts': { name: 'Peanuts', calories: 567, protein: 26, carbs: 16, fats: 49, fiber: 8.5, sugar: 4.7, satFat: 6.8, unsatFat: 25, transFat: 0, vitA: 0, vitC: 0, vitD: 0, vitE: 8.3, vitK: 0, vitB12: 0, calcium: 92, iron: 4.6, magnesium: 168, potassium: 705, sodium: 18, zinc: 3.3 },
-                
-                // Oils & Fats
-                'olive oil': { name: 'Olive Oil', calories: 884, protein: 0, carbs: 0, fats: 100, fiber: 0, sugar: 0, satFat: 13.8, unsatFat: 73, transFat: 0, vitA: 0, vitC: 0, vitD: 0, vitE: 14.4, vitK: 60.2, vitB12: 0, calcium: 1, iron: 0.6, magnesium: 0, potassium: 1, sodium: 2, zinc: 0 },
-                'butter': { name: 'Butter', calories: 717, protein: 0.9, carbs: 0.1, fats: 81, fiber: 0, sugar: 0.1, satFat: 51, unsatFat: 21, transFat: 3, vitA: 684, vitC: 0, vitD: 1.5, vitE: 2.3, vitK: 7, vitB12: 0.2, calcium: 24, iron: 0, magnesium: 2, potassium: 24, sodium: 11, zinc: 0.1 },
-                
-                // Beverages
-                'coffee': { name: 'Black Coffee', calories: 2, protein: 0.3, carbs: 0, fats: 0, fiber: 0, sugar: 0, satFat: 0, unsatFat: 0, transFat: 0, vitA: 0, vitC: 0, vitD: 0, vitE: 0.01, vitK: 0.1, vitB12: 0, calcium: 2, iron: 0, magnesium: 3, potassium: 49, sodium: 2, zinc: 0 },
-                'tea': { name: 'Green Tea', calories: 1, protein: 0.2, carbs: 0.2, fats: 0, fiber: 0, sugar: 0, satFat: 0, unsatFat: 0, transFat: 0, vitA: 0, vitC: 0, vitD: 0, vitE: 0, vitK: 0, vitB12: 0, calcium: 0, iron: 0, magnesium: 1, potassium: 8, sodium: 1, zinc: 0 },
-                'juice': { name: 'Orange Juice', calories: 45, protein: 0.7, carbs: 10, fats: 0.2, fiber: 0.2, sugar: 8, satFat: 0, unsatFat: 0, transFat: 0, vitA: 200, vitC: 50, vitD: 0, vitE: 0.04, vitK: 0.1, vitB12: 0, calcium: 11, iron: 0.2, magnesium: 11, potassium: 200, sodium: 1, zinc: 0.1 },
-                
-                // Prepared foods
-                'salad': { name: 'Mixed Green Salad', calories: 33, protein: 2.9, carbs: 5, fats: 0.5, fiber: 2.8, sugar: 2.5, satFat: 0.1, unsatFat: 0.2, transFat: 0, vitA: 5000, vitC: 35, vitD: 0, vitE: 1.5, vitK: 300, vitB12: 0, calcium: 100, iron: 2, magnesium: 40, potassium: 450, sodium: 50, zinc: 0.5 },
-                'soup': { name: 'Vegetable Soup', calories: 45, protein: 2, carbs: 7, fats: 1.5, fiber: 2, sugar: 3, satFat: 0.5, unsatFat: 0.8, transFat: 0, vitA: 3000, vitC: 15, vitD: 0, vitE: 0.5, vitK: 10, vitB12: 0, calcium: 30, iron: 1, magnesium: 15, potassium: 300, sodium: 400, zinc: 0.3 },
-                'sandwich': { name: 'Turkey Sandwich', calories: 250, protein: 18, carbs: 30, fats: 8, fiber: 3, sugar: 4, satFat: 2, unsatFat: 4, transFat: 0, vitA: 100, vitC: 5, vitD: 0.2, vitE: 1, vitK: 15, vitB12: 0.5, calcium: 150, iron: 2.5, magnesium: 40, potassium: 350, sodium: 600, zinc: 2 },
-                'pizza': { name: 'Cheese Pizza', calories: 266, protein: 11, carbs: 33, fats: 10, fiber: 2.3, sugar: 3.6, satFat: 4.5, unsatFat: 3.5, transFat: 0.2, vitA: 200, vitC: 2, vitD: 0, vitE: 1, vitK: 7, vitB12: 0.4, calcium: 200, iron: 2.5, magnesium: 20, potassium: 180, sodium: 600, zinc: 1.5 },
-                'burger': { name: 'Beef Burger', calories: 295, protein: 17, carbs: 30, fats: 12, fiber: 1.5, sugar: 5, satFat: 4.5, unsatFat: 5, transFat: 0.5, vitA: 50, vitC: 2, vitD: 0.2, vitE: 0.5, vitK: 5, vitB12: 1.5, calcium: 80, iron: 3, magnesium: 25, potassium: 250, sodium: 500, zinc: 3 },
-                'fries': { name: 'French Fries', calories: 312, protein: 3.4, carbs: 41, fats: 15, fiber: 3.8, sugar: 0.3, satFat: 2.3, unsatFat: 9, transFat: 0.1, vitA: 0, vitC: 2.7, vitD: 0, vitE: 1.7, vitK: 11.2, vitB12: 0, calcium: 15, iron: 0.8, magnesium: 35, potassium: 579, sodium: 246, zinc: 0.5 },
-                'pancake': { name: 'Pancakes', calories: 227, protein: 6, carbs: 28, fats: 10, fiber: 1, sugar: 8, satFat: 2.5, unsatFat: 5, transFat: 0.1, vitA: 80, vitC: 0.3, vitD: 0.2, vitE: 0.8, vitK: 5, vitB12: 0.3, calcium: 180, iron: 1.5, magnesium: 15, potassium: 150, sodium: 400, zinc: 0.5 },
-                'cereal': { name: 'Breakfast Cereal', calories: 379, protein: 8, carbs: 83, fats: 3, fiber: 10, sugar: 20, satFat: 0.5, unsatFat: 1.5, transFat: 0, vitA: 500, vitC: 20, vitD: 3, vitE: 1, vitK: 1.5, vitB12: 6, calcium: 30, iron: 30, magnesium: 80, potassium: 300, sodium: 500, zinc: 10 },
-                
-                // Default fallback
-                'default': { name: 'Mixed Meal', calories: 150, protein: 8, carbs: 20, fats: 5, fiber: 3, sugar: 5, satFat: 1.5, unsatFat: 2.5, transFat: 0, vitA: 100, vitC: 10, vitD: 0.5, vitE: 1, vitK: 5, vitB12: 0.2, calcium: 50, iron: 1.5, magnesium: 25, potassium: 200, sodium: 150, zinc: 0.8 }
-            };
-
-            // Find matching foods in description
-            const foundFoods = [];
-            const words = description.split(/\s+/);
-            
-            // Check for multi-word matches first
-            for (let key in foodDatabase) {
-                if (key !== 'default' && description.includes(key)) {
-                    foundFoods.push({ key: key, data: foodDatabase[key] });
-                }
-            }
-            
-            // If no specific foods found, use default
-            if (foundFoods.length === 0) {
-                foundFoods.push({ key: 'default', data: foodDatabase['default'] });
-            }
-            
-            // Calculate weighted average based on found foods
-            let totalWeight = foundFoods.length;
-            let result = {
-                name: foundFoods.map(f => f.data.name).join(' + '),
-                calories: 0, protein: 0, carbs: 0, fats: 0, fiber: 0, sugar: 0,
-                satFat: 0, unsatFat: 0, transFat: 0,
-                vitA: 0, vitC: 0, vitD: 0, vitE: 0, vitK: 0, vitB12: 0,
-                calcium: 0, iron: 0, magnesium: 0, potassium: 0, sodium: 0, zinc: 0
-            };
-            
-            foundFoods.forEach(food => {
-                result.calories += food.data.calories;
-                result.protein += food.data.protein;
-                result.carbs += food.data.carbs;
-                result.fats += food.data.fats;
-                result.fiber += food.data.fiber;
-                result.sugar += food.data.sugar;
-                result.satFat += food.data.satFat;
-                result.unsatFat += food.data.unsatFat;
-                result.transFat += food.data.transFat;
-                result.vitA += food.data.vitA;
-                result.vitC += food.data.vitC;
-                result.vitD += food.data.vitD;
-                result.vitE += food.data.vitE;
-                result.vitK += food.data.vitK;
-                result.vitB12 += food.data.vitB12;
-                result.calcium += food.data.calcium;
-                result.iron += food.data.iron;
-                result.magnesium += food.data.magnesium;
-                result.potassium += food.data.potassium;
-                result.sodium += food.data.sodium;
-                result.zinc += food.data.zinc;
-            });
-            
-            // Average the values
-            Object.keys(result).forEach(key => {
-                if (key !== 'name') {
-                    result[key] = Math.round((result[key] / totalWeight) * multiplier);
-                }
-            });
-            
-            // Adjust name based on quantity
-            if (grams >= 250) {
-                result.name = 'Large ' + result.name;
-            } else if (grams <= 50) {
-                result.name = 'Small ' + result.name;
-            }
-            
-            return result;
+            localStorage.removeItem('nutriTrackData');
+            location.reload();
         }
 
         window.addEventListener('load', init);
