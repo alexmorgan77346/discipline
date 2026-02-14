@@ -1,4 +1,4 @@
-const CACHE_NAME = 'discipline-dashboard-v7';
+const CACHE_NAME = 'discipline-dashboard-v8';
 const urlsToCache = [
   './',
   './index.html',
@@ -50,6 +50,7 @@ self.addEventListener('activate', event => {
   );
   self.clients.claim();
 });
+
 
 
 
